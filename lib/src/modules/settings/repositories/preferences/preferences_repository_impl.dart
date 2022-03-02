@@ -1,9 +1,9 @@
-import 'package:base/src/models/theme_model.dart';
 import 'package:global_configuration/global_configuration.dart';
-
 import 'preferences_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:string_validator/string_validator.dart';
+
+import '../../models/theme_model.dart';
 
 class PreferencesRepositoryImpl implements PreferencesRepository {
   // Instancia de FlutterSourceStorage que nos permitirá leer y escribir en las

@@ -1,14 +1,15 @@
-import 'package:base/src/bloc/bloc/settings_bloc.dart';
-import 'package:base/src/models/settings_model.dart';
-import 'package:base/src/models/theme_model.dart';
-import 'package:base/src/repositories/preferences/preferences_repository.dart';
-import 'package:base/src/repositories/preferences/preferences_repository_impl.dart';
-import 'package:base/src/repositories/settings/settings_repository.dart';
-import 'package:base/src/repositories/settings/settings_repository_impl.dart';
+
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 
 import 'src/app.dart';
+import 'src/modules/settings/bloc/settings/settings_bloc.dart';
+import 'src/modules/settings/models/settings_model.dart';
+import 'src/modules/settings/models/theme_model.dart';
+import 'src/modules/settings/repositories/preferences/preferences_repository.dart';
+import 'src/modules/settings/repositories/preferences/preferences_repository_impl.dart';
+import 'src/modules/settings/repositories/settings/settings_repository.dart';
+import 'src/modules/settings/repositories/settings/settings_repository_impl.dart';
 import 'src/utils/logger.dart';
 
 void main() async {

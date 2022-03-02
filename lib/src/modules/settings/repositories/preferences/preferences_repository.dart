@@ -1,4 +1,4 @@
-import 'package:base/src/models/theme_model.dart';
+import '../../models/theme_model.dart';
 
 /// Permite leer y escribir en las preferencias del usuario
 abstract class PreferencesRepository {

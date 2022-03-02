@@ -1,6 +1,7 @@
-import 'package:base/src/models/settings_model.dart';
-import 'package:base/src/repositories/preferences/preferences_repository.dart';
-import 'package:base/src/repositories/settings/settings_repository.dart';
+import '../../models/settings_model.dart';
+import '../preferences/preferences_repository.dart';
+
+import 'settings_repository.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
   final PreferencesRepository _pref;

@@ -1,8 +1,9 @@
-import 'package:base/src/bloc/bloc/settings_bloc.dart';
-import 'package:base/src/models/settings_model.dart';
-import 'package:base/src/models/theme_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../models/settings_model.dart';
+import '../models/theme_model.dart';
+import '../bloc/settings/settings_bloc.dart';
 
 class ColorsHelper {
   final SettingsModel settingsModel;
@@ -67,10 +68,25 @@ class ColorsHelper {
   }
 
   Color scaffoldColor(double opacity) {
-    // TODO test if brightness is dark or not
+    // Obtiene el tema actual del sistema
+    // final brightness = MediaQueryData.fromWindow(WidgetsBinding.instance!.window).platformBrightness;
+
     try {
       return Color(
               int.parse(settingsModel.scaffoldColor.replaceAll("#", "0xFF")))
+          .withOpacity(opacity);
+    } catch (e) {
+      return const Color(0xFFCCCCCC).withOpacity(opacity);
+    }
+  }
+
+  Color scaffoldDarkColor(double opacity) {
+    // Obtiene el tema actual del sistema
+    // final brightness = MediaQueryData.fromWindow(WidgetsBinding.instance!.window).platformBrightness;
+
+    try {
+      return Color(
+              int.parse(settingsModel.scaffoldDarkColor.replaceAll("#", "0xFF")))
           .withOpacity(opacity);
     } catch (e) {
       return const Color(0xFFCCCCCC).withOpacity(opacity);
@@ -101,8 +117,7 @@ ThemeData _lightTheme(BuildContext context, ColorsHelper colors) {
         FloatingActionButtonThemeData(backgroundColor: colors.secondColor(1)),
     fontFamily: 'Poppins',
     primaryColor: Colors.white,
-    brightness: Brightness.light,
-    colorScheme: theme.colorScheme.copyWith(secondary: colors.secondColor(1)),
+    colorScheme: theme.colorScheme.copyWith(secondary: colors.secondColor(1), brightness: Brightness.light),
     focusColor: colors.accentColor(1),
     hintColor: colors.secondColor(1),
     textTheme: TextTheme(
@@ -139,5 +154,48 @@ ThemeData _lightTheme(BuildContext context, ColorsHelper colors) {
 }
 
 ThemeData _darkTheme(BuildContext context, ColorsHelper colors) {
-  return ThemeData(brightness: Brightness.dark);
+  final ThemeData theme = ThemeData();
+  return ThemeData(
+    
+    scaffoldBackgroundColor: colors.scaffoldDarkColor(1),
+    brightness: Brightness.dark,
+    appBarTheme:  const AppBarTheme(color: Color(0xff1f1b24), titleTextStyle: TextStyle(color: Colors.white, fontSize: 15, fontFamily: 'Poppins'),
+    iconTheme: IconThemeData(color: Colors.white), ),
+    floatingActionButtonTheme:
+        FloatingActionButtonThemeData(backgroundColor: colors.secondColor(1)),
+    fontFamily: 'Poppins',
+    primaryColor: Colors.white,
+    colorScheme: theme.colorScheme.copyWith(secondary: colors.secondDarkColor(1), brightness: Brightness.dark ),
+    focusColor: colors.accentDarkColor(1),
+    hintColor: colors.secondDarkColor(1),
+    textTheme: TextTheme(
+      headline1: TextStyle(fontSize: 20.0, color: colors.secondDarkColor(1)),
+      headline2: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.w600,
+          color: colors.secondDarkColor(1)),
+      headline3: TextStyle(
+          fontSize: 20.0,
+          fontWeight: FontWeight.w600,
+          color: colors.secondDarkColor(1)),
+      headline4: TextStyle(
+          fontSize: 22.0,
+          fontWeight: FontWeight.w700,
+          color: colors.mainColor(1)),
+      headline5: TextStyle(
+          fontSize: 22.0,
+          fontWeight: FontWeight.w300,
+          color: colors.secondDarkColor(1)),
+      headline6: TextStyle(
+          fontSize: 15.0,
+          fontWeight: FontWeight.w500,
+          color: colors.secondDarkColor(1)),
+      subtitle1: TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.w600,
+          color: colors.mainColor(1)),
+      bodyText1: TextStyle(fontSize: 12.0, color: colors.secondDarkColor(1)),
+      bodyText2: TextStyle(fontSize: 14.0, color: colors.secondDarkColor(1)),
+      caption: TextStyle(fontSize: 12.0, color: colors.accentColor(1)),
+    ),);
 }

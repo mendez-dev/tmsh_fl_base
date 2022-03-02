@@ -12,7 +12,7 @@ class SettingsState extends Equatable {
 
   factory SettingsState.initial() {
     return const SettingsState(
-        settingsLoaded: false, theme: ThemeModel.light, settings: null);
+        settingsLoaded: false, theme: ThemeModel.dark, settings: null);
   }
 
   SettingsState copyWith({

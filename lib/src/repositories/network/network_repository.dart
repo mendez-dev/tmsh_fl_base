@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
-import '../preferences/preferences_repository.dart';
+import '../../modules/settings/repositories/preferences/preferences_repository.dart';
+
 
 /// Librería que nos permite realizar peticiones HTTP utilizando DIO
 class NetworkRepository {

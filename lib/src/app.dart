@@ -1,24 +1,28 @@
-import 'package:base/src/bloc/bloc/settings_bloc.dart';
-import 'package:base/src/helpers/theme_helpers.dart';
-import 'package:base/src/repositories/network/network_repository.dart';
-import 'package:base/src/repositories/preferences/preferences_repository.dart';
-import 'package:base/src/repositories/preferences/preferences_repository_impl.dart';
-import 'package:base/src/repositories/settings/settings_repository.dart';
-import 'package:base/src/repositories/settings/settings_repository_impl.dart';
+
+import 'package:base/src/modules/settings/helpers/theme_helpers.dart';
+import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:global_configuration/global_configuration.dart';
+
+import 'modules/settings/bloc/settings/settings_bloc.dart';
+import 'modules/settings/repositories/preferences/preferences_repository.dart';
+import 'modules/settings/repositories/settings/settings_repository.dart';
+import 'routers/application.dart';
+import 'routers/routes.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp(
+   MyApp(
       {Key? key,
       required this.settingsRepository,
       // required this.networkRepository,
       required this.preferencesRepository,
       required this.settingsBloc
       // required this.colors
-      })
-      : super(key: key);
+      }) : super(key: key) {
+         final router = FluroRouter();
+    Routes.configureRoutes(router);
+    Application.router = router;
+      }
 
   final SettingsRepository settingsRepository;
   // final NetworkRepository networkRepository;
@@ -50,19 +54,8 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               title: 'Material App',
               theme: getThemeData(context: context, theme: state.theme),
-              home: Scaffold(
-                appBar: AppBar(
-                  title: const Text('Material App Bar'),
-                ),
-                body: Center(
-                  child: Text(
-                      GlobalConfiguration().getValue<String>('api_base_url')),
-                ),
-                floatingActionButton: FloatingActionButton(
-                  child: const Icon(Icons.add),
-                  onPressed: () {},
-                ),
-              ),
+              initialRoute: 'home',
+              onGenerateRoute: Application.router!.generator,
             );
           },
         ),

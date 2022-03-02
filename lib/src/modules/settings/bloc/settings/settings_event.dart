@@ -17,3 +17,17 @@ class GetInitialConfigEvent implements SettingsEvent {
   @override
   bool? get stringify => true;
 }
+
+/// Establese el tema de la aplicación
+class SetDarkModeEvent implements SettingsEvent {
+
+  final bool value;
+
+  SetDarkModeEvent(this.value);
+  @override
+  List<Object?> get props => [value];
+
+  @override
+  bool? get stringify => true;
+
+}
