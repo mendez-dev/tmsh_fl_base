@@ -8,9 +8,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: const Text("Inicio"),
       actions: [IconButton(onPressed: () => Navigator.pushNamed(context, 'settings'), icon: const Icon(FontAwesomeIcons.cogs))],),
-      body: const Center(
-        child: Text('Hola Mundo'),
-     ),
+      body: SingleChildScrollView(
+        child: Column(children:  [
+          ListTile(title: const Text("Login"),
+          leading: const Icon(FontAwesomeIcons.signInAlt),
+          trailing: const Icon(Icons.chevron_right),
+          onTap: () => Navigator.pushNamed(context, "login"),
+          )
+        ],),
+      ),
    );
   }
 }

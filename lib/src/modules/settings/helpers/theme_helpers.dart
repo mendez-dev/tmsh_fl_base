@@ -116,8 +116,10 @@ ThemeData _lightTheme(BuildContext context, ColorsHelper colors) {
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: colors.secondColor(1)),
     fontFamily: 'Poppins',
-    primaryColor: Colors.white,
-    colorScheme: theme.colorScheme.copyWith(secondary: colors.secondColor(1), brightness: Brightness.light),
+    primaryColor: colors.mainColor(1),
+    colorScheme: theme.colorScheme.copyWith(
+      primary: colors.mainColor(1),
+      secondary: colors.secondColor(1), brightness: Brightness.light),
     focusColor: colors.accentColor(1),
     hintColor: colors.secondColor(1),
     textTheme: TextTheme(
@@ -164,8 +166,10 @@ ThemeData _darkTheme(BuildContext context, ColorsHelper colors) {
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: colors.secondColor(1)),
     fontFamily: 'Poppins',
-    primaryColor: Colors.white,
-    colorScheme: theme.colorScheme.copyWith(secondary: colors.secondDarkColor(1), brightness: Brightness.dark ),
+    primaryColor: colors.mainDarkColor(1),
+    colorScheme: theme.colorScheme.copyWith(
+      primary: colors.mainDarkColor(1),
+      secondary: colors.secondDarkColor(1), brightness: Brightness.dark ),
     focusColor: colors.accentDarkColor(1),
     hintColor: colors.secondDarkColor(1),
     textTheme: TextTheme(

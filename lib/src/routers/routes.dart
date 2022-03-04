@@ -1,3 +1,4 @@
+import 'package:base/src/modules/auth/routes/auth_routes.dart';
 import 'package:base/src/modules/home/pages/home_page.dart';
 import 'package:base/src/modules/settings/router/settings_routes.dart';
 import 'package:base/src/pages/page_404.dart';
@@ -25,5 +26,6 @@ class Routes {
     ));
     // Importacion de rutas por modulos
     SettingsRoutes.configureRoutes(router);
+    AuthRoutes.configureRoutes(router);
   }
 }
