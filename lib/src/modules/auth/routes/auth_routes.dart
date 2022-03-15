@@ -8,7 +8,7 @@ class AuthRoutes {
         handler: Handler(
           handlerFunc:
               (BuildContext? context, Map<String, List<String>> params) =>
-                  const LoginPage(),
+                   const LoginPage(),
         ));
   }
 }

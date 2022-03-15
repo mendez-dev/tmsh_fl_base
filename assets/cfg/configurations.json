@@ -1,4 +1,5 @@
 {
   "base_url": "https://localhost",
-  "api_base_url": "https://localhost/api"
+  "api_base_url": "https://localhost/api",
+  "allow_account_creation": false
 }

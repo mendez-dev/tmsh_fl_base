@@ -117,6 +117,7 @@ ThemeData _lightTheme(BuildContext context, ColorsHelper colors) {
         FloatingActionButtonThemeData(backgroundColor: colors.secondColor(1)),
     fontFamily: 'Poppins',
     primaryColor: colors.mainColor(1),
+    primaryColorDark: colors.mainColor(1),
     colorScheme: theme.colorScheme.copyWith(
       primary: colors.mainColor(1),
       secondary: colors.secondColor(1), brightness: Brightness.light),
