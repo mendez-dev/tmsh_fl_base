@@ -6,15 +6,15 @@ class InputText extends StatelessWidget {
 
   final String? label;
   final IconData? icon;
-  final InputTextType type;
+  final InputTextStyle type;
   final String Function(String? value)? validator;
 
-  const InputText({Key? key, this.label, this.icon, this.type = InputTextType.standar, this.validator}) : super(key: key);
+  const InputText({Key? key, this.label, this.icon, this.type = InputTextStyle.standar, this.validator}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
 
-    if (type == InputTextType.circularBorder) {
+    if (type == InputTextStyle.circularBorder) {
       return FormField(
         validator: validator,
         builder: (FormFieldState formFieldState){
@@ -22,8 +22,8 @@ class InputText extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                padding: type == InputTextType.circularBorder ? const EdgeInsets.symmetric(horizontal: 15, vertical: 5) : null,
-                decoration: type == InputTextType.circularBorder ? BoxDecoration(
+                padding: type == InputTextStyle.circularBorder ? const EdgeInsets.symmetric(horizontal: 15, vertical: 5) : null,
+                decoration: type == InputTextStyle.circularBorder ? BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
                   border: Border.all(
                     color: const Color(0xffB7C7C7),
@@ -62,7 +62,7 @@ class InputText extends StatelessWidget {
   InputDecoration _getDecoration() {
 
     switch (type) {
-      case InputTextType.bordered:
+      case InputTextStyle.bordered:
         return InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10)
@@ -70,7 +70,7 @@ class InputText extends StatelessWidget {
           icon: icon != null ? Icon(icon) : null,
           label: label != null ? Text(label!) : null
         );
-      case InputTextType.circularBorder:
+      case InputTextStyle.circularBorder:
         return InputDecoration(
           border: InputBorder.none,
           icon: icon != null ? Icon(icon) : null,
@@ -86,7 +86,7 @@ class InputText extends StatelessWidget {
   }
 }
 
-enum InputTextType {
+enum InputTextStyle {
   standar,
   bordered,
   circularBorder

@@ -11,10 +11,16 @@ class HomePage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(children:  [
           ListTile(title: const Text("Login"),
-          leading: const Icon(FontAwesomeIcons.signInAlt),
-          trailing: const Icon(Icons.chevron_right),
-          onTap: () => Navigator.pushNamed(context, "login"),
-          )
+            leading: const Icon(FontAwesomeIcons.signInAlt),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.pushNamed(context, "login"),
+          ),
+          ListTile(title: const Text("Ejemplos"),
+            leading: const Icon(FontAwesomeIcons.mobile),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => Navigator.pushNamed(context, "buttonsTypes"),
+          ),
+          
         ],),
       ),
    );

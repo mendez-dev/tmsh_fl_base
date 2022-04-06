@@ -1,3 +1,4 @@
+import 'package:base/src/components/buttons.dart';
 import 'package:base/src/components/form.dart';
 import 'package:base/src/modules/auth/components/buttons.dart';
 import 'package:base/src/modules/auth/bloc/bloc/auth_bloc.dart';
@@ -108,8 +109,8 @@ class LoginPage extends StatelessWidget {
                       Column(
                         children: const [
                           Text("Iniciar sesión", style: TextStyle(fontSize: 20),),
-                          InputText(label: "Correo", icon: FontAwesomeIcons.at, type: InputTextType.circularBorder),
-                          InputText(label: "Contraseña", icon: FontAwesomeIcons.key, type: InputTextType.circularBorder)
+                          InputText(label: "Correo", icon: FontAwesomeIcons.at, type: InputTextStyle.circularBorder),
+                          InputText(label: "Contraseña", icon: FontAwesomeIcons.key, type: InputTextStyle.circularBorder)
                         ],
                       ),
                       Column(
@@ -150,13 +151,13 @@ class LoginPage extends StatelessWidget {
                             ),
                              InputText(
                               validator: (String? value) => "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                              type: InputTextType.circularBorder,
+                              type: InputTextStyle.circularBorder,
                               icon: FontAwesomeIcons.at,
                               label: "Contraseña",
                             ),
                              InputText(
                                validator: (String? value) => "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                              type: InputTextType.bordered,
+                              type: InputTextStyle.bordered,
                               icon: FontAwesomeIcons.at,
                               label: "Repetir Contraseña",
                             ),
