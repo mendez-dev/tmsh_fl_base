@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 
@@ -22,8 +21,7 @@ void main() async {
   // Cargamos el PreferencesRepository y El Settings bloc para leer los ajustes
   // iniciales de la aplicación, como el tema seleccionado
   PreferencesRepository preferencesRepository = PreferencesRepositoryImpl();
-  SettingsRepository settingsRepository =
-      SettingsRepositoryImpl(pref: preferencesRepository);
+  SettingsRepository settingsRepository = SettingsRepositoryImpl();
 
   SettingsBloc settingsBloc = SettingsBloc(
       preferencesRepository: preferencesRepository,

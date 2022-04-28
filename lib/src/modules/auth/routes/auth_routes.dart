@@ -1,4 +1,5 @@
 import 'package:base/src/modules/auth/pages/login_page.dart';
+import 'package:base/src/modules/auth/pages/spash_screen.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,12 @@ class AuthRoutes {
         handler: Handler(
           handlerFunc:
               (BuildContext? context, Map<String, List<String>> params) =>
-                   const LoginPage(),
+                  const LoginPage(),
         ));
+    router.define("splash",
+        handler: Handler(
+            handlerFunc:
+                (BuildContext? context, Map<String, List<String>> params) =>
+                    const SplashScreen()));
   }
 }

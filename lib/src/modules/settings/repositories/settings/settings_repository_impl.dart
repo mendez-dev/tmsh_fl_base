@@ -1,20 +1,13 @@
 import '../../models/settings_model.dart';
-import '../preferences/preferences_repository.dart';
 
 import 'settings_repository.dart';
 
 class SettingsRepositoryImpl implements SettingsRepository {
-  final PreferencesRepository _pref;
-
-  SettingsRepositoryImpl({required PreferencesRepository pref}) : _pref = pref;
-
   @override
   Future<SettingsModel> initSettings() async {
-    await Future.delayed(const Duration(milliseconds: 500));
-    // En caso de no poder leer las configuraciones iniciales usara unas por
-    // defecto
+    // Load defaul app settings
     SettingsModel defaultSettings = SettingsModel((s) => s
-      ..appName = "BASE APP"
+      ..appName = "My movie app"
       ..defaultTax = 0.13
       ..defaultCurrency = "\$"
       ..mainColor = "#FF4E6A"
