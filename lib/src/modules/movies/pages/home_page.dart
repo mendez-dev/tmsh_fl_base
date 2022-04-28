@@ -2,7 +2,6 @@ import 'package:base/src/modules/movies/bloc/movies_bloc/movies_bloc.dart';
 import 'package:base/src/modules/movies/repositories/movies_repository/movies_repository.dart';
 import 'package:base/src/modules/movies/repositories/movies_repository/movies_repository_impl.dart';
 import 'package:base/src/repositories/network/network_repository.dart';
-import 'package:base/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -84,6 +83,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 child: Column(
                   children: state.movies
                       .map((m) => ListTile(
+                        onTap: () => Navigator.pushNamed(context, 'info/${m.id}'),
                             trailing: const Icon(FontAwesomeIcons.chevronRight),
                             leading: m.posterPath != null
                                 ? Image.network(
