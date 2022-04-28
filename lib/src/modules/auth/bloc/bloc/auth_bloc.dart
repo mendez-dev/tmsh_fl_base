@@ -20,7 +20,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ChangePageStateEvent>(_onChangePageStateEventToState);
     on<SetScreenSizeEvent>(_setScreenSizeEventToState);
     on<VerifyTokenEvent>(_verifyTokenEvent);
+    on<LoginEvent>(_loginEvent);
   }
+
+  void _loginEvent(LoginEvent event, Emitter<AuthState> emit){
+
+    // indicate that the request is being made with a loading
+    emit(state.copyWith(loading: true));
+
+    
+
+  }
+
 
   void _verifyTokenEvent(
       VerifyTokenEvent event, Emitter<AuthState> emit) async {

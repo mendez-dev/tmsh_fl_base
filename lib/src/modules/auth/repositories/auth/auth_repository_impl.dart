@@ -10,7 +10,7 @@ class AuthRepositoryImpl implements AuthRepository {
       final response = await Dio().post('https://reqres.in/api/login',
           options: Options(contentType: "application/json"),
           // data: {email: email, password: password}
-          data: {'email': 'eve.holt@reqres.in', 'password': 'cityslicka'});
+          data: {'email': 'eve.holt@reqres.in', 'password': 'cityslic222555ka'});
 
       logger.v(response);
     } on DioError catch (error) {

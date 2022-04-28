@@ -1,6 +1,7 @@
 part of 'auth_bloc.dart';
 
 class AuthState extends Equatable {
+  final bool loading;
   final int pageState;
   final double loginYOffset;
   final double loginXOffset;
@@ -10,10 +11,14 @@ class AuthState extends Equatable {
   final double windowWidth;
   final double windowHeight;
   final double headingTop;
-  final int loggedStatus; // 0: --- // 1 - no auth // 2 auth
+  final bool onSuccess;
+  final bool onError;
+  final String message;
+  final int loggedStatus; // 0: unverified // 1 - no auth // 2 auth
 
   const AuthState(
-      {required this.pageState,
+      {required this.loading,
+      required this.pageState,
       required this.loginYOffset,
       required this.loginXOffset,
       required this.loginWidth,
@@ -22,10 +27,14 @@ class AuthState extends Equatable {
       required this.windowWidth,
       required this.windowHeight,
       required this.headingTop,
+      required this.onSuccess,
+      required this.onError,
+      required this.message,
       required this.loggedStatus});
 
   factory AuthState.initial() {
     return const AuthState(
+        loading: false,
         pageState: 0,
         loginYOffset: double.infinity,
         loginXOffset: 0,
@@ -35,11 +44,15 @@ class AuthState extends Equatable {
         windowWidth: 0,
         windowHeight: 0.0,
         headingTop: 100,
+        onError: false,
+        onSuccess: true,
+        message: '',
         loggedStatus: 0);
   }
 
   AuthState copyWith(
-      {int? pageState,
+      {bool? loading,
+      int? pageState,
       double? loginYOffset,
       double? loginXOffset,
       double? loginWidth,
@@ -48,8 +61,12 @@ class AuthState extends Equatable {
       double? windowWidth,
       double? windowHeight,
       double? headingTop,
+      bool? onError,
+      bool? onSuccess,
+      String? message,
       int? loggedStatus}) {
     return AuthState(
+        loading: loading ?? this.loading,
         pageState: pageState ?? this.pageState,
         loginYOffset: loginYOffset ?? this.loginYOffset,
         loginXOffset: loginXOffset ?? this.loginXOffset,
@@ -59,11 +76,15 @@ class AuthState extends Equatable {
         windowWidth: windowWidth ?? this.windowWidth,
         windowHeight: windowHeight ?? this.windowHeight,
         headingTop: headingTop ?? this.headingTop,
+        onError: onError ?? this.onError,
+        onSuccess: onSuccess ?? this.onSuccess,
+        message: message ?? this.message,
         loggedStatus: loggedStatus ?? this.loggedStatus);
   }
 
   @override
   List<Object> get props => [
+        loading,
         pageState,
         loginYOffset,
         loginXOffset,
@@ -73,6 +94,9 @@ class AuthState extends Equatable {
         windowHeight,
         headingTop,
         loginHeight,
+        onError,
+        onSuccess,
+        message,
         loggedStatus
       ];
 }

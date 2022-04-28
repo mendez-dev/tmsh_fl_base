@@ -32,11 +32,27 @@ class SetScreenSizeEvent implements AuthEvent {
   bool? get stringify => true;
 }
 
-/// Verifi auth token status
+/// Verify auth token status
 class VerifyTokenEvent implements AuthEvent {
   @override
   List<Object> get props => [];
 
   @override
   bool? get stringify => true;
+}
+
+/// Compare login credentials with the backend
+class LoginEvent implements AuthEvent{
+
+  final String email;
+  final String password;
+
+  LoginEvent({required this.email, required this.password});
+  
+  @override
+  List<Object> get props => [password, email];
+
+  @override
+  bool? get stringify => true;
+
 }
