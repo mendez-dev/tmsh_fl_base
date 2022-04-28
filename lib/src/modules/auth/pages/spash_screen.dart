@@ -1,4 +1,5 @@
 import 'package:base/src/modules/auth/bloc/bloc/auth_bloc.dart';
+import 'package:base/src/utils/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -26,8 +27,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Size _size = MediaQuery.of(context).size;
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (BuildContext context, state) {
           if (state.loggedStatus == 1) {
+            logger.i("navegar al login");
             Navigator.pushNamedAndRemoveUntil(
                 context, 'login', (route) => false);
           }

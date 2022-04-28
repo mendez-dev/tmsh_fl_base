@@ -2,6 +2,7 @@ import 'package:base/src/modules/auth/bloc/bloc/auth_bloc.dart';
 import 'package:base/src/modules/auth/repositories/auth/auth_repository.dart';
 import 'package:base/src/modules/auth/repositories/auth/auth_repository_impl.dart';
 import 'package:base/src/modules/settings/helpers/theme_helpers.dart';
+import 'package:base/src/repositories/network/network_repository.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<SettingsRepository>.value(value: settingsRepository),
         RepositoryProvider<AuthRepository>(
           create: (BuildContext context) => AuthRepositoryImpl(),
-        )
+        ),
+        RepositoryProvider(create: (BuildContext context) => NetworkRepository(preferences: RepositoryProvider.of<PreferencesRepository>(context)))
       ],
       child: MultiBlocProvider(
         providers: [

@@ -1,6 +1,8 @@
 import 'package:base/src/modules/auth/repositories/auth/auth_repository.dart';
 import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
+import 'package:base/src/utils/logger.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
 part 'auth_event.dart';
@@ -23,15 +25,40 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LoginEvent>(_loginEvent);
   }
 
-  void _loginEvent(LoginEvent event, Emitter<AuthState> emit){
-
+  void _loginEvent(LoginEvent event, Emitter<AuthState> emit) async {
     // indicate that the request is being made with a loading
     emit(state.copyWith(loading: true));
 
-    
+    try {
+      String? token = await _authRepository.login(
+          email: event.email, password: event.password);
 
+      if (token != null) {
+        // Save token in local storage
+        _preferencesRepository.saveAuthToken(token);
+
+        emit(state.copyWith(onSuccess: true));
+        emit(AuthState.initial());
+      } else {
+        emit(state.copyWith(
+            onError: true, message: "Incorrect access credentials"));
+      }
+    } on DioError catch (e) {
+      logger.v(e.response!.data['error']);
+
+      if (e.response != null) {
+        if (e.response!.statusCode == 400) {
+          emit(state.copyWith(onError: true, message: e.response!.data['error']));
+        } else {
+          emit(state.copyWith(onError: true, message: "Error trying to login"));
+        }
+      } else {
+        emit(state.copyWith(onError: true, message: "Internal server error"));
+      }
+    }
+
+    emit(state.copyWith(loading: false, onError: false, onSuccess: false));
   }
-
 
   void _verifyTokenEvent(
       VerifyTokenEvent event, Emitter<AuthState> emit) async {
@@ -40,7 +67,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     // Load toke from local storage
     String? token = await _preferencesRepository.getAuthToken();
 
-    await _authRepository.login(email: 'a', password: 'b');
+    logger.i(token);
 
     if (token != null) {
       emit(state.copyWith(loggedStatus: 2));

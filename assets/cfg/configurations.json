@@ -1,3 +1,5 @@
 {
-  "api_base_url": "https://localhost/api"
+  "api_base_url": "https://api.themoviedb.org/3",
+  "api_key": "7adc85bf4c582471ae35e0f2cb16b370",
+  "bearer_token": "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3YWRjODViZjRjNTgyNDcxYWUzNWUwZjJjYjE2YjM3MCIsInN1YiI6IjYyNmFkNTFlMmQ1MzFhMDljMTA0NWFhNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.21MiHNR6CNjkpFGmD8unw5PL1rL11LA41lU01RG9jQg"
 }

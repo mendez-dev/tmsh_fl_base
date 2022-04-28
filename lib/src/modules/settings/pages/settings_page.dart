@@ -1,11 +1,11 @@
 import 'package:base/src/modules/settings/models/theme_model.dart';
-import 'package:base/src/utils/logger.dart';
-
+import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
 import '../bloc/settings/settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -26,37 +26,34 @@ class SettingsPage extends StatelessWidget {
             contentPadding: const EdgeInsets.symmetric(vertical: 15),
             sections: [
               SettingsSection(
-                title: "Cuenta",
+                title: "Account",
                 tiles: [
                   SettingsTile(
-                    leading: const Icon(FontAwesomeIcons.idCard),
-                    title: "Nombre",
-                    subtitle: "Juan Pérez",
-                  ),
-                  SettingsTile(
-                    leading: const Icon(FontAwesomeIcons.userTag),
-                    title: "Rol",
-                    subtitle: "Administrador",
-                  ),
-                  SettingsTile(
-                    leading: const Icon(FontAwesomeIcons.userAlt),
-                    title: "Nombre de usuario",
-                    subtitle: "juanP123",
-                  ),
-                  SettingsTile(
                     leading: const Icon(FontAwesomeIcons.signOutAlt),
-                    title: "Cerrar sesión",
-                    subtitle: "Salir de la aplicación",
-                    onPressed: (BuildContext context) => logger.i("Cerrar sesión"),
+                    title: "Sign off",
+                    subtitle: "Exit application",
+                    onPressed: (BuildContext context) async {
+                      bool? response = await Alert(context: context, title: "Sign off?", buttons: [
+                        DialogButton(child: const Text("No", style: TextStyle(color: Colors.white)), onPressed: () => Navigator.pop(context, false)),
+                        DialogButton(child: const Text("Yes", style: TextStyle(color: Colors.white),), onPressed: () => Navigator.pop(context, true))
+                      ]).show();
+                      
+                      if (response != null) {
+                        if(response){
+                          await RepositoryProvider.of<PreferencesRepository>(context).remove('authToken');
+                          Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
+                        }
+                      }
+                    },
                   ),
                 ],
               ),
               SettingsSection(
-                title: "Apariencia",
+                title: "Customization",
                 tiles: [
                   SettingsTile.switchTile(
                       leading: const Icon(FontAwesomeIcons.moon),
-                      title: "Tema oscuro",
+                      title: "Dark theme",
                       onToggle: (bool value) {
                         BlocProvider.of<SettingsBloc>(context).add(SetDarkModeEvent(value));
                       },

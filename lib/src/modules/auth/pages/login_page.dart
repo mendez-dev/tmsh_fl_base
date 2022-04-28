@@ -5,14 +5,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  
+  final TextEditingController emailController = TextEditingController(text: 'eve.holt@reqres.in');
+  final TextEditingController passwordController = TextEditingController(text: 'cityslicka');
+
+  // final TextEditingController emailController = TextEditingController();
+  // final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<AuthBloc, AuthState>(
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (BuildContext context, AuthState state) {
+          if (state.onSuccess) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, 'home', (route) => false);
+          }
+
+          if (state.onError) {
+            Fluttertoast.showToast(msg: state.message);
+          }
+        },
         builder: (BuildContext context, AuthState state) {
           BlocProvider.of<AuthBloc>(context).add(SetScreenSizeEvent(
               windowWidth: MediaQuery.of(context).size.width,
@@ -104,33 +123,76 @@ class LoginPage extends StatelessWidget {
                       topLeft: Radius.circular(25),
                       topRight: Radius.circular(25),
                     )),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: const [
-                        Text(
-                          "Login",
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        InputText(
-                            label: "Email",
-                            icon: FontAwesomeIcons.at,
-                            type: InputTextStyle.circularBorder),
-                        InputText(
-                            label: "Password",
-                            icon: FontAwesomeIcons.key,
-                            type: InputTextStyle.circularBorder)
+                child: Form(
+                    key: formKey,
+                    child: Column(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              children: [
+                                const Text(
+                                  "Login",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                InputText(
+                                    keyboardType: TextInputType.emailAddress,
+                                    controller: emailController,
+                                    validator: (String? value) {
+                                      if (value == '' || value == null) {
+                                        return 'this field is required';
+                                      }
+
+                                      if (!RegExp(
+                                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          .hasMatch(value)) {
+                                        return 'enter a valid email';
+                                      }
+                                    },
+                                    label: "Email",
+                                    icon: FontAwesomeIcons.at,
+                                    type: InputTextStyle.circularBorder),
+                                InputText(
+                                    password: true,
+                                    controller: passwordController,
+                                    validator: (String? value) {
+                                      if (value == '' || value == null) {
+                                        return 'this field is required';
+                                      }
+                                    },
+                                    label: "Password",
+                                    icon: FontAwesomeIcons.key,
+                                    type: InputTextStyle.circularBorder)
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                if (state.loading) ...[
+                                  const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                ] else ...[
+                                  LoginButton(
+                                      onTap: () {
+                                        if (!formKey.currentState!.validate()) {
+                                          return;
+                                        }
+                                        BlocProvider.of<AuthBloc>(context).add(
+                                            LoginEvent(
+                                                email: emailController.text,
+                                                password:
+                                                    passwordController.text));
+                                      },
+                                      text: "Login"),
+                                ],
+                                const SizedBox(height: 10),
+                              ],
+                            ),
+                          ],
+                        )
                       ],
-                    ),
-                    Column(
-                      children: const [
-                        LoginButton(text: "Login"),
-                        SizedBox(height: 10),
-                      ],
-                    ),
-                  ],
-                ),
+                    )),
               )
             ],
           );

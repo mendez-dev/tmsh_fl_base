@@ -9,7 +9,7 @@ class AuthRoutes {
         handler: Handler(
           handlerFunc:
               (BuildContext? context, Map<String, List<String>> params) =>
-                  const LoginPage(),
+                  LoginPage(),
         ));
     router.define("splash",
         handler: Handler(

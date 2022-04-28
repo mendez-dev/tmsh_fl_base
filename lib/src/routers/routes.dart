@@ -1,6 +1,5 @@
 import 'package:base/src/modules/auth/routes/auth_routes.dart';
-import 'package:base/src/modules/examples/router/examples_router.dart';
-import 'package:base/src/modules/home/pages/home_page.dart';
+import 'package:base/src/modules/movies/routes/movies_routes.dart';
 import 'package:base/src/modules/settings/router/settings_routes.dart';
 import 'package:base/src/pages/page_404.dart';
 import 'package:fluro/fluro.dart';
@@ -20,14 +19,9 @@ class Routes {
       return const Page404();
     });
     
-    // Declaración de rutas
-    router.define("home", handler: Handler(
-      handlerFunc: (BuildContext? context, Map<String, List<String>> params) =>
-          const HomePage(),
-    ));
-    // Importacion de rutas por modulos
-    SettingsRoutes.configureRoutes(router);
     AuthRoutes.configureRoutes(router);
-    ExamplesRoutes.configureRoutes(router);
+    SettingsRoutes.configureRoutes(router);
+    MoviesRoutes.configureRoutes(router);
+    
   }
 }

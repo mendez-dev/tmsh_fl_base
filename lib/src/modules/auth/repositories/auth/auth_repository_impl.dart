@@ -6,15 +6,13 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<String?> login(
       {required String email, required String password}) async {
-    try {
+    
       final response = await Dio().post('https://reqres.in/api/login',
           options: Options(contentType: "application/json"),
           // data: {email: email, password: password}
-          data: {'email': 'eve.holt@reqres.in', 'password': 'cityslic222555ka'});
+          data: {'email': email, 'password': password});
 
       logger.v(response);
-    } on DioError catch (error) {
-      logger.e(error);
-    }
+      return response.data['token'];
   }
 }

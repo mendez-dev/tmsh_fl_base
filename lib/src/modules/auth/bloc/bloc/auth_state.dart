@@ -45,7 +45,7 @@ class AuthState extends Equatable {
         windowHeight: 0.0,
         headingTop: 100,
         onError: false,
-        onSuccess: true,
+        onSuccess: false,
         message: '',
         loggedStatus: 0);
   }
