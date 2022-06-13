@@ -1,30 +1,56 @@
-import 'package:base/src/components/buttons.dart';
-import 'package:base/src/components/form.dart';
-import 'package:base/src/modules/auth/components/buttons.dart';
 import 'package:base/src/modules/auth/bloc/bloc/auth_bloc.dart';
+import 'package:base/src/modules/auth/components/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:global_configuration/global_configuration.dart';
+
+import '../components/login_form_widget.dart';
+import '../components/register_form_widget.dart';
 
 class LoginPage extends StatelessWidget {
-  
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => AuthBloc(),
-      child: Scaffold(
-        body: BlocBuilder<AuthBloc, AuthState>(
-          builder: (BuildContext context, AuthState state) {
+      child: const LoginWidget(),
+    );
+  }
+}
 
-            BlocProvider.of<AuthBloc>(context).add(SetScreenSizeEvent(
-                windowWidth: MediaQuery.of(context).size.width,
-                windowHeight: MediaQuery.of(context).size.height));
+class LoginWidget extends StatelessWidget {
+  const LoginWidget({Key? key}) : super(key: key);
 
-            return Stack(
+  @override
+  Widget build(BuildContext context) {
+    BlocProvider.of<AuthBloc>(context)
+        .add(KeyboardHeightEvent(MediaQuery.of(context).viewInsets.bottom));
+
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: BlocConsumer<AuthBloc, AuthState>(
+        listener: (BuildContext context, AuthState state) {
+          // logger.v(MediaQuery.of(context).viewInsets.bottom);
+        },
+        builder: (BuildContext context, AuthState state) {
+          BlocProvider.of<AuthBloc>(context).add(SetScreenSizeEvent(
+              windowWidth: MediaQuery.of(context).size.width,
+              windowHeight: MediaQuery.of(context).size.height));
+
+          return WillPopScope(
+            onWillPop: () async {
+              if (state.pageState == 2) {
+                BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(1));
+                return false;
+              } else if (state.pageState == 1) {
+                BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(0));
+                return false;
+              }
+
+              return true;
+            },
+            child: Stack(
               children: [
                 AnimatedContainer(
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -36,11 +62,12 @@ class LoginPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       GestureDetector(
-                        onTap: () => BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(0)),
+                        onTap: () => BlocProvider.of<AuthBloc>(context)
+                            .add(ChangePageStateEvent(0)),
                         child: Column(
                           children: [
                             Container(
-                              margin:  EdgeInsets.only(top: state.headingTop),
+                              margin: EdgeInsets.only(top: state.headingTop),
                               child: Text(
                                 "Learn free",
                                 style: TextStyle(
@@ -51,14 +78,18 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                             Container(
-                              margin: const EdgeInsets.symmetric(vertical: 15, horizontal: 32),
-                              padding: const EdgeInsets.symmetric(horizontal: 32),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 32),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 32),
                               child: Text(
                                 "Proident magna nostrud do id. Excepteur labore culpa elit officia cupidatat.",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     color: state.pageState == 0
-                                        ? Theme.of(context).colorScheme.secondary
+                                        ? Theme.of(context)
+                                            .colorScheme
+                                            .secondary
                                         : Colors.white,
                                     fontSize: 16),
                               ),
@@ -76,111 +107,83 @@ class LoginPage extends StatelessWidget {
                       Container(
                         // margin: const EdgeInsets.all(32),
                         padding: const EdgeInsets.all(20),
-                        child: LoginButton(text: "Get started", onTap: (){
-                           if (state.pageState != 0) {
-                            BlocProvider.of<AuthBloc>(context)
-                                .add(ChangePageStateEvent(0));
-                          } else {
-                            BlocProvider.of<AuthBloc>(context)
-                                .add(ChangePageStateEvent(1));
-                          }
-                        },),
+                        child: LoginButton(
+                          text: "Get started",
+                          onTap: () {
+                            if (state.pageState != 0) {
+                              BlocProvider.of<AuthBloc>(context)
+                                  .add(ChangePageStateEvent(0));
+                            } else {
+                              BlocProvider.of<AuthBloc>(context)
+                                  .add(ChangePageStateEvent(1));
+                            }
+                          },
+                        ),
                       ),
                     ],
                   ),
                 ),
                 AnimatedContainer(
-                  padding: const EdgeInsets.all(20),
+                  duration: const Duration(milliseconds: 1000),
+                  curve: Curves.fastLinearToSlowEaseIn,
+                  width: double.infinity,
+                  height: state.keyboardHeight,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  transform: Matrix4.translationValues(
+                      0,
+                      MediaQuery.of(context).size.height - state.keyboardHeight,
+                      1),
+                ),
+                AnimatedContainer(
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 30),
                   width: state.loginWidth,
                   height: state.loginHeight,
                   curve: Curves.fastLinearToSlowEaseIn,
                   duration: const Duration(milliseconds: 1000),
-                  transform:
-                      Matrix4.translationValues(state.loginXOffset, state.loginYOffset, 1),
-                  decoration:  BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity( state.pageState == 2 ? 0.7 : 1 ),
+                  transform: Matrix4.translationValues(state.loginXOffset,
+                      state.loginYOffset - state.keyboardHeight, 1),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .scaffoldBackgroundColor
+                          .withOpacity(state.pageState == 2 ? 0.7 : 1),
                       borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(25),
                         topRight: Radius.circular(25),
                       )),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: const [
-                          Text("Iniciar sesión", style: TextStyle(fontSize: 20),),
-                          InputText(label: "Correo", icon: FontAwesomeIcons.at, type: InputTextStyle.circularBorder),
-                          InputText(label: "Contraseña", icon: FontAwesomeIcons.key, type: InputTextStyle.circularBorder)
-                        ],
-                      ),
-                      Column(
-                        children:  [
-                          const LoginButton(text: "Login"),
-                          const SizedBox(height: 10),
-                          if ( GlobalConfiguration().get("allow_account_creation") ) ...[
-                            LoginButton(text: "Create new account", type: CustomButtomType.outline, onTap: () => BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(2)),)
-                          ]
-                        ],
-                      ),
-                    ],
+                  child: SizedBox(
+                    height: state.loginHeight,
+                    child: const SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: LoginFormWidget(),
+                    ),
                   ),
                 ),
                 AnimatedContainer(
-                  padding: const EdgeInsets.all(20),
-                  curve: Curves.fastLinearToSlowEaseIn,
-                  duration: const Duration(milliseconds: 1000),
-                  transform:
-                      Matrix4.translationValues(0, state.registerYOffset, 1),
-                  decoration:  BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      )),
-                  child: Column(
-                    children: [
-                      Form(
-                        
-                        child: Column(
-                          children:  [
-                            const Text("Create new account", style: TextStyle(fontSize: 20),),
-                              InputText(
-                              icon: FontAwesomeIcons.at,
-                              label: "Correo",
-                              validator: (String? value) => "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                            ),
-                             InputText(
-                              validator: (String? value) => "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                              type: InputTextStyle.circularBorder,
-                              icon: FontAwesomeIcons.at,
-                              label: "Contraseña",
-                            ),
-                             InputText(
-                               validator: (String? value) => "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                              type: InputTextStyle.bordered,
-                              icon: FontAwesomeIcons.at,
-                              label: "Repetir Contraseña",
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        children:    [
-                           const LoginButton(text: "Crate account",),
-                           const SizedBox(height: 10),
-                           LoginButton(text: "Back to login", type: CustomButtomType.outline, onTap: () => BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(1)))
-                        ],
-                      ),
-                    ],
-                  )
-                ),
+                    height: state.loginHeight,
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 25),
+                    curve: Curves.fastLinearToSlowEaseIn,
+                    duration: const Duration(milliseconds: 1000),
+                    transform: Matrix4.translationValues(
+                        0,
+                        state.pageState == 2
+                            ? state.registerYOffset - state.keyboardHeight
+                            : state.registerYOffset,
+                        1),
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25),
+                        )),
+                    child: const SingleChildScrollView(
+                      physics: BouncingScrollPhysics(),
+                      child: RegisterFormWindget(),
+                    )),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

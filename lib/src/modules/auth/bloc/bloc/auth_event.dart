@@ -7,8 +7,7 @@ abstract class AuthEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ChangePageStateEvent implements AuthEvent{
-
+class ChangePageStateEvent implements AuthEvent {
   final int pageState;
 
   ChangePageStateEvent(this.pageState);
@@ -18,21 +17,29 @@ class ChangePageStateEvent implements AuthEvent{
 
   @override
   bool? get stringify => true;
-
 }
 
-class SetScreenSizeEvent implements AuthEvent{
-
+class SetScreenSizeEvent implements AuthEvent {
   final double windowWidth;
   final double windowHeight;
 
   SetScreenSizeEvent({required this.windowWidth, required this.windowHeight});
-
 
   @override
   List<Object> get props => throw UnimplementedError();
 
   @override
   bool? get stringify => true;
+}
 
+class KeyboardHeightEvent implements AuthEvent {
+  final double value;
+
+  KeyboardHeightEvent(this.value);
+
+  @override
+  List<Object> get props => [value];
+
+  @override
+  bool? get stringify => true;
 }

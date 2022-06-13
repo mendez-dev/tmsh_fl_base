@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 
 /// Boton personalizado y configurable
-/// 
+///
 /// El objetivo de este widget es que pueda cumplir con todas
 /// las necesidades al momento de usar un botón sin requrir a
 /// la creacion de un widget adicional.
-/// 
+///
 /// Es configurable y se le pueden definir diferentes estilos
 /// y comportamientos.
 class Button extends StatelessWidget {
-
   /// [String] Texto que se mostrara dentro del botón
   final String text;
 
@@ -39,6 +38,8 @@ class Button extends StatelessWidget {
   /// de el botón
   final bool isLoading;
 
+  final EdgeInsets? padding;
+
   const Button(
       {Key? key,
       required this.text,
@@ -48,7 +49,8 @@ class Button extends StatelessWidget {
       this.isExpanded = false,
       this.isRounded = false,
       this.color,
-      this.isLoading = false})
+      this.isLoading = false,
+      this.padding})
       : super(key: key);
 
   @override
@@ -56,12 +58,14 @@ class Button extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 3),
       width: isExpanded ? double.infinity : null,
-      child: isLoading ? const CircularProgressIndicator() : _getButtonType(context),
+      child: isLoading
+          ? const CircularProgressIndicator()
+          : _getButtonType(context),
     );
   }
 
   /// Retorna el widget correspondiente al tipo de boton
-  /// 
+  ///
   /// Si no se a indicado un tipo de botón se retorna un
   /// widget del tipo [ElevatedButton]
   Widget _getButtonType(BuildContext context) {
@@ -80,19 +84,21 @@ class Button extends StatelessWidget {
   }
 
   /// Retorna el estilo del bóton de acuerdo al tipo selecionado
-  /// 
+  ///
   /// Identifica el tipo de botón y genera un estilo de acuerdo
   /// a cada tipo
   ButtonStyle _getButtonStyle(BuildContext context) {
     switch (type) {
       case ButtonType.outline:
         return OutlinedButton.styleFrom(
+            padding: padding,
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: _getBorderRaius()),
             side: BorderSide(color: color ?? Theme.of(context).primaryColor));
 
       default:
         return ElevatedButton.styleFrom(
+            padding: padding,
             primary: color,
             shape: RoundedRectangleBorder(borderRadius: _getBorderRaius()));
     }
@@ -121,12 +127,12 @@ class Button extends StatelessWidget {
   }
 
   /// Retorna el borde radio del botón
-  /// 
+  ///
   /// Si se ha definido un borderRadius espesífico se retornara este,
-  /// si no evaluare si la propiedad rounded es verdadera y si no 
+  /// si no evaluare si la propiedad rounded es verdadera y si no
   /// retornara un border radius circular ed 5 pixeles
   BorderRadius _getBorderRaius() {
-    if (borderRadius != null ) {
+    if (borderRadius != null) {
       return borderRadius!;
     } else if (isRounded) {
       return BorderRadius.circular(50);
