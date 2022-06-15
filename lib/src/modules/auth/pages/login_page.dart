@@ -1,20 +1,27 @@
-import 'package:base/src/modules/auth/bloc/bloc/auth_bloc.dart';
-import 'package:base/src/modules/auth/components/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 
+import '../../../repositories/network/network_repository.dart';
+import '../bloc/bloc/auth_bloc.dart';
 import '../components/login_form_widget.dart';
 import '../components/register_form_widget.dart';
+import '../components/welcome_page_widget.dart';
+import '../repositories/auth_repository_impl.dart';
+import '../repositories/auth_repository.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (BuildContext context) => AuthBloc(),
-      child: const LoginWidget(),
+    return RepositoryProvider<AuthRepository>(
+      create: (BuildContext context) => AuthRepositoryImpl(
+          networkRepository: RepositoryProvider.of<NetworkRepository>(context)),
+      child: BlocProvider<AuthBloc>(
+        create: (BuildContext context) => AuthBloc(
+            authRepository: RepositoryProvider.of<AuthRepository>(context)),
+        child: const LoginWidget(),
+      ),
     );
   }
 }
@@ -24,9 +31,6 @@ class LoginWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<AuthBloc>(context)
-        .add(KeyboardHeightEvent(MediaQuery.of(context).viewInsets.bottom));
-
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<AuthBloc, AuthState>(
@@ -34,22 +38,15 @@ class LoginWidget extends StatelessWidget {
           // logger.v(MediaQuery.of(context).viewInsets.bottom);
         },
         builder: (BuildContext context, AuthState state) {
+          // Actualizamos el tamaño de la pantalla cada vez que se redibuja
           BlocProvider.of<AuthBloc>(context).add(SetScreenSizeEvent(
               windowWidth: MediaQuery.of(context).size.width,
-              windowHeight: MediaQuery.of(context).size.height));
+              windowHeight: MediaQuery.of(context).size.height,
+              keyboardHeight: MediaQuery.of(context).viewInsets.bottom));
 
           return WillPopScope(
-            onWillPop: () async {
-              if (state.pageState == 2) {
-                BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(1));
-                return false;
-              } else if (state.pageState == 1) {
-                BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(0));
-                return false;
-              }
-
-              return true;
-            },
+            onWillPop: () =>
+                _onWillPop(pageState: state.pageState, context: context),
             child: Stack(
               children: [
                 AnimatedContainer(
@@ -58,70 +55,7 @@ class LoginWidget extends StatelessWidget {
                   color: state.pageState == 0
                       ? Theme.of(context).scaffoldBackgroundColor
                       : Theme.of(context).primaryColorDark,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      GestureDetector(
-                        onTap: () => BlocProvider.of<AuthBloc>(context)
-                            .add(ChangePageStateEvent(0)),
-                        child: Column(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(top: state.headingTop),
-                              child: Text(
-                                "Learn free",
-                                style: TextStyle(
-                                    color: state.pageState == 0
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.white,
-                                    fontSize: 28),
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                  vertical: 15, horizontal: 32),
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 32),
-                              child: Text(
-                                "Proident magna nostrud do id. Excepteur labore culpa elit officia cupidatat.",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: state.pageState == 0
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                        : Colors.white,
-                                    fontSize: 16),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Container(
-                        height: 250,
-                        padding: const EdgeInsets.symmetric(horizontal: 32),
-                        child: Center(
-                          child: SvgPicture.asset("assets/svg/welcome.svg"),
-                        ),
-                      ),
-                      Container(
-                        // margin: const EdgeInsets.all(32),
-                        padding: const EdgeInsets.all(20),
-                        child: LoginButton(
-                          text: "Get started",
-                          onTap: () {
-                            if (state.pageState != 0) {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(ChangePageStateEvent(0));
-                            } else {
-                              BlocProvider.of<AuthBloc>(context)
-                                  .add(ChangePageStateEvent(1));
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: const WelcomePageWidget(),
                 ),
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 1000),
@@ -140,8 +74,7 @@ class LoginWidget extends StatelessWidget {
                   height: state.loginHeight,
                   curve: Curves.fastLinearToSlowEaseIn,
                   duration: const Duration(milliseconds: 1000),
-                  transform: Matrix4.translationValues(state.loginXOffset,
-                      state.loginYOffset - state.keyboardHeight, 1),
+                  transform: _loginTransform(state, context),
                   decoration: BoxDecoration(
                       color: Theme.of(context)
                           .scaffoldBackgroundColor
@@ -164,12 +97,7 @@ class LoginWidget extends StatelessWidget {
                         const EdgeInsets.only(left: 20, right: 20, top: 25),
                     curve: Curves.fastLinearToSlowEaseIn,
                     duration: const Duration(milliseconds: 1000),
-                    transform: Matrix4.translationValues(
-                        0,
-                        state.pageState == 2
-                            ? state.registerYOffset - state.keyboardHeight
-                            : state.registerYOffset,
-                        1),
+                    transform: _registerTransform(state, context),
                     decoration: BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: const BorderRadius.only(
@@ -186,5 +114,44 @@ class LoginWidget extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<bool> _onWillPop(
+      {required int pageState, required BuildContext context}) async {
+    if (pageState == 2) {
+      BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(1));
+      return false;
+    } else if (pageState == 1) {
+      BlocProvider.of<AuthBloc>(context).add(ChangePageStateEvent(0));
+      return false;
+    }
+
+    return true;
+  }
+
+  Matrix4 _registerTransform(AuthState state, BuildContext context) {
+    if (state.registerYOffset == 0) {
+      return Matrix4.translationValues(
+          0,
+          state.pageState == 2
+              ? MediaQuery.of(context).size.height - state.keyboardHeight
+              : MediaQuery.of(context).size.height,
+          1);
+    }
+    return Matrix4.translationValues(
+        0,
+        state.pageState == 2
+            ? state.registerYOffset - state.keyboardHeight
+            : state.registerYOffset,
+        1);
+  }
+
+  Matrix4 _loginTransform(AuthState state, BuildContext context) {
+    if (state.loginYOffset == 0) {
+      return Matrix4.translationValues(state.loginXOffset,
+          MediaQuery.of(context).size.height - state.keyboardHeight, 1);
+    }
+    return Matrix4.translationValues(
+        state.loginXOffset, state.loginYOffset - state.keyboardHeight, 1);
   }
 }

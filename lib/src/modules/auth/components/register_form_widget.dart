@@ -1,15 +1,22 @@
+import 'package:base/src/components/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../components/form.dart';
 import '../bloc/bloc/auth_bloc.dart';
-import 'buttons.dart';
 
-class RegisterFormWindget extends StatelessWidget {
+class RegisterFormWindget extends StatefulWidget {
   const RegisterFormWindget({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<RegisterFormWindget> createState() => _RegisterFormWindgetState();
+}
+
+class _RegisterFormWindgetState extends State<RegisterFormWindget> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +24,7 @@ class RegisterFormWindget extends StatelessWidget {
       child: Column(
         children: [
           Form(
+            key: formKey,
             child: Column(
               children: [
                 const Text(
@@ -51,13 +59,19 @@ class RegisterFormWindget extends StatelessWidget {
           ),
           Column(
             children: [
-              const LoginButton(
+              const Button(
+                padding: EdgeInsets.all(15),
                 text: "Crate account",
+                isExpanded: true,
+                isRounded: true,
               ),
               const SizedBox(height: 10),
-              LoginButton(
+              Button(
+                  padding: const EdgeInsets.all(15),
                   text: "Back to login",
-                  type: CustomButtomType.outline,
+                  isExpanded: true,
+                  isRounded: true,
+                  type: ButtonType.outline,
                   onTap: () => BlocProvider.of<AuthBloc>(context)
                       .add(ChangePageStateEvent(1))),
               const SizedBox(height: 30)

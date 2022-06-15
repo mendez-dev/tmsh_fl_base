@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import '../../modules/settings/repositories/preferences/preferences_repository.dart';
 
-
 /// Librería que nos permite realizar peticiones HTTP utilizando DIO
 class NetworkRepository {
   /// Instancia de preferences repository que nos permite leer el base url y el
@@ -48,5 +47,5 @@ class NetworkRepository {
     _network!.interceptors.add(interceptor);
   }
 
-  Dio? get instance => _network;
+  Dio get instance => _network!;
 }

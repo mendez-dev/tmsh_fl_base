@@ -67,53 +67,53 @@ class _$SettingsModelSerializer implements StructuredSerializer<SettingsModel> {
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
         case 'app_name':
           result.appName = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'defaultTax':
           result.defaultTax = serializers.deserialize(value,
-              specifiedType: const FullType(double)) as double;
+              specifiedType: const FullType(double))! as double;
           break;
         case 'defaultCurrency':
           result.defaultCurrency = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'main_color':
           result.mainColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'main_dark_color':
           result.mainDarkColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'second_color':
           result.secondColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'second_dark_color':
           result.secondDarkColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'accent_color':
           result.accentColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'accent_dark_color':
           result.accentDarkColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'scaffold_dark_color':
           result.scaffoldDarkColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'scaffold_color':
           result.scaffoldColor = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
       }
     }
@@ -158,17 +158,17 @@ class _$SettingsResponseSerializer
 
     final iterator = serialized.iterator;
     while (iterator.moveNext()) {
-      final key = iterator.current as String;
+      final key = iterator.current! as String;
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
         case 'code':
           result.code = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+              specifiedType: const FullType(int))! as int;
           break;
         case 'message':
           result.message = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String))! as String;
           break;
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -206,7 +206,7 @@ class _$SettingsModel extends SettingsModel {
   final String scaffoldColor;
 
   factory _$SettingsModel([void Function(SettingsModelBuilder)? updates]) =>
-      (new SettingsModelBuilder()..update(updates)).build();
+      (new SettingsModelBuilder()..update(updates))._build();
 
   _$SettingsModel._(
       {required this.appName,
@@ -221,27 +221,27 @@ class _$SettingsModel extends SettingsModel {
       required this.scaffoldDarkColor,
       required this.scaffoldColor})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(appName, 'SettingsModel', 'appName');
+    BuiltValueNullFieldError.checkNotNull(appName, r'SettingsModel', 'appName');
     BuiltValueNullFieldError.checkNotNull(
-        defaultTax, 'SettingsModel', 'defaultTax');
+        defaultTax, r'SettingsModel', 'defaultTax');
     BuiltValueNullFieldError.checkNotNull(
-        defaultCurrency, 'SettingsModel', 'defaultCurrency');
+        defaultCurrency, r'SettingsModel', 'defaultCurrency');
     BuiltValueNullFieldError.checkNotNull(
-        mainColor, 'SettingsModel', 'mainColor');
+        mainColor, r'SettingsModel', 'mainColor');
     BuiltValueNullFieldError.checkNotNull(
-        mainDarkColor, 'SettingsModel', 'mainDarkColor');
+        mainDarkColor, r'SettingsModel', 'mainDarkColor');
     BuiltValueNullFieldError.checkNotNull(
-        secondColor, 'SettingsModel', 'secondColor');
+        secondColor, r'SettingsModel', 'secondColor');
     BuiltValueNullFieldError.checkNotNull(
-        secondDarkColor, 'SettingsModel', 'secondDarkColor');
+        secondDarkColor, r'SettingsModel', 'secondDarkColor');
     BuiltValueNullFieldError.checkNotNull(
-        accentColor, 'SettingsModel', 'accentColor');
+        accentColor, r'SettingsModel', 'accentColor');
     BuiltValueNullFieldError.checkNotNull(
-        accentDarkColor, 'SettingsModel', 'accentDarkColor');
+        accentDarkColor, r'SettingsModel', 'accentDarkColor');
     BuiltValueNullFieldError.checkNotNull(
-        scaffoldDarkColor, 'SettingsModel', 'scaffoldDarkColor');
+        scaffoldDarkColor, r'SettingsModel', 'scaffoldDarkColor');
     BuiltValueNullFieldError.checkNotNull(
-        scaffoldColor, 'SettingsModel', 'scaffoldColor');
+        scaffoldColor, r'SettingsModel', 'scaffoldColor');
   }
 
   @override
@@ -294,7 +294,7 @@ class _$SettingsModel extends SettingsModel {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SettingsModel')
+    return (newBuiltValueToStringHelper(r'SettingsModel')
           ..add('appName', appName)
           ..add('defaultTax', defaultTax)
           ..add('defaultCurrency', defaultCurrency)
@@ -397,29 +397,31 @@ class SettingsModelBuilder
   }
 
   @override
-  _$SettingsModel build() {
+  SettingsModel build() => _build();
+
+  _$SettingsModel _build() {
     final _$result = _$v ??
         new _$SettingsModel._(
             appName: BuiltValueNullFieldError.checkNotNull(
-                appName, 'SettingsModel', 'appName'),
+                appName, r'SettingsModel', 'appName'),
             defaultTax: BuiltValueNullFieldError.checkNotNull(
-                defaultTax, 'SettingsModel', 'defaultTax'),
+                defaultTax, r'SettingsModel', 'defaultTax'),
             defaultCurrency: BuiltValueNullFieldError.checkNotNull(
-                defaultCurrency, 'SettingsModel', 'defaultCurrency'),
+                defaultCurrency, r'SettingsModel', 'defaultCurrency'),
             mainColor: BuiltValueNullFieldError.checkNotNull(
-                mainColor, 'SettingsModel', 'mainColor'),
+                mainColor, r'SettingsModel', 'mainColor'),
             mainDarkColor: BuiltValueNullFieldError.checkNotNull(
-                mainDarkColor, 'SettingsModel', 'mainDarkColor'),
+                mainDarkColor, r'SettingsModel', 'mainDarkColor'),
             secondColor: BuiltValueNullFieldError.checkNotNull(
-                secondColor, 'SettingsModel', 'secondColor'),
+                secondColor, r'SettingsModel', 'secondColor'),
             secondDarkColor: BuiltValueNullFieldError.checkNotNull(
-                secondDarkColor, 'SettingsModel', 'secondDarkColor'),
+                secondDarkColor, r'SettingsModel', 'secondDarkColor'),
             accentColor: BuiltValueNullFieldError.checkNotNull(
-                accentColor, 'SettingsModel', 'accentColor'),
+                accentColor, r'SettingsModel', 'accentColor'),
             accentDarkColor:
-                BuiltValueNullFieldError.checkNotNull(accentDarkColor, 'SettingsModel', 'accentDarkColor'),
-            scaffoldDarkColor: BuiltValueNullFieldError.checkNotNull(scaffoldDarkColor, 'SettingsModel', 'scaffoldDarkColor'),
-            scaffoldColor: BuiltValueNullFieldError.checkNotNull(scaffoldColor, 'SettingsModel', 'scaffoldColor'));
+                BuiltValueNullFieldError.checkNotNull(accentDarkColor, r'SettingsModel', 'accentDarkColor'),
+            scaffoldDarkColor: BuiltValueNullFieldError.checkNotNull(scaffoldDarkColor, r'SettingsModel', 'scaffoldDarkColor'),
+            scaffoldColor: BuiltValueNullFieldError.checkNotNull(scaffoldColor, r'SettingsModel', 'scaffoldColor'));
     replace(_$result);
     return _$result;
   }
@@ -435,13 +437,13 @@ class _$SettingsResponse extends SettingsResponse {
 
   factory _$SettingsResponse(
           [void Function(SettingsResponseBuilder)? updates]) =>
-      (new SettingsResponseBuilder()..update(updates)).build();
+      (new SettingsResponseBuilder()..update(updates))._build();
 
   _$SettingsResponse._({required this.code, required this.message, this.data})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(code, 'SettingsResponse', 'code');
+    BuiltValueNullFieldError.checkNotNull(code, r'SettingsResponse', 'code');
     BuiltValueNullFieldError.checkNotNull(
-        message, 'SettingsResponse', 'message');
+        message, r'SettingsResponse', 'message');
   }
 
   @override
@@ -469,7 +471,7 @@ class _$SettingsResponse extends SettingsResponse {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('SettingsResponse')
+    return (newBuiltValueToStringHelper(r'SettingsResponse')
           ..add('code', code)
           ..add('message', message)
           ..add('data', data))
@@ -518,15 +520,17 @@ class SettingsResponseBuilder
   }
 
   @override
-  _$SettingsResponse build() {
+  SettingsResponse build() => _build();
+
+  _$SettingsResponse _build() {
     _$SettingsResponse _$result;
     try {
       _$result = _$v ??
           new _$SettingsResponse._(
               code: BuiltValueNullFieldError.checkNotNull(
-                  code, 'SettingsResponse', 'code'),
+                  code, r'SettingsResponse', 'code'),
               message: BuiltValueNullFieldError.checkNotNull(
-                  message, 'SettingsResponse', 'message'),
+                  message, r'SettingsResponse', 'message'),
               data: _data?.build());
     } catch (_) {
       late String _$failedField;
@@ -535,7 +539,7 @@ class SettingsResponseBuilder
         _data?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
-            'SettingsResponse', _$failedField, e.toString());
+            r'SettingsResponse', _$failedField, e.toString());
       }
       rethrow;
     }
@@ -544,4 +548,4 @@ class SettingsResponseBuilder
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,no_leading_underscores_for_local_identifiers,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new,unnecessary_lambdas

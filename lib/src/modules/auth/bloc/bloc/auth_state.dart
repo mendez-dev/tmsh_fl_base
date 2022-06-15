@@ -27,11 +27,11 @@ class AuthState extends Equatable {
   factory AuthState.initial() {
     return const AuthState(
         pageState: 0,
-        loginYOffset: double.infinity,
+        loginYOffset: 0,
         loginXOffset: 0,
         loginWidth: 0,
         loginHeight: 0,
-        registerYOffset: double.infinity,
+        registerYOffset: 0,
         windowWidth: 0,
         windowHeight: 0.0,
         headingTop: 100,

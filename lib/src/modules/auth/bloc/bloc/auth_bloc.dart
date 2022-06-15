@@ -1,3 +1,4 @@
+import 'package:base/src/modules/auth/repositories/auth_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -5,11 +6,14 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthState.initial()) {
+  final AuthRepository _authRepository;
+
+  AuthBloc({required AuthRepository authRepository})
+      : _authRepository = authRepository,
+        super(AuthState.initial()) {
     on<AuthEvent>((event, emit) {});
     on<ChangePageStateEvent>(_onChangePageStateEventToState);
     on<SetScreenSizeEvent>(_setScreenSizeEventToState);
-    on<KeyboardHeightEvent>(_keyboardHeightEventToState);
   }
 
   void _onChangePageStateEventToState(
@@ -24,7 +28,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           headingTop: 90));
     } else if (state.pageState == 2) {
       emit(state.copyWith(
-          loginYOffset: 245,
+          loginYOffset: 225,
           registerYOffset: 245,
           loginXOffset: 20,
           loginWidth: state.windowWidth - 40,
@@ -35,6 +39,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _setScreenSizeEventToState(
       SetScreenSizeEvent event, Emitter<AuthState> emit) {
     emit(state.copyWith(
+        keyboardHeight: event.keyboardHeight,
         windowWidth: event.windowWidth,
         windowHeight: event.windowHeight,
         loginHeight: event.windowHeight - 245));
@@ -46,10 +51,5 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           loginWidth: event.windowWidth,
           headingTop: 100));
     }
-  }
-
-  void _keyboardHeightEventToState(
-      KeyboardHeightEvent event, Emitter<AuthState> emit) {
-    emit(state.copyWith(keyboardHeight: event.value));
   }
 }

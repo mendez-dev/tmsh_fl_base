@@ -1,93 +1,61 @@
 import 'package:flutter/material.dart';
 
 class InputText extends StatelessWidget {
-
-  
-
   final String? label;
   final IconData? icon;
   final InputTextStyle type;
-  final String Function(String? value)? validator;
+  final String? Function(String?)? validator;
+  final EdgeInsets? margin;
 
-  const InputText({Key? key, this.label, this.icon, this.type = InputTextStyle.standar, this.validator}) : super(key: key);
+  const InputText(
+      {Key? key,
+      this.label,
+      this.icon,
+      this.type = InputTextStyle.standar,
+      this.validator,
+      this.margin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    if (type == InputTextStyle.circularBorder) {
-      return FormField(
+    return Container(
+      margin: margin ?? const EdgeInsets.symmetric(vertical: 7),
+      child: TextFormField(
         validator: validator,
-        builder: (FormFieldState formFieldState){
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: type == InputTextStyle.circularBorder ? const EdgeInsets.symmetric(horizontal: 15, vertical: 5) : null,
-                decoration: type == InputTextStyle.circularBorder ? BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  border: Border.all(
-                    color: const Color(0xffB7C7C7),
-                    width: 2
-                  )
-                ) : null,
-                margin: const EdgeInsets.symmetric(vertical: 10),
-                child: TextFormField(
-                  decoration: _getDecoration(),
-                ),
-              ),
-              if (formFieldState.hasError) ...[
-                Row(
-                  children: [
-                    const SizedBox(width: 25),
-                    Expanded(child: Text(formFieldState.errorText!, maxLines: 1, overflow: TextOverflow.ellipsis, style: const TextStyle( fontSize: 11, color: Colors.red))),
-                    const SizedBox(width: 10),
-                  ],
-                ),
-                const SizedBox(height: 10)
-              ]
-            ],
-          );
-        } 
-      );
-    }
-
-    return TextFormField(
-      validator: validator,
-      decoration: _getDecoration(),
+        decoration: _getDecoration(context),
+      ),
     );
-
-
   }
 
-  InputDecoration _getDecoration() {
-
+  InputDecoration _getDecoration(BuildContext context) {
     switch (type) {
       case InputTextStyle.bordered:
         return InputDecoration(
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10)
-          ),
-          icon: icon != null ? Icon(icon) : null,
-          label: label != null ? Text(label!) : null
-        );
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                    color: Theme.of(context).textTheme.bodyText1!.color!)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+            icon: icon != null ? Icon(icon) : null,
+            label: label != null ? Text(label!) : null);
       case InputTextStyle.circularBorder:
         return InputDecoration(
-          border: InputBorder.none,
-          icon: icon != null ? Icon(icon) : null,
-          hintText: label
-        );
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(50),
+                borderSide: BorderSide(
+                    color: Theme.of(context).textTheme.bodyText1!.color!)),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(50)),
+            prefixIcon: icon != null ? Icon(icon) : null,
+            hintText: label);
       default:
         return InputDecoration(
-          icon: icon != null ? Icon(icon) : null,
-          label: label != null ? Text(label!) : null
-        );
+            enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: Theme.of(context).textTheme.bodyText1!.color!)),
+            icon: icon != null ? Icon(icon) : null,
+            label: label != null ? Text(label!) : null);
     }
-
   }
 }
 
-enum InputTextStyle {
-  standar,
-  bordered,
-  circularBorder
-}
+enum InputTextStyle { standar, bordered, circularBorder }

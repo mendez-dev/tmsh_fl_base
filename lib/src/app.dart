@@ -1,5 +1,5 @@
-
 import 'package:base/src/modules/settings/helpers/theme_helpers.dart';
+import 'package:base/src/repositories/network/network_repository.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,18 +11,19 @@ import 'routers/application.dart';
 import 'routers/routes.dart';
 
 class MyApp extends StatelessWidget {
-   MyApp(
+  MyApp(
       {Key? key,
       required this.settingsRepository,
       // required this.networkRepository,
       required this.preferencesRepository,
       required this.settingsBloc
       // required this.colors
-      }) : super(key: key) {
-         final router = FluroRouter();
+      })
+      : super(key: key) {
+    final router = FluroRouter();
     Routes.configureRoutes(router);
     Application.router = router;
-      }
+  }
 
   final SettingsRepository settingsRepository;
   // final NetworkRepository networkRepository;
@@ -40,7 +41,11 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<PreferencesRepository>.value(
             value: preferencesRepository),
         // Gestiona las funciones de ajustes de la aplicación
-        RepositoryProvider<SettingsRepository>.value(value: settingsRepository)
+        RepositoryProvider<SettingsRepository>.value(value: settingsRepository),
+        RepositoryProvider<NetworkRepository>(
+            create: ((context) => NetworkRepository(
+                preferences:
+                    RepositoryProvider.of<PreferencesRepository>(context))))
       ],
       child: MultiBlocProvider(
         providers: [

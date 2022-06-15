@@ -22,23 +22,15 @@ class ChangePageStateEvent implements AuthEvent {
 class SetScreenSizeEvent implements AuthEvent {
   final double windowWidth;
   final double windowHeight;
+  final double keyboardHeight;
 
-  SetScreenSizeEvent({required this.windowWidth, required this.windowHeight});
-
-  @override
-  List<Object> get props => throw UnimplementedError();
-
-  @override
-  bool? get stringify => true;
-}
-
-class KeyboardHeightEvent implements AuthEvent {
-  final double value;
-
-  KeyboardHeightEvent(this.value);
+  SetScreenSizeEvent(
+      {required this.windowWidth,
+      required this.windowHeight,
+      required this.keyboardHeight});
 
   @override
-  List<Object> get props => [value];
+  List<Object> get props => [windowHeight, windowWidth, keyboardHeight];
 
   @override
   bool? get stringify => true;
