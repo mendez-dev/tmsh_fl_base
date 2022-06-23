@@ -7,6 +7,7 @@ class InputText extends StatelessWidget {
   final String? Function(String?)? validator;
   final EdgeInsets? margin;
   final TextEditingController? controller;
+  final bool? enabled;
 
   const InputText(
       {Key? key,
@@ -15,7 +16,8 @@ class InputText extends StatelessWidget {
       this.controller,
       this.type = InputTextStyle.standar,
       this.validator,
-      this.margin})
+      this.margin,
+      this.enabled = true})
       : super(key: key);
 
   @override
@@ -23,6 +25,7 @@ class InputText extends StatelessWidget {
     return Container(
       margin: margin ?? const EdgeInsets.symmetric(vertical: 7),
       child: TextFormField(
+        enabled: enabled,
         controller: controller,
         validator: validator,
         decoration: _getDecoration(context),

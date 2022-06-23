@@ -43,12 +43,14 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       style: TextStyle(fontSize: 20),
                     ),
                     InputText(
+                        enabled: !state.isLoadingLogin,
                         controller: usernameController,
                         validator: usernameValidator,
                         label: "Correo",
                         icon: FontAwesomeIcons.at,
                         type: InputTextStyle.circularBorder),
                     InputText(
+                        enabled: !state.isLoadingLogin,
                         controller: passwordController,
                         label: "Contraseña",
                         icon: FontAwesomeIcons.key,

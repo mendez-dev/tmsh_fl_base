@@ -21,7 +21,7 @@ import '../../utils/logger.dart';
 /// {
 ///   code: 200,
 ///   message: "ok",
-///   data: object
+///   data: {}
 /// }
 /// ```
 ///
@@ -33,7 +33,7 @@ class NetworkRepository {
   /// token de acceso
   final PreferencesRepository preferences;
   Dio? _network;
-  final BaseOptions? _options = BaseOptions(connectTimeout: 300);
+  final BaseOptions? _options = BaseOptions(connectTimeout: 2000);
 
   NetworkRepository({required this.preferences}) {
     // Creamos nuestra instancia de DIO
@@ -124,6 +124,7 @@ class NetworkRepository {
     String message = "";
 
     if (error.type == DioErrorType.response) {
+      logger.e("DIO TYPE ERROR");
       // Si el error viene desde el servidor se reestructura la data
 
       if (error.response!.data["errors"] != null) {
@@ -141,16 +142,17 @@ class NetworkRepository {
       });
     } else {
       // Si el error es al generar la petición se crea un "fake response"
-      logger.e("ERROR EN EL SERVIDOR");
+      logger.e("SERVER ERROR");
       // ignore: avoid_print
       response = Response(
           requestOptions: error.requestOptions,
           data: {"code": 500, "message": "No se pudo establecer conexión"});
+
+      message = "No se pudo establecer conexión";
     }
 
     Fluttertoast.showToast(msg: message);
 
-    logger.e("Error al realizar la peticion");
     print(error.response);
 
     return handler.resolve(response);
