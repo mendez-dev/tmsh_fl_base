@@ -26,10 +26,10 @@ class _$AuthResponseSerializer implements StructuredSerializer<AuthResponse> {
           specifiedType: const FullType(String)),
     ];
     Object? value;
-    value = object.auth;
+    value = object.data;
     if (value != null) {
       result
-        ..add('auth')
+        ..add('data')
         ..add(serializers.serialize(value,
             specifiedType: const FullType(AuthModel)));
     }
@@ -56,8 +56,8 @@ class _$AuthResponseSerializer implements StructuredSerializer<AuthResponse> {
           result.message = serializers.deserialize(value,
               specifiedType: const FullType(String))! as String;
           break;
-        case 'auth':
-          result.auth.replace(serializers.deserialize(value,
+        case 'data':
+          result.data.replace(serializers.deserialize(value,
               specifiedType: const FullType(AuthModel))! as AuthModel);
           break;
       }
@@ -73,12 +73,12 @@ class _$AuthResponse extends AuthResponse {
   @override
   final String message;
   @override
-  final AuthModel? auth;
+  final AuthModel? data;
 
   factory _$AuthResponse([void Function(AuthResponseBuilder)? updates]) =>
       (new AuthResponseBuilder()..update(updates))._build();
 
-  _$AuthResponse._({required this.code, required this.message, this.auth})
+  _$AuthResponse._({required this.code, required this.message, this.data})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(code, r'AuthResponse', 'code');
     BuiltValueNullFieldError.checkNotNull(message, r'AuthResponse', 'message');
@@ -97,13 +97,13 @@ class _$AuthResponse extends AuthResponse {
     return other is AuthResponse &&
         code == other.code &&
         message == other.message &&
-        auth == other.auth;
+        data == other.data;
   }
 
   @override
   int get hashCode {
     return $jf(
-        $jc($jc($jc(0, code.hashCode), message.hashCode), auth.hashCode));
+        $jc($jc($jc(0, code.hashCode), message.hashCode), data.hashCode));
   }
 
   @override
@@ -111,7 +111,7 @@ class _$AuthResponse extends AuthResponse {
     return (newBuiltValueToStringHelper(r'AuthResponse')
           ..add('code', code)
           ..add('message', message)
-          ..add('auth', auth))
+          ..add('data', data))
         .toString();
   }
 }
@@ -128,9 +128,9 @@ class AuthResponseBuilder
   String? get message => _$this._message;
   set message(String? message) => _$this._message = message;
 
-  AuthModelBuilder? _auth;
-  AuthModelBuilder get auth => _$this._auth ??= new AuthModelBuilder();
-  set auth(AuthModelBuilder? auth) => _$this._auth = auth;
+  AuthModelBuilder? _data;
+  AuthModelBuilder get data => _$this._data ??= new AuthModelBuilder();
+  set data(AuthModelBuilder? data) => _$this._data = data;
 
   AuthResponseBuilder();
 
@@ -139,7 +139,7 @@ class AuthResponseBuilder
     if ($v != null) {
       _code = $v.code;
       _message = $v.message;
-      _auth = $v.auth?.toBuilder();
+      _data = $v.data?.toBuilder();
       _$v = null;
     }
     return this;
@@ -168,12 +168,12 @@ class AuthResponseBuilder
                   code, r'AuthResponse', 'code'),
               message: BuiltValueNullFieldError.checkNotNull(
                   message, r'AuthResponse', 'message'),
-              auth: _auth?.build());
+              data: _data?.build());
     } catch (_) {
       late String _$failedField;
       try {
-        _$failedField = 'auth';
-        _auth?.build();
+        _$failedField = 'data';
+        _data?.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             r'AuthResponse', _$failedField, e.toString());

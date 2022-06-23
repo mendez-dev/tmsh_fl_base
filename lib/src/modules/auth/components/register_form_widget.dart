@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../components/form.dart';
+import '../../../components/forms.dart';
 import '../bloc/bloc/auth_bloc.dart';
 
 class RegisterFormWindget extends StatefulWidget {
@@ -23,37 +23,7 @@ class _RegisterFormWindgetState extends State<RegisterFormWindget> {
     return SizedBox(
       child: Column(
         children: [
-          Form(
-            key: formKey,
-            child: Column(
-              children: [
-                const Text(
-                  "Create new account",
-                  style: TextStyle(fontSize: 20),
-                ),
-                InputText(
-                  icon: FontAwesomeIcons.at,
-                  label: "Correo",
-                  validator: (String? value) =>
-                      "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                ),
-                InputText(
-                  validator: (String? value) =>
-                      "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                  type: InputTextStyle.circularBorder,
-                  icon: FontAwesomeIcons.at,
-                  label: "Contraseña",
-                ),
-                InputText(
-                  validator: (String? value) =>
-                      "Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido, Campo requerido",
-                  type: InputTextStyle.bordered,
-                  icon: FontAwesomeIcons.at,
-                  label: "Repetir Contraseña",
-                ),
-              ],
-            ),
-          ),
+          const Placeholder(),
           const SizedBox(
             height: 30,
           ),

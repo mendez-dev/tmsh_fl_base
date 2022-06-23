@@ -1,3 +1,4 @@
+import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,6 +20,8 @@ class LoginPage extends StatelessWidget {
           networkRepository: RepositoryProvider.of<NetworkRepository>(context)),
       child: BlocProvider<AuthBloc>(
         create: (BuildContext context) => AuthBloc(
+            preferencesRepository:
+                RepositoryProvider.of<PreferencesRepository>(context),
             authRepository: RepositoryProvider.of<AuthRepository>(context)),
         child: const LoginWidget(),
       ),

@@ -1,5 +1,5 @@
 {
   "base_url": "https://localhost",
-  "api_base_url": "http://172.26.67.67/ci4_api/public",
-  "allow_account_creation": true
+  "api_base_url": "http://192.168.34.57/ci4_api/public",
+  "allow_account_creation": false
 }

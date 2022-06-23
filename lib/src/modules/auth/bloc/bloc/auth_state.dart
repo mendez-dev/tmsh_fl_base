@@ -11,6 +11,7 @@ class AuthState extends Equatable {
   final double windowHeight;
   final double headingTop;
   final double keyboardHeight;
+  final bool isLoadingLogin;
 
   const AuthState(
       {required this.pageState,
@@ -22,7 +23,8 @@ class AuthState extends Equatable {
       required this.windowWidth,
       required this.windowHeight,
       required this.headingTop,
-      required this.keyboardHeight});
+      required this.keyboardHeight,
+      required this.isLoadingLogin});
 
   factory AuthState.initial() {
     return const AuthState(
@@ -35,7 +37,8 @@ class AuthState extends Equatable {
         windowWidth: 0,
         windowHeight: 0.0,
         headingTop: 100,
-        keyboardHeight: 0.0);
+        keyboardHeight: 0.0,
+        isLoadingLogin: false);
   }
 
   AuthState copyWith(
@@ -48,7 +51,8 @@ class AuthState extends Equatable {
       double? windowWidth,
       double? windowHeight,
       double? headingTop,
-      double? keyboardHeight}) {
+      double? keyboardHeight,
+      bool? isLoadingLogin}) {
     return AuthState(
         pageState: pageState ?? this.pageState,
         loginYOffset: loginYOffset ?? this.loginYOffset,
@@ -59,7 +63,8 @@ class AuthState extends Equatable {
         windowWidth: windowWidth ?? this.windowWidth,
         windowHeight: windowHeight ?? this.windowHeight,
         headingTop: headingTop ?? this.headingTop,
-        keyboardHeight: keyboardHeight ?? this.keyboardHeight);
+        keyboardHeight: keyboardHeight ?? this.keyboardHeight,
+        isLoadingLogin: isLoadingLogin ?? this.isLoadingLogin);
   }
 
   @override
@@ -73,6 +78,7 @@ class AuthState extends Equatable {
         windowHeight,
         headingTop,
         loginHeight,
-        keyboardHeight
+        keyboardHeight,
+        isLoadingLogin
       ];
 }

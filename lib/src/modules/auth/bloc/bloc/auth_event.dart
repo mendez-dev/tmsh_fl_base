@@ -35,3 +35,16 @@ class SetScreenSizeEvent implements AuthEvent {
   @override
   bool? get stringify => true;
 }
+
+class LoginEvent implements AuthEvent {
+  final String username;
+  final String password;
+
+  LoginEvent({required this.username, required this.password});
+
+  @override
+  List<Object> get props => [username, password];
+
+  @override
+  bool? get stringify => throw UnimplementedError();
+}

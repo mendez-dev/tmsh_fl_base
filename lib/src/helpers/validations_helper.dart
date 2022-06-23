@@ -1,12 +1,9 @@
-import '../utils/logger.dart';
-
 /// Valida el formato de un correo electronico
 ///
 /// Usa expreciones regulares para validar si el formato del correo
 /// ingresado es válido
 ///
 String? emailValidator(String? value) {
-  logger.v(value);
   if (value != null) {
     if (value.isEmpty) {
       return "Ingrese el correo";
@@ -21,5 +18,16 @@ String? emailValidator(String? value) {
     return null;
   } else {
     return "Ingrese un correo";
+  }
+}
+
+String? usernameValidator(String? value) {
+  if (value != null) {
+    if (value.isEmpty) {
+      return "Ingrese el nombre de usuario";
+    }
+    return null;
+  } else {
+    return "Ingrese el nombre de usuario";
   }
 }

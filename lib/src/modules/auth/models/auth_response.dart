@@ -11,7 +11,7 @@ abstract class AuthResponse
     implements Built<AuthResponse, AuthResponseBuilder> {
   int get code;
   String get message;
-  AuthModel? get auth;
+  AuthModel? get data;
 
   AuthResponse._();
   factory AuthResponse([void Function(AuthResponseBuilder) updates]) =

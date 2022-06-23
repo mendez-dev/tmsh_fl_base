@@ -59,7 +59,7 @@ class Button extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 3),
       width: isExpanded ? double.infinity : null,
       child: isLoading
-          ? const CircularProgressIndicator()
+          ? const Center(child: CircularProgressIndicator())
           : _getButtonType(context),
     );
   }

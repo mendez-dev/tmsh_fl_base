@@ -1,4 +1,6 @@
+import 'package:base/src/modules/auth/models/auth_response.dart';
 import 'package:base/src/modules/auth/repositories/auth_repository.dart';
+import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -7,13 +9,18 @@ part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository _authRepository;
+  final PreferencesRepository _preferencesRepository;
 
-  AuthBloc({required AuthRepository authRepository})
+  AuthBloc(
+      {required AuthRepository authRepository,
+      required PreferencesRepository preferencesRepository})
       : _authRepository = authRepository,
+        _preferencesRepository = preferencesRepository,
         super(AuthState.initial()) {
     on<AuthEvent>((event, emit) {});
     on<ChangePageStateEvent>(_onChangePageStateEventToState);
     on<SetScreenSizeEvent>(_setScreenSizeEventToState);
+    on<LoginEvent>(_onLoginEventToState);
   }
 
   void _onChangePageStateEventToState(
@@ -51,5 +58,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           loginWidth: event.windowWidth,
           headingTop: 100));
     }
+  }
+
+  _onLoginEventToState(LoginEvent event, Emitter<AuthState> emit) async {
+    // Indicamos que se está realizando la peticion
+    emit(state.copyWith(isLoadingLogin: true));
+
+    final AuthResponse response = await _authRepository.login(
+        username: event.username, password: event.password);
+
+    if (response.code == 200) {
+      _preferencesRepository.save<bool>("isLogged", true);
+      _preferencesRepository.save("token", response.data!.token);
+    }
+
+    emit(state.copyWith(isLoadingLogin: false));
   }
 }

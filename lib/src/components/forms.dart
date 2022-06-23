@@ -6,11 +6,13 @@ class InputText extends StatelessWidget {
   final InputTextStyle type;
   final String? Function(String?)? validator;
   final EdgeInsets? margin;
+  final TextEditingController? controller;
 
   const InputText(
       {Key? key,
       this.label,
       this.icon,
+      this.controller,
       this.type = InputTextStyle.standar,
       this.validator,
       this.margin})
@@ -21,6 +23,7 @@ class InputText extends StatelessWidget {
     return Container(
       margin: margin ?? const EdgeInsets.symmetric(vertical: 7),
       child: TextFormField(
+        controller: controller,
         validator: validator,
         decoration: _getDecoration(context),
       ),
