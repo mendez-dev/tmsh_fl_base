@@ -56,6 +56,7 @@ class NetworkRepository {
     final String? token = await preferences.getAuthToken();
     // Obtenemos la url base
     final String baseUrl = await preferences.getBaseUrl();
+    logger.i(token);
 
     // Agregamos el token a el header de las peticiones
     options.headers['Authorization'] = "Bearer $token";
@@ -128,8 +129,20 @@ class NetworkRepository {
       // Si el error viene desde el servidor se reestructura la data
 
       if (error.response!.data["errors"] != null) {
-        List<dynamic> errors = error.response!.data["errors"];
-        message = errors.first.toString();
+        String errorType =
+            error.response!.data["errors"].runtimeType.toString();
+
+        // Evaluamos el tipo de datos del error
+        switch (errorType) {
+          case 'List<dynamic>':
+            List<dynamic> errors = error.response!.data["errors"];
+            message = errors.first.toString();
+            break;
+          case 'String':
+            message = error.response!.data["errors"];
+            break;
+          default:
+        }
       } else {
         message = error.response!.statusMessage ??
             "Error: No se pudo manejar la respuesta";

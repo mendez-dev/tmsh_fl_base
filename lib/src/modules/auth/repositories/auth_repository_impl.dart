@@ -26,6 +26,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
     AuthResponse? auth = AuthResponse.fromJson(response.data);
 
+    logger.v(response);
+
     return auth!;
   }
 
