@@ -8,6 +8,7 @@ class InputText extends StatelessWidget {
   final EdgeInsets? margin;
   final TextEditingController? controller;
   final bool? enabled;
+  final bool obscureText;
 
   const InputText(
       {Key? key,
@@ -17,7 +18,8 @@ class InputText extends StatelessWidget {
       this.type = InputTextStyle.standar,
       this.validator,
       this.margin,
-      this.enabled = true})
+      this.enabled = true,
+      this.obscureText = false})
       : super(key: key);
 
   @override
@@ -25,6 +27,7 @@ class InputText extends StatelessWidget {
     return Container(
       margin: margin ?? const EdgeInsets.symmetric(vertical: 7),
       child: TextFormField(
+        obscureText: obscureText,
         enabled: enabled,
         controller: controller,
         validator: validator,

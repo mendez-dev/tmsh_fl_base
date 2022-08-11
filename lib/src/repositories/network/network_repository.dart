@@ -56,7 +56,6 @@ class NetworkRepository {
     final String? token = await preferences.getAuthToken();
     // Obtenemos la url base
     final String baseUrl = await preferences.getBaseUrl();
-    logger.i(token);
 
     // Agregamos el token a el header de las peticiones
     options.headers['Authorization'] = "Bearer $token";

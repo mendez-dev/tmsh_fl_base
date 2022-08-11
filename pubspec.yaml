@@ -57,12 +57,12 @@ dev_dependencies:
   built_value_generator: ^8.1.3
   analyzer: ^4.1.0
 
-dependency_overrides:
-  # Sobreescribimos la dependencia para solucionar error en flutter 3 que no se ha
-  # solucionado en el paquete original
-  pull_to_refresh:
-    git:
-      url: https://github.com/miquelbeltran/flutter_pulltorefresh
+# dependency_overrides:
+#   # Sobreescribimos la dependencia para solucionar error en flutter 3 que no se ha
+#   # solucionado en el paquete original
+#   pull_to_refresh:
+#     git:
+#       url: https://github.com/miquelbeltran/flutter_pulltorefresh
 
 flutter:
   uses-material-design: true

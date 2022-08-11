@@ -22,6 +22,7 @@ class SettingsPage extends StatelessWidget {
         },
         builder: (BuildContext context, SettingsState state) {
           return SettingsList(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             darkBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.symmetric(vertical: 15),
             sections: [
@@ -47,7 +48,8 @@ class SettingsPage extends StatelessWidget {
                     leading: const Icon(FontAwesomeIcons.signOutAlt),
                     title: "Cerrar sesión",
                     subtitle: "Salir de la aplicación",
-                    onPressed: (BuildContext context) => logger.i("Cerrar sesión"),
+                    onPressed: (BuildContext context) =>
+                        logger.i("Cerrar sesión"),
                   ),
                 ],
               ),
@@ -58,7 +60,8 @@ class SettingsPage extends StatelessWidget {
                       leading: const Icon(FontAwesomeIcons.moon),
                       title: "Tema oscuro",
                       onToggle: (bool value) {
-                        BlocProvider.of<SettingsBloc>(context).add(SetDarkModeEvent(value));
+                        BlocProvider.of<SettingsBloc>(context)
+                            .add(SetDarkModeEvent(value));
                       },
                       switchValue: state.theme == ThemeModel.dark)
                 ],

@@ -1,5 +1,5 @@
 {
   "base_url": "https://localhost",
-  "api_base_url": "http://10.168.241.106/api_ci4/public",
+  "api_base_url": "http://192.168.8.102/mini_pos_api/public/",
   "allow_account_creation": false
 }
