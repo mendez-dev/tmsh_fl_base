@@ -29,7 +29,8 @@ class SmartRefresh<T extends PaginationModel<S>, S> extends StatefulWidget {
   ///
   /// * [int page] => el numero de la pagina que se esta solicitando
   /// * [int recordsPerPage] => el numero de registros que se solicitan
-  final Future<T> Function({int page, int recordsPerPage}) getData;
+  final Future<T> Function({int page, int recordsPerPage, String query})
+      getData;
 
   /// Constructor de vista de tipo lista
   ///
@@ -76,7 +77,8 @@ class _SmartRefreshState<T extends PaginationModel<S>, S>
         title: Text(widget.title),
         actions: [
           IconButton(
-              onPressed: () {}, icon: const Icon(FontAwesomeIcons.search))
+              onPressed: () => _search(widget.getData),
+              icon: const Icon(FontAwesomeIcons.search))
         ],
       ),
       body: Column(
@@ -172,5 +174,89 @@ class _SmartRefreshState<T extends PaginationModel<S>, S>
   /// Retorna el widget de carga por defecto
   Widget loadingWidget() {
     return const Center(child: CircularProgressIndicator());
+  }
+
+  /// Busqueda
+  void _search(
+      Future<T> Function({int page, int recordsPerPage, String query})
+          getData) {
+    showSearch(context: context, delegate: SearchData<T, S>(getData, widget));
+  }
+}
+
+class SearchData<T extends PaginationModel<S>, S> extends SearchDelegate {
+  SearchData(this.getData, this.smartRefresh);
+
+  final Future<T> Function({int page, int recordsPerPage, String query})
+      getData;
+  final SmartRefresh<T, S> smartRefresh;
+
+  BuiltList<S> data = BuiltList<S>();
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {}
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+        onPressed: () => Navigator.pop(context),
+        icon: const Icon(Icons.arrow_back));
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return ListView.separated(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      primary: false,
+      itemCount: data.length,
+      separatorBuilder: (BuildContext context, int index) {
+        return const SizedBox(height: 10);
+      },
+      itemBuilder: (context, index) {
+        return smartRefresh.listViewBuilder(data[index]);
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) {
+      return Container();
+    }
+
+    return FutureBuilder<T>(
+        future: getData(query: query.trim()),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            final T response = snapshot.data;
+            data = response.data;
+
+            if (data.isNotEmpty) {
+              return ListView.separated(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                primary: false,
+                itemCount: data.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 10);
+                },
+                itemBuilder: (context, index) {
+                  return smartRefresh.listViewBuilder(data[index]);
+                },
+              );
+            } else {
+              return const Center(
+                child: Text("No se encontraron registros"),
+              );
+            }
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return Container();
+        });
   }
 }

@@ -13,9 +13,14 @@ class UserRepositoryApi implements UserRepository {
 
   @override
   Future<UsersPagination> getUserPagination(
-      {int page = 1, int recordsPerPage = 10}) async {
-    final response = await _network.instance.get('/v1/user',
-        queryParameters: {'page': page, 'records_per_page': recordsPerPage});
+      {int page = 1, int recordsPerPage = 10, String query = ""}) async {
+    final response = await _network.instance.get('/v1/user', queryParameters: {
+      'page': page,
+      'records_per_page': recordsPerPage,
+      'firstname': query,
+      'lastname': query,
+      'email': query,
+    });
 
     final UsersPaginationResponse? usersPaginationResponse =
         UsersPaginationResponse.fromJson(response.data);
