@@ -17,6 +17,11 @@ class Navigation extends StatelessWidget {
           children: [
             const DrawerHeader(child: Placeholder()),
             NavigationListTile(
+                onTap: () => Navigator.pushReplacementNamed(context, 'home'),
+                title: "Inicio",
+                subtitle: "Página principal",
+                icon: FontAwesomeIcons.home),
+            NavigationListTile(
               title: "Usuarios",
               subtitle: "Administrar usuarios",
               icon: FontAwesomeIcons.solidUser,
@@ -27,9 +32,7 @@ class Navigation extends StatelessWidget {
               title: "Ajustes",
               subtitle: "Administrar configuración",
               icon: FontAwesomeIcons.cogs,
-              onTap: () {
-                Navigator.pushReplacementNamed(context, 'settings');
-              },
+              onTap: () => Navigator.pushReplacementNamed(context, 'settings'),
             ),
             NavigationListTile(
               title: "Cerrar sesión",

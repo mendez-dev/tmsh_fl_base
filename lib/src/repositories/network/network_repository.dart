@@ -122,17 +122,34 @@ class NetworkRepository {
     Response<dynamic> response;
 
     String message = "";
+    int code = 500;
 
     if (error.type == DioErrorType.response) {
       logger.e("DIO TYPE ERROR");
       // Si el error viene desde el servidor se reestructura la data
 
       if (error.response!.data["errors"] != null) {
-        List<dynamic> errors = error.response!.data["errors"];
-        message = errors.first.toString();
+        String errorType =
+            error.response!.data["errors"].runtimeType.toString();
+
+        // Evaluamos el tipo de datos del error
+        switch (errorType) {
+          case 'List<dynamic>':
+            List<dynamic> errors = error.response!.data["errors"];
+            message = errors.first.toString();
+            break;
+          case 'String':
+            message = error.response!.data["errors"];
+            break;
+          default:
+        }
       } else {
         message = error.response!.statusMessage ??
             "Error: No se pudo manejar la respuesta";
+      }
+
+      if (error.response!.statusCode != null) {
+        code = error.response!.statusCode!;
       }
 
       response = Response(requestOptions: error.requestOptions, data: {
@@ -151,7 +168,9 @@ class NetworkRepository {
       message = "No se pudo establecer conexión";
     }
 
-    Fluttertoast.showToast(msg: message);
+    if (code != 404) {
+      Fluttertoast.showToast(msg: message);
+    }
 
     print(error.response);
 
