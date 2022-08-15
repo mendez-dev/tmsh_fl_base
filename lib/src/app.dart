@@ -3,6 +3,7 @@ import 'package:base/src/repositories/network/network_repository.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'modules/settings/bloc/settings/settings_bloc.dart';
 import 'modules/settings/repositories/preferences/preferences_repository.dart';
@@ -57,6 +58,14 @@ class MyApp extends StatelessWidget {
         child: BlocBuilder<SettingsBloc, SettingsState>(
           builder: (BuildContext context, SettingsState state) {
             return MaterialApp(
+              localizationsDelegates: const [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: const <Locale>[
+                Locale('es', ''),
+              ],
               title: 'Material App',
               theme: getThemeData(context: context, theme: state.theme),
               initialRoute: 'home',

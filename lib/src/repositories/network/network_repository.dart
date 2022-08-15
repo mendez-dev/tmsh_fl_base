@@ -122,6 +122,7 @@ class NetworkRepository {
     Response<dynamic> response;
 
     String message = "";
+    int code = 500;
 
     if (error.type == DioErrorType.response) {
       logger.e("DIO TYPE ERROR");
@@ -147,6 +148,10 @@ class NetworkRepository {
             "Error: No se pudo manejar la respuesta";
       }
 
+      if (error.response!.statusCode != null) {
+        code = error.response!.statusCode!;
+      }
+
       response = Response(requestOptions: error.requestOptions, data: {
         "code": error.response!.statusCode ?? 500,
         "message": error.response!.statusMessage ??
@@ -163,7 +168,9 @@ class NetworkRepository {
       message = "No se pudo establecer conexión";
     }
 
-    Fluttertoast.showToast(msg: message);
+    if (code != 404) {
+      Fluttertoast.showToast(msg: message);
+    }
 
     print(error.response);
 
