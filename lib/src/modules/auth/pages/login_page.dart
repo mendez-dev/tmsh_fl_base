@@ -39,6 +39,10 @@ class LoginWidget extends StatelessWidget {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (BuildContext context, AuthState state) {
           // logger.v(MediaQuery.of(context).viewInsets.bottom);
+          if (state.isLoginSuccess) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, 'home', (route) => false);
+          }
         },
         builder: (BuildContext context, AuthState state) {
           // Actualizamos el tamaño de la pantalla cada vez que se redibuja

@@ -42,14 +42,16 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       "Iniciar sesión",
                       style: TextStyle(fontSize: 20),
                     ),
+                    const SizedBox(height: 10),
                     InputText(
                         enabled: !state.isLoadingLogin,
                         controller: usernameController,
                         validator: usernameValidator,
-                        label: "Correo",
-                        icon: FontAwesomeIcons.at,
+                        label: "Usuario",
+                        icon: FontAwesomeIcons.solidUser,
                         type: InputTextStyle.circularBorder),
                     InputText(
+                        obscureText: true,
                         enabled: !state.isLoadingLogin,
                         controller: passwordController,
                         label: "Contraseña",
@@ -64,7 +66,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   Button(
                     isLoading: state.isLoadingLogin,
                     padding: const EdgeInsets.all(15),
-                    text: "Login",
+                    text: "Iniciar sesión",
                     isRounded: true,
                     isExpanded: true,
                     onTap: () async {

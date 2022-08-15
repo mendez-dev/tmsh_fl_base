@@ -44,6 +44,8 @@ dependencies:
   flutter_keyboard_visibility: ^5.2.0
   # Facilita el uso de toast
   fluttertoast: ^8.0.9
+  # Alertas y mensajes de confirmación
+  rflutter_alert: ^2.0.4
 
 dev_dependencies:
   flutter_test:

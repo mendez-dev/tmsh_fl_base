@@ -17,13 +17,13 @@ class SettingsRepositoryImpl implements SettingsRepository {
       ..appName = "BASE APP"
       ..defaultTax = 0.13
       ..defaultCurrency = "\$"
-      ..mainColor = "#FF4E6A"
-      ..mainDarkColor = "#ea5c44"
+      ..mainColor = "#B63ECB"
+      ..mainDarkColor = "#CB54DF"
       ..secondColor = "#344968"
       ..secondDarkColor = "#ccccdd"
       ..accentColor = "#8C98A8"
       ..accentDarkColor = "#9999aa"
-      ..scaffoldColor = "#FAFAFA"
+      ..scaffoldColor = "#EFEFF4"
       ..scaffoldDarkColor = "#2C2C2C");
 
     return defaultSettings;

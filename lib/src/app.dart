@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
       required this.settingsRepository,
       // required this.networkRepository,
       required this.preferencesRepository,
-      required this.settingsBloc
+      required this.settingsBloc,
+      required this.initialRoute
       // required this.colors
       })
       : super(key: key) {
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
   final PreferencesRepository preferencesRepository;
   final SettingsBloc settingsBloc;
   // final ColorsHelper colors;
+
+  final String initialRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               title: 'Material App',
               theme: getThemeData(context: context, theme: state.theme),
-              initialRoute: 'home',
+              initialRoute: initialRoute,
               onGenerateRoute: Application.router!.generator,
             );
           },

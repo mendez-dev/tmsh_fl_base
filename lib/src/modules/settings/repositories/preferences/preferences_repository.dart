@@ -30,4 +30,7 @@ abstract class PreferencesRepository {
 
   /// Lee un valor booleano en el  [local storage]
   Future<bool> getBool(String key);
+
+  /// Retorna la ruta inicial de la aplicacion
+  Future<String> getInitialRoute();
 }

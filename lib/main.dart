@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 
@@ -32,6 +31,7 @@ void main() async {
   // Leemos los ajustes y el tema por defecto
   ThemeModel theme = await preferencesRepository.getTheme();
   SettingsModel settings = await settingsRepository.initSettings();
+  String initialRoute = await preferencesRepository.getInitialRoute();
 
   logger.v(settings);
 
@@ -41,5 +41,6 @@ void main() async {
     settingsRepository: settingsRepository,
     settingsBloc: settingsBloc,
     preferencesRepository: preferencesRepository,
+    initialRoute: initialRoute,
   ));
 }

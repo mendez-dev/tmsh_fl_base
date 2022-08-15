@@ -97,4 +97,13 @@ class PreferencesRepositoryImpl implements PreferencesRepository {
 
     return Future.value(false);
   }
+
+  @override
+  Future<String> getInitialRoute() async {
+    final String? value = await _storage.read(key: 'initial_route');
+    if (value != null) {
+      return value;
+    }
+    return 'login';
+  }
 }

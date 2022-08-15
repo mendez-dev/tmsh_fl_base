@@ -1,11 +1,12 @@
-import 'package:base/src/modules/settings/models/theme_model.dart';
-import 'package:base/src/utils/logger.dart';
-
-import '../bloc/settings/settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../bloc/settings/settings_bloc.dart';
+import '../models/theme_model.dart';
+import '../../../helpers/dialog_helper.dart';
+import '../../../helpers/sesion_helper.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -22,6 +23,7 @@ class SettingsPage extends StatelessWidget {
         },
         builder: (BuildContext context, SettingsState state) {
           return SettingsList(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             darkBackgroundColor: Theme.of(context).scaffoldBackgroundColor,
             contentPadding: const EdgeInsets.symmetric(vertical: 15),
             sections: [
@@ -47,7 +49,17 @@ class SettingsPage extends StatelessWidget {
                     leading: const Icon(FontAwesomeIcons.signOutAlt),
                     title: "Cerrar sesión",
                     subtitle: "Salir de la aplicación",
-                    onPressed: (BuildContext context) => logger.i("Cerrar sesión"),
+                    onPressed: (BuildContext context) async {
+                      bool response = await showConfirmationDialog(
+                          context: context,
+                          title: "¿Cerrar sesión?",
+                          description:
+                              "Para acceder de nuevo deberás ingresar tus credenciales.");
+
+                      if (response) {
+                        signOut(context);
+                      }
+                    },
                   ),
                 ],
               ),
@@ -58,7 +70,8 @@ class SettingsPage extends StatelessWidget {
                       leading: const Icon(FontAwesomeIcons.moon),
                       title: "Tema oscuro",
                       onToggle: (bool value) {
-                        BlocProvider.of<SettingsBloc>(context).add(SetDarkModeEvent(value));
+                        BlocProvider.of<SettingsBloc>(context)
+                            .add(SetDarkModeEvent(value));
                       },
                       switchValue: state.theme == ThemeModel.dark)
                 ],

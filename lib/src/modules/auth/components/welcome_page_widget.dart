@@ -25,7 +25,7 @@ class WelcomePageWidget extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: state.headingTop),
                     child: Text(
-                      "Learn free",
+                      "Mini POS",
                       style: TextStyle(
                           color: state.pageState == 0
                               ? Theme.of(context).primaryColor
@@ -38,7 +38,7 @@ class WelcomePageWidget extends StatelessWidget {
                         vertical: 15, horizontal: 32),
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: Text(
-                      "Proident magna nostrud do id. Excepteur labore culpa elit officia cupidatat.",
+                      "Impulsa tu negocio desde la palma de tu mano.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: state.pageState == 0
@@ -64,7 +64,7 @@ class WelcomePageWidget extends StatelessWidget {
                 isRounded: true,
                 isExpanded: true,
                 padding: const EdgeInsets.all(15),
-                text: "Get started",
+                text: "Empezar",
                 onTap: () {
                   if (state.pageState != 0) {
                     BlocProvider.of<AuthBloc>(context)

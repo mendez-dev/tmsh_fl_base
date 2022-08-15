@@ -85,8 +85,8 @@ class ColorsHelper {
     // final brightness = MediaQueryData.fromWindow(WidgetsBinding.instance!.window).platformBrightness;
 
     try {
-      return Color(
-              int.parse(settingsModel.scaffoldDarkColor.replaceAll("#", "0xFF")))
+      return Color(int.parse(
+              settingsModel.scaffoldDarkColor.replaceAll("#", "0xFF")))
           .withOpacity(opacity);
     } catch (e) {
       return const Color(0xFFCCCCCC).withOpacity(opacity);
@@ -112,6 +112,7 @@ ThemeData _lightTheme(BuildContext context, ColorsHelper colors) {
   final ThemeData theme = ThemeData();
 
   return ThemeData(
+    scaffoldBackgroundColor: colors.scaffoldColor(1),
     appBarTheme: AppBarTheme(color: colors.mainColor(1)),
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: colors.secondColor(1)),
@@ -119,8 +120,9 @@ ThemeData _lightTheme(BuildContext context, ColorsHelper colors) {
     primaryColor: colors.mainColor(1),
     primaryColorDark: colors.mainColor(1),
     colorScheme: theme.colorScheme.copyWith(
-      primary: colors.mainColor(1),
-      secondary: colors.secondColor(1), brightness: Brightness.light),
+        primary: colors.mainColor(1),
+        secondary: colors.secondColor(1),
+        brightness: Brightness.light),
     focusColor: colors.accentColor(1),
     hintColor: colors.secondColor(1),
     textTheme: TextTheme(
@@ -159,18 +161,22 @@ ThemeData _lightTheme(BuildContext context, ColorsHelper colors) {
 ThemeData _darkTheme(BuildContext context, ColorsHelper colors) {
   final ThemeData theme = ThemeData();
   return ThemeData(
-    
     scaffoldBackgroundColor: colors.scaffoldDarkColor(1),
     brightness: Brightness.dark,
-    appBarTheme:  const AppBarTheme(color: Color(0xff1f1b24), titleTextStyle: TextStyle(color: Colors.white, fontSize: 15, fontFamily: 'Poppins'),
-    iconTheme: IconThemeData(color: Colors.white), ),
+    appBarTheme: const AppBarTheme(
+      color: Color(0xff1f1b24),
+      titleTextStyle:
+          TextStyle(color: Colors.white, fontSize: 15, fontFamily: 'Poppins'),
+      iconTheme: IconThemeData(color: Colors.white),
+    ),
     floatingActionButtonTheme:
         FloatingActionButtonThemeData(backgroundColor: colors.secondColor(1)),
     fontFamily: 'Poppins',
     primaryColor: colors.mainDarkColor(1),
     colorScheme: theme.colorScheme.copyWith(
-      primary: colors.mainDarkColor(1),
-      secondary: colors.secondDarkColor(1), brightness: Brightness.dark ),
+        primary: colors.mainDarkColor(1),
+        secondary: colors.secondDarkColor(1),
+        brightness: Brightness.dark),
     focusColor: colors.accentDarkColor(1),
     hintColor: colors.secondDarkColor(1),
     textTheme: TextTheme(
@@ -202,5 +208,6 @@ ThemeData _darkTheme(BuildContext context, ColorsHelper colors) {
       bodyText1: TextStyle(fontSize: 12.0, color: colors.secondDarkColor(1)),
       bodyText2: TextStyle(fontSize: 14.0, color: colors.secondDarkColor(1)),
       caption: TextStyle(fontSize: 12.0, color: colors.accentColor(1)),
-    ),);
+    ),
+  );
 }
