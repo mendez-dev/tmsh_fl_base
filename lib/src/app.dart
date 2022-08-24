@@ -1,3 +1,5 @@
+import 'package:base/src/modules/async/repository/async_repository.dart';
+import 'package:base/src/modules/async/utils/repositories_blocs.dart';
 import 'package:base/src/modules/settings/helpers/theme_helpers.dart';
 import 'package:base/src/repositories/network/network_repository.dart';
 import 'package:fluro/fluro.dart';
@@ -49,7 +51,8 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<NetworkRepository>(
             create: ((context) => NetworkRepository(
                 preferences:
-                    RepositoryProvider.of<PreferencesRepository>(context))))
+                    RepositoryProvider.of<PreferencesRepository>(context)))),
+        ...asyncRepositoryProviders
       ],
       child: MultiBlocProvider(
         providers: [
@@ -57,6 +60,7 @@ class MyApp extends StatelessWidget {
           // la app haciendo uso de las funciones proporcionadas por
           // preferences repository
           BlocProvider<SettingsBloc>.value(value: settingsBloc),
+          ...asyncBlocProviders
         ],
         child: BlocBuilder<SettingsBloc, SettingsState>(
           builder: (BuildContext context, SettingsState state) {

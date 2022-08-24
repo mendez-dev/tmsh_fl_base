@@ -160,6 +160,7 @@ class NetworkRepository {
     } else {
       // Si el error es al generar la petición se crea un "fake response"
       logger.e("SERVER ERROR");
+      logger.v(error);
       // ignore: avoid_print
       response = Response(
           requestOptions: error.requestOptions,

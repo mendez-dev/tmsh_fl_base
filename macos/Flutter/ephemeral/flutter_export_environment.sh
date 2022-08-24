@@ -1,7 +1,7 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=C:\Users\MENDEZ\fvm\default"
-export "FLUTTER_APPLICATION_PATH=C:\Users\MENDEZ\Documents\sandbox\tmsh_fl_base"
+export "FLUTTER_ROOT=C:\Users\WILBER\fvm\default"
+export "FLUTTER_APPLICATION_PATH=D:\Bibliotecas\Documentos\Desarrollo\DMS\APP\mini_pos_app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"
 export "FLUTTER_BUILD_NAME=1.0.0"

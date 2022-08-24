@@ -1,3 +1,4 @@
+import 'package:base/src/database/database.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 
@@ -36,6 +37,11 @@ void main() async {
   logger.v(settings);
 
   settingsBloc.add(GetInitialConfigEvent(theme: theme, settings: settings));
+
+  // Cargamos la base de datos local
+
+  final DataBase _dataBase = DataBase(version: 7);
+  _dataBase.initDB();
 
   runApp(MyApp(
     settingsRepository: settingsRepository,

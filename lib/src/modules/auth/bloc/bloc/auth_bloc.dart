@@ -69,7 +69,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     if (response.code == 200) {
       _preferencesRepository.save<bool>("isLogged", true);
-      _preferencesRepository.save("token", response.data!.token);
+      _preferencesRepository.save("authToken", response.data!.token);
       _preferencesRepository.save("initial_route", 'home');
 
       emit(state.copyWith(isLoginSuccess: true));

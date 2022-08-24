@@ -6,7 +6,7 @@ publish_to: "none"
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.15.0 <3.0.0"
+  sdk: ">=2.16.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -48,6 +48,14 @@ dependencies:
   pull_to_refresh: ^2.0.0
   # Alertas y mensajes de confirmación
   rflutter_alert: ^2.0.4
+  # Base de datos sqlite
+  sqflite: ^2.0.3+1
+  # Nos permite acceder a los archivos del sistema
+  path_provider: ^2.0.11
+  # Herramienta de desarrollo para examinar bases de datos
+  sqlite_viewer: ^1.0.5
+  # Dibuja gráficos de progreso
+  percent_indicator: ^4.2.2
 
 dev_dependencies:
   flutter_test:
@@ -61,12 +69,12 @@ dev_dependencies:
   flutter_localizations:
     sdk: flutter
 
-# dependency_overrides:
-#   # Sobreescribimos la dependencia para solucionar error en flutter 3 que no se ha
-#   # solucionado en el paquete original
-#   pull_to_refresh:
-#     git:
-#       url: https://github.com/miquelbeltran/flutter_pulltorefresh
+dependency_overrides:
+  # Sobreescribimos la dependencia para solucionar error en flutter 3 que no se ha
+  # solucionado en el paquete original
+  pull_to_refresh:
+    git:
+      url: https://github.com/miquelbeltran/flutter_pulltorefresh
 
 flutter:
   uses-material-design: true

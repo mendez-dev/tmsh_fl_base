@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sqlite_viewer/sqlite_viewer.dart';
 
 import '../helpers/dialog_helper.dart';
 import '../helpers/sesion_helper.dart';
@@ -50,6 +51,18 @@ class Navigation extends StatelessWidget {
                 }
               },
             ),
+            const Divider(),
+            NavigationListTile(
+                onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => const DatabaseList(
+                              dbPath:
+                                  "/storage/emulated/0/Android/data/com.tmsh.base/files",
+                            ))),
+                title: "Base de datos",
+                subtitle: "Visualisar registros",
+                icon: FontAwesomeIcons.database)
           ],
         ),
       ),

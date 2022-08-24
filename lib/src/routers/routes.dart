@@ -1,3 +1,4 @@
+import 'package:base/src/modules/async/router/async_router.dart';
 import 'package:base/src/modules/auth/routes/auth_routes.dart';
 import 'package:base/src/modules/examples/router/examples_router.dart';
 import 'package:base/src/modules/home/pages/home_page.dart';
@@ -30,5 +31,6 @@ class Routes {
     SettingsRoutes.configureRoutes(router);
     AuthRoutes.configureRoutes(router);
     ExamplesRoutes.configureRoutes(router);
+    AsyncRoutes.configureRoutes(router);
   }
 }
