@@ -1,9 +1,12 @@
-import 'package:base/src/modules/async/pages/async_page.dart';
-
-import '../pages/download_page.dart';
+// Importaciones de terceros
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
+// Importaciones propias
+import '../pages/download_page.dart';
+import '../pages/async_page.dart';
+
+// Definimos las rutas del modulo de sincronización
 class AsyncRoutes {
   static void configureRoutes(FluroRouter router) {
     router.define("async",

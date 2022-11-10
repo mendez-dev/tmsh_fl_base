@@ -1,1 +1,1 @@
-enum DataOrigin { web, local }
+enum DataOrigin { remote, local }

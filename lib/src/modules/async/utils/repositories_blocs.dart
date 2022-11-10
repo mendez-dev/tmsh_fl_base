@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../repositories/database_repository/database_repository.dart';
 import '../../../repositories/network/network_repository.dart';
 import '../bloc/download/download_bloc.dart';
 import '../repository/async_repository.dart';
@@ -8,6 +9,7 @@ import '../repository/async_repository.dart';
 List<RepositoryProvider> asyncRepositoryProviders = [
   RepositoryProvider<AsyncRepository>(
     create: (context) => AsyncRepository(
+        database: RepositoryProvider.of<DatabaseRepository>(context),
         network: RepositoryProvider.of<NetworkRepository>(context)),
   ),
 ];

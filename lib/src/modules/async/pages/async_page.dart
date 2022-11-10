@@ -1,14 +1,7 @@
-import 'package:base/src/modules/async/bloc/download/download_bloc.dart';
-import 'package:base/src/modules/async/repository/async_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../repositories/network/network_repository.dart';
-
-// Crear una widget con un scaffold y un appbar con un título
-// y en el body un texto centrado
 class AsyncPage extends StatelessWidget {
   const AsyncPage({Key? key}) : super(key: key);
   @override
@@ -50,14 +43,15 @@ class AsyncPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             width: double.infinity,
             child: const Text("Sincronización de datos automática")),
-        RadioListTile(
-          title: const Text("Sincronizar automática"),
-          subtitle: const Text(
-              "La aplicación subirá datos al servidor en cada operación, y cada 15 minutos estará consultando si hay datos nuevos"),
-          value: 2,
-          groupValue: 1,
-          onChanged: (value) {},
-        ),
+        // RadioListTile(
+
+        //   title: const Text("Sincronizar automática"),
+        //   subtitle: const Text(
+        //       "La aplicación subirá datos al servidor en cada operación, y cada 15 minutos estará consultando si hay datos nuevos"),
+        //   value: 2,
+        //   groupValue: 1,
+        //   onChanged: (value) {},
+        // ),
         RadioListTile(
           title: const Text("Sincronización manual"),
           subtitle: const Text(
@@ -78,12 +72,12 @@ class AsyncPage extends StatelessWidget {
           trailing: const Icon(Icons.chevron_right),
           onTap: () => Navigator.pushNamed(context, "download"),
         ),
-        const ListTile(
-          leading: Icon(FontAwesomeIcons.upload),
-          title: Text("Subida de datos"),
-          subtitle: Text("Subir datos locales al servidor"),
-          trailing: Icon(Icons.chevron_right),
-        ),
+        // const ListTile(
+        //   leading: Icon(FontAwesomeIcons.upload),
+        //   title: Text("Subida de datos"),
+        //   subtitle: Text("Subir datos locales al servidor"),
+        //   trailing: Icon(Icons.chevron_right),
+        // ),
         const ListTile(
           leading: Icon(FontAwesomeIcons.database),
           title: Text("Borrar base de datos"),

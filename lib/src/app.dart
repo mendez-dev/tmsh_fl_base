@@ -1,6 +1,7 @@
-import 'package:base/src/modules/async/repository/async_repository.dart';
 import 'package:base/src/modules/async/utils/repositories_blocs.dart';
 import 'package:base/src/modules/settings/helpers/theme_helpers.dart';
+import 'package:base/src/modules/users/utils/repositories_bloc.dart';
+import 'package:base/src/repositories/database_repository/database_repository.dart';
 import 'package:base/src/repositories/network/network_repository.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
       // required this.networkRepository,
       required this.preferencesRepository,
       required this.settingsBloc,
-      required this.initialRoute
+      required this.initialRoute,
+      required this.databaseRepository
+
       // required this.colors
       })
       : super(key: key) {
@@ -34,6 +37,7 @@ class MyApp extends StatelessWidget {
   final PreferencesRepository preferencesRepository;
   final SettingsBloc settingsBloc;
   // final ColorsHelper colors;
+  final DatabaseRepository databaseRepository;
 
   final String initialRoute;
 
@@ -43,6 +47,7 @@ class MyApp extends StatelessWidget {
     // bloc provider
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider<DatabaseRepository>.value(value: databaseRepository),
         // Preferences repository se encarga de la interacción con el local storage
         RepositoryProvider<PreferencesRepository>.value(
             value: preferencesRepository),
@@ -52,7 +57,8 @@ class MyApp extends StatelessWidget {
             create: ((context) => NetworkRepository(
                 preferences:
                     RepositoryProvider.of<PreferencesRepository>(context)))),
-        ...asyncRepositoryProviders
+        ...asyncRepositoryProviders,
+        ...usersRepositoryProviders
       ],
       child: MultiBlocProvider(
         providers: [

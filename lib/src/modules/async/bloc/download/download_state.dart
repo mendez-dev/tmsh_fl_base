@@ -41,7 +41,7 @@ class DownloadState extends Equatable {
     return const DownloadState(
       state: 0,
       batches: 0,
-      recordsPerBatch: 2,
+      recordsPerBatch: 1000,
       resources: [],
       downloads: [],
       progress: 0,

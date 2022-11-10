@@ -1,3 +1,5 @@
+import 'package:base/src/models/data_origin.dart';
+
 import '../../models/theme_model.dart';
 
 /// Permite leer y escribir en las preferencias del usuario
@@ -31,6 +33,9 @@ abstract class PreferencesRepository {
   /// Lee un valor booleano en el  [local storage]
   Future<bool> getBool(String key);
 
-  /// Retorna la ruta inicial de la aplicacion
+  /// Retorna la ruta inicial de la aplicación
   Future<String> getInitialRoute();
+
+  /// Retorna el origen de datos de la aplicación
+  Future<DataOrigin> getDataOrigin();
 }

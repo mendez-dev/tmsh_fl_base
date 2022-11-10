@@ -26,7 +26,7 @@ class Navigation extends StatelessWidget {
               title: "Usuarios",
               subtitle: "Administrar usuarios",
               icon: FontAwesomeIcons.solidUser,
-              onTap: () {},
+              onTap: () => Navigator.pushNamed(context, 'users'),
             ),
             const Divider(),
             NavigationListTile(

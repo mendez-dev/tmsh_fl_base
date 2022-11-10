@@ -1,3 +1,4 @@
+import 'package:base/src/models/data_origin.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'preferences_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -105,5 +106,16 @@ class PreferencesRepositoryImpl implements PreferencesRepository {
       return value;
     }
     return 'login';
+  }
+
+  @override
+  Future<DataOrigin> getDataOrigin() async {
+    final String? value = await _storage.read(key: 'data_origin');
+    if (value != null) {
+      if (value == 'remote') {
+        return DataOrigin.remote;
+      }
+    }
+    return DataOrigin.local;
   }
 }

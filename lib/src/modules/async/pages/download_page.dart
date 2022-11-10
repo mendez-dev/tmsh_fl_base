@@ -1,5 +1,6 @@
 import 'package:base/src/modules/async/bloc/download/download_bloc.dart';
 import 'package:base/src/modules/async/components/download_info.dart';
+import 'package:base/src/modules/async/components/download_no_data.dart';
 import 'package:base/src/modules/async/components/download_success.dart';
 import 'package:base/src/modules/async/components/get_download_info.dart';
 
@@ -19,8 +20,7 @@ class DownloadPage extends StatefulWidget {
 class _DownloadPageState extends State<DownloadPage> {
   @override
   void initState() {
-    BlocProvider.of<DownloadBloc>(context)
-        .add(const DownloadInitialEvent(resources: ['user', 'user_group']));
+    BlocProvider.of<DownloadBloc>(context).add(const DownloadInitialEvent());
     super.initState();
   }
 
@@ -42,6 +42,8 @@ class _DownloadPageState extends State<DownloadPage> {
             return const Downloading();
           } else if (state.state == 3) {
             return const DownloadSuccess();
+          } else if (state.state == 4) {
+            return const DownloadNoData();
           } else {
             return const DownloadError();
           }

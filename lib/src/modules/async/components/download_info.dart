@@ -37,7 +37,7 @@ class DownloadInfo extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   child: Text(
-                    "Se descargaran un aproximado de ${state.batches * state.recordsPerBatch} registros, asegúrate de tener una conexión a internet estable. ",
+                    "Se descargaran un ${state.batches} lotes de hasta ${state.recordsPerBatch}* registros cada uno",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),

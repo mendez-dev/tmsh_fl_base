@@ -33,7 +33,7 @@ abstract class UserModel implements Built<UserModel, UserModelBuilder> {
   String get email;
   String? get picture;
   @BuiltValueField(wireName: 'is_active')
-  bool get isActive;
+  int get isActive;
   @BuiltValueField(wireName: 'created_by')
   String get createdBy;
   @BuiltValueField(wireName: 'created_at')

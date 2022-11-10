@@ -7,6 +7,7 @@ import 'package:base/src/pages/page_404.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
+import '../modules/users/router/user_router.dart';
 import '../utils/logger.dart';
 
 class Routes {
@@ -32,5 +33,6 @@ class Routes {
     AuthRoutes.configureRoutes(router);
     ExamplesRoutes.configureRoutes(router);
     AsyncRoutes.configureRoutes(router);
+    UserRoutes.configureRoutes(router);
   }
 }

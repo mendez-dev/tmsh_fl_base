@@ -20,6 +20,10 @@ class HomePage extends StatelessWidget {
                 icon: const Icon(FontAwesomeIcons.cogs))
           ],
         ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.pushNamed(context, 'users'),
+          child: const Icon(FontAwesomeIcons.plus),
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: [

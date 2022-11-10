@@ -25,7 +25,7 @@ class WelcomePageWidget extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(top: state.headingTop),
                     child: Text(
-                      "Mini POS",
+                      "MI APP",
                       style: TextStyle(
                           color: state.pageState == 0
                               ? Theme.of(context).primaryColor
@@ -38,7 +38,7 @@ class WelcomePageWidget extends StatelessWidget {
                         vertical: 15, horizontal: 32),
                     padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: Text(
-                      "Impulsa tu negocio desde la palma de tu mano.",
+                      "Empecemos una nueva app poderosa",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           color: state.pageState == 0

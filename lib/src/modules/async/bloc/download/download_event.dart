@@ -9,9 +9,8 @@ abstract class DownloadEvent extends Equatable {
 
 class DownloadInitialEvent implements DownloadEvent {
   /// Lista de String con los nombres de los recursos a descargar
-  final List<String> resources;
 
-  const DownloadInitialEvent({required this.resources});
+  const DownloadInitialEvent();
 
   @override
   List<Object> get props => [];

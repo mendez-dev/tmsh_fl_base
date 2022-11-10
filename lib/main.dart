@@ -1,4 +1,4 @@
-import 'package:base/src/database/database.dart';
+import 'package:base/src/repositories/database_repository/database_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 
@@ -40,10 +40,11 @@ void main() async {
 
   // Cargamos la base de datos local
 
-  final DataBase _dataBase = DataBase(version: 7);
+  final DatabaseRepository _dataBase = DatabaseRepository(version: 1);
   _dataBase.initDB();
 
   runApp(MyApp(
+    databaseRepository: _dataBase,
     settingsRepository: settingsRepository,
     settingsBloc: settingsBloc,
     preferencesRepository: preferencesRepository,

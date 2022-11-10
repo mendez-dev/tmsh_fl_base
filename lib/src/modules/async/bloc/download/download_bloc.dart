@@ -23,16 +23,21 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       DownloadInitialEvent event, Emitter<DownloadState> emit) async {
     // Estado inicial
     emit(DownloadState.initial());
+    List<String> resources = await _asyncRepository.getResourcesList();
+
+    String? lastUpdate =
+        await _asyncRepository.getLastUpdateDate(tables: resources);
 
     // Verificar si la lista de recursos contiene elementos, si es asi recorrer
     // la lista y obtener la cantidad de lotes a descargar
-    if (event.resources.isNotEmpty) {
+    if (resources.isNotEmpty) {
       int batches = 0;
       List<Map<String, dynamic>> downloads = [];
-      for (String resource in event.resources) {
+      for (String resource in resources) {
         int response = await _asyncRepository.getNumberOfBatches(
           resource: resource,
           recordsPerBatch: state.recordsPerBatch,
+          lastUpdate: lastUpdate,
         );
 
         // Almacenamos la información en la lista de descargas
@@ -48,14 +53,22 @@ class DownloadBloc extends Bloc<DownloadEvent, DownloadState> {
       }
 
       // Calculamos el numero total de lotes a descargar
-      int totalBatches = batches * event.resources.length;
+      int totalBatches = batches * resources.length;
 
-      emit(state.copyWith(
-          state: 1,
-          batches: batches,
-          resources: event.resources,
-          downloads: downloads));
-      logger.v(state.downloads);
+      if (totalBatches == 0) {
+        emit(state.copyWith(
+            state: 4,
+            batches: batches,
+            resources: resources,
+            downloads: downloads));
+      } else {
+        emit(state.copyWith(
+            state: 1,
+            batches: batches,
+            resources: resources,
+            downloads: downloads));
+        logger.v(state.downloads);
+      }
     }
   }
 

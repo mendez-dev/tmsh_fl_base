@@ -10,11 +10,11 @@ import '../models/pagination_model.dart';
 /// Smart refresh v1.0.0
 ///
 /// Hace uso del SmartRefresher del paquete pull_to_refresh para crear un widget
-/// que sea capas de consumir la api CI4 de forma automatica indicando el modelo
+/// que sea capas de consumir la api CI4 de forma automática indicando el modelo
 /// de la paginacion de datos (por ejemplo UserPagination) el cual debe extender
-/// a PaginationModel, indicando el modelo indiviudal (por ejemplo UserModel) y
-/// tambien indicando la funcion que retornara los datos la cual debe cumplir los
-/// criterios que aqui se indiquen.
+/// a PaginationModel, indicando el modelo individual (por ejemplo UserModel) y
+/// también indicando la función que retornara los datos la cual debe cumplir los
+/// criterios que aquí se indiquen.
 class SmartRefresh<T extends PaginationModel<S>, S> extends StatefulWidget {
   const SmartRefresh(
       {Key? key,
@@ -138,7 +138,7 @@ class _SmartRefreshState<T extends PaginationModel<S>, S>
     setState(() => loading = true);
 
     // Obtenemos los datos
-    final response = await getData();
+    final response = await getData(recordsPerPage: widget.recordsPerPage);
 
     if (response.data.isNotEmpty) {
       setState(() {
@@ -148,26 +148,27 @@ class _SmartRefreshState<T extends PaginationModel<S>, S>
       });
     }
 
-    // Indicamos que ya no se estan cargando datos
+    // Indicamos que ya no se están cargando datos
     setState(() => loading = false);
   }
 
   /// Carga mas datos al momento de llegar al final de la lista
   Future<void> _loadMoreData(
       Future<T> Function({int page, int recordsPerPage}) getData) async {
-    // Solo se cargan datos si no se a alcansado el total de paginas mostradas
+    // Solo se cargan datos si no se a alcanzado el total de paginas mostradas
     if (currentPage + 1 <= totalPages) {
-      final response = await getData(page: currentPage + 1);
+      final response = await getData(
+          page: currentPage + 1, recordsPerPage: widget.recordsPerPage);
 
       if (response.data.isNotEmpty) {
         setState(() {
-          // BuildList
           ListBuilder<S> temp = data.toBuilder();
           temp.addAll(response.data.toBuiltList());
           data = temp.build();
           currentPage = response.currentPage;
           totalPages = response.totalPages;
         });
+        _controller.loadComplete();
       }
     }
 
@@ -181,7 +182,7 @@ class _SmartRefreshState<T extends PaginationModel<S>, S>
   /// Refresca la pagina al hacer pull to refresh
   Future<void> _refreshData(
       Future<T> Function({int page, int recordsPerPage}) getData) async {
-    final response = await getData();
+    final response = await getData(recordsPerPage: widget.recordsPerPage);
 
     if (response.data.isNotEmpty) {
       setState(() {
