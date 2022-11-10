@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class Error404 extends StatelessWidget {
-  const Error404({
+class Error404Widget extends StatelessWidget {
+  const Error404Widget({
     Key? key,
     this.message = "Recurso no encontrado",
   }) : super(key: key);

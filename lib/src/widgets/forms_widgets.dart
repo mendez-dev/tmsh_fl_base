@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class InputText extends StatelessWidget {
+class InputTextWidget extends StatelessWidget {
   final String? label;
   final IconData? icon;
   final InputTextStyle type;
@@ -9,8 +9,9 @@ class InputText extends StatelessWidget {
   final TextEditingController? controller;
   final bool? enabled;
   final bool obscureText;
+  final void Function(String)? onChanged;
 
-  const InputText(
+  const InputTextWidget(
       {Key? key,
       this.label,
       this.icon,
@@ -19,7 +20,8 @@ class InputText extends StatelessWidget {
       this.validator,
       this.margin,
       this.enabled = true,
-      this.obscureText = false})
+      this.obscureText = false,
+      this.onChanged})
       : super(key: key);
 
   @override
@@ -27,6 +29,7 @@ class InputText extends StatelessWidget {
     return Container(
       margin: margin ?? const EdgeInsets.symmetric(vertical: 7),
       child: TextFormField(
+        onChanged: onChanged,
         obscureText: obscureText,
         enabled: enabled,
         controller: controller,

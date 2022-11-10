@@ -1,10 +1,10 @@
-import 'package:base/src/components/buttons.dart';
+import 'package:base/src/widgets/buttons_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 // Crear un stateless widget con un container que tenga una animación lottie centrada en el widget
-class GetDownloadInfo extends StatelessWidget {
-  const GetDownloadInfo({Key? key}) : super(key: key);
+class GetDownloadInfoWidget extends StatelessWidget {
+  const GetDownloadInfoWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,7 +42,7 @@ class GetDownloadInfo extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.all(20),
-          child: Button(
+          child: ButtonWidget(
               type: ButtonType.outline,
               text: "Cancelar",
               isExpanded: true,

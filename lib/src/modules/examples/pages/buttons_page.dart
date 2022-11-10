@@ -1,31 +1,52 @@
-import 'package:base/src/components/buttons.dart';
+import 'package:base/src/widgets/buttons_widget.dart';
 import 'package:flutter/material.dart';
+
 class ButtonsPage extends StatelessWidget {
   const ButtonsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Tipos de botones"),),
+      appBar: AppBar(
+        title: const Text("Tipos de botones"),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Button(onTap:(){} , text: "Estandar"),
-              Button(onTap:(){} , text: "Expandido", isExpanded: true),
-              Button(onTap:(){} , text: "Redondeado", isRounded: true),
-              Button(onTap:(){} , text: "Azul", color: Colors.blue),
-              Button(onTap:(){} , text: "Estandar", type: ButtonType.outline),
-              Button(onTap:(){} , text: "Expandido", type: ButtonType.outline, isExpanded: true),
-              Button(onTap:(){} , text: "Redodeado", type: ButtonType.outline, isRounded: true),
-              Button(onTap:(){} , text: "Verde", type: ButtonType.outline, color: Colors.green,),
-              Button(onTap:(){} , text: "Cargando", isLoading: true,),
+              ButtonWidget(onTap: () {}, text: "Estandar"),
+              ButtonWidget(onTap: () {}, text: "Expandido", isExpanded: true),
+              ButtonWidget(onTap: () {}, text: "Redondeado", isRounded: true),
+              ButtonWidget(onTap: () {}, text: "Azul", color: Colors.blue),
+              ButtonWidget(
+                  onTap: () {}, text: "Estandar", type: ButtonType.outline),
+              ButtonWidget(
+                  onTap: () {},
+                  text: "Expandido",
+                  type: ButtonType.outline,
+                  isExpanded: true),
+              ButtonWidget(
+                  onTap: () {},
+                  text: "Redodeado",
+                  type: ButtonType.outline,
+                  isRounded: true),
+              ButtonWidget(
+                onTap: () {},
+                text: "Verde",
+                type: ButtonType.outline,
+                color: Colors.green,
+              ),
+              ButtonWidget(
+                onTap: () {},
+                text: "Cargando",
+                isLoading: true,
+              ),
             ],
           ),
         ),
       ),
-   );
+    );
   }
 }

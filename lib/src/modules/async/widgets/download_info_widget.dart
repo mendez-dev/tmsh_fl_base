@@ -1,4 +1,4 @@
-import 'package:base/src/components/buttons.dart';
+import 'package:base/src/widgets/buttons_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -6,8 +6,8 @@ import 'package:lottie/lottie.dart';
 import '../bloc/download/download_bloc.dart';
 
 // Crear un stateless widget con un container que tenga una animación lottie centrada en el widget
-class DownloadInfo extends StatelessWidget {
-  const DownloadInfo({Key? key}) : super(key: key);
+class DownloadInfoWidget extends StatelessWidget {
+  const DownloadInfoWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DownloadBloc, DownloadState>(
@@ -49,7 +49,7 @@ class DownloadInfo extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.all(20),
-              child: Button(
+              child: ButtonWidget(
                   text: "Descargar datos",
                   isExpanded: true,
                   onTap: () => BlocProvider.of<DownloadBloc>(context)

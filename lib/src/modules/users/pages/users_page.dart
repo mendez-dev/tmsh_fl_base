@@ -1,11 +1,13 @@
 import 'package:base/src/modules/users/models/user_model.dart';
 import 'package:base/src/modules/users/models/users_pagination.dart';
 import 'package:base/src/modules/users/repositories/user_repository.dart';
+import 'package:base/src/modules/users/widgets/add_user_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../components/smart_refresh.dart';
+import '../../../widgets/animated_container_widget.dart';
+import '../../../widgets/smart_refresh_widget.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage([Key? key]) : super(key: key);
@@ -17,16 +19,20 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
-    return SmartRefresh<UsersPagination, UserModel>(
-        title: "Usuarios",
-        listViewBuilder: (item) => ListTile(
-              leading: const CircleAvatar(
-                  child: Center(child: Icon(FontAwesomeIcons.solidUser))),
-              title: Text("${item.firstname} ${item.lastname}"),
-              subtitle: Text(item.email),
-              trailing: const Icon(Icons.chevron_right),
-            ),
-        getData:
-            RepositoryProvider.of<UserRepository>(context).getUserPagination);
+    return SmartRefreshWidget<UsersPagination, UserModel>(
+      title: "Usuarios",
+      listViewBuilder: (item) => ListTile(
+        leading: const CircleAvatar(
+            child: Center(child: Icon(FontAwesomeIcons.solidUser))),
+        title: Text("${item.firstname} ${item.lastname}"),
+        subtitle: Text(item.email),
+        trailing: const Icon(Icons.chevron_right),
+      ),
+      getData: RepositoryProvider.of<UserRepository>(context).getUserPagination,
+      floatingActionButton: AnimatedContainerWidget(
+        icon: FontAwesomeIcons.userPlus,
+        child: AddUserWidget(),
+      ),
+    );
   }
 }

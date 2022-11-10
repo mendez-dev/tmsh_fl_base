@@ -1,14 +1,14 @@
 import 'package:base/src/modules/async/bloc/download/download_bloc.dart';
-import 'package:base/src/modules/async/components/download_info.dart';
-import 'package:base/src/modules/async/components/download_no_data.dart';
-import 'package:base/src/modules/async/components/download_success.dart';
-import 'package:base/src/modules/async/components/get_download_info.dart';
+import 'package:base/src/modules/async/widgets/download_info_widget.dart';
+import 'package:base/src/modules/async/widgets/download_no_data_widget.dart';
+import 'package:base/src/modules/async/widgets/download_success_widget.dart';
+import 'package:base/src/modules/async/widgets/get_download_info_widget.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../components/download_error.dart';
-import '../components/downloading.dart';
+import '../widgets/download_error_widget.dart';
+import '../widgets/downloading_widget.dart';
 
 class DownloadPage extends StatefulWidget {
   const DownloadPage({Key? key}) : super(key: key);
@@ -35,17 +35,17 @@ class _DownloadPageState extends State<DownloadPage> {
         listener: (BuildContext context, DownloadState state) {},
         builder: (BuildContext context, DownloadState state) {
           if (state.state == 0) {
-            return const GetDownloadInfo();
+            return const GetDownloadInfoWidget();
           } else if (state.state == 1) {
-            return const DownloadInfo();
+            return const DownloadInfoWidget();
           } else if (state.state == 2) {
-            return const Downloading();
+            return const DownloadingWidget();
           } else if (state.state == 3) {
-            return const DownloadSuccess();
+            return const DownloadSuccessWidget();
           } else if (state.state == 4) {
-            return const DownloadNoData();
+            return const DownloadNoDataWidget();
           } else {
-            return const DownloadError();
+            return const DownloadErrorWidget();
           }
         },
       ),

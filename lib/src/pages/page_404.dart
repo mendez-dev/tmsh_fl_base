@@ -1,4 +1,4 @@
-import 'package:base/src/components/error_404.dart';
+import 'package:base/src/widgets/error_404_widget.dart';
 import 'package:flutter/material.dart';
 
 class Page404 extends StatelessWidget {
@@ -6,8 +6,8 @@ class Page404 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Error404(),
+    return const Scaffold(
+      body: Error404Widget(),
     );
   }
 }

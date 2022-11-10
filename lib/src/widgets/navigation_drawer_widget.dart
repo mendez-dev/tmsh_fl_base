@@ -5,8 +5,8 @@ import 'package:sqlite_viewer/sqlite_viewer.dart';
 import '../helpers/dialog_helper.dart';
 import '../helpers/sesion_helper.dart';
 
-class Navigation extends StatelessWidget {
-  const Navigation({
+class NavigationDrawerWidget extends StatelessWidget {
+  const NavigationDrawerWidget({
     Key? key,
   }) : super(key: key);
 

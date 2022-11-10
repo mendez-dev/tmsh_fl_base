@@ -1,4 +1,4 @@
-import 'package:base/src/components/navigation.dart';
+import 'package:base/src/widgets/navigation_drawer_widget.dart';
 import 'package:base/src/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +18,7 @@ class SettingsPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: Helpers.of(context).onWillPop,
       child: Scaffold(
-        drawer: const Navigation(),
+        drawer: const NavigationDrawerWidget(),
         appBar: AppBar(
           title: const Text("Configuración"),
         ),

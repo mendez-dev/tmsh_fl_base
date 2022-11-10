@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-class Error500 extends StatelessWidget {
-  const Error500({
+class Error500Widget extends StatelessWidget {
+  const Error500Widget({
     Key? key,
     this.message = "Ocurrio un error interno",
   }) : super(key: key);

@@ -6,4 +6,6 @@ abstract class UserRepository {
     int recordsPerPage = 10,
     String query = "",
   });
+
+  Future<String> getAdminGroupId();
 }

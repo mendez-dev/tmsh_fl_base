@@ -1,4 +1,4 @@
-import 'package:base/src/components/navigation.dart';
+import 'package:base/src/widgets/navigation_drawer_widget.dart';
 import 'package:base/src/helpers/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,7 +11,7 @@ class HomePage extends StatelessWidget {
     return WillPopScope(
       onWillPop: Helpers.of(context).onWillPop,
       child: Scaffold(
-        drawer: const Navigation(),
+        drawer: const NavigationDrawerWidget(),
         appBar: AppBar(
           title: const Text("Inicio"),
           actions: [

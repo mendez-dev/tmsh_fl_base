@@ -1,4 +1,4 @@
-import '../components/buttons.dart';
+import '../widgets/buttons_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
@@ -34,7 +34,7 @@ Future<bool> showConfirmationDialog(
           child: Row(
             children: [
               Expanded(
-                child: Button(
+                child: ButtonWidget(
                   isExpanded: true,
                   type: ButtonType.outline,
                   text: cancelText,
@@ -43,7 +43,7 @@ Future<bool> showConfirmationDialog(
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Button(
+                child: ButtonWidget(
                   isExpanded: true,
                   text: confirmText,
                   onTap: () => Navigator.pop<bool>(context, true),

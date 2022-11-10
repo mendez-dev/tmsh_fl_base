@@ -1,6 +1,3 @@
-import 'package:base/src/components/error_404.dart';
-import 'package:base/src/components/error_500.dart';
-import 'package:base/src/components/smart_refresh.dart';
 import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
 import 'package:base/src/modules/users/models/user_model.dart';
 import 'package:base/src/modules/users/models/users_pagination.dart';
@@ -8,6 +5,9 @@ import 'package:base/src/modules/users/models/users_pagination_response.dart';
 import 'package:base/src/modules/users/repositories/user_repository.dart';
 import 'package:base/src/modules/users/repositories/user_repository_impl.dart';
 import 'package:base/src/repositories/network/network_repository.dart';
+import 'package:base/src/widgets/error_404_widget.dart';
+import 'package:base/src/widgets/error_500_widget.dart';
+import 'package:base/src/widgets/smart_refresh_widget.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,7 +37,7 @@ class NewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresh<UsersPagination, UserModel>(
+    return SmartRefreshWidget<UsersPagination, UserModel>(
       title: "Usuarios",
       getData: RepositoryProvider.of<UserRepository>(context).getUserPagination,
       listViewBuilder: (UserModel item) => ListTile(
@@ -47,10 +47,10 @@ class NewWidget extends StatelessWidget {
         subtitle: Text(item.email),
         trailing: const Icon(Icons.chevron_right),
       ),
-      noDataWidget: const Error404(
+      noDataWidget: const Error404Widget(
         message: "No se encontraron registros",
       ),
-      errorWidget: const Error500(),
+      errorWidget: const Error500Widget(),
     );
   }
 }

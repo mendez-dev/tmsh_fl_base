@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../components/buttons.dart';
+import '../../../widgets/buttons_widget.dart';
 import '../bloc/bloc/auth_bloc.dart';
 
 class WelcomePageWidget extends StatelessWidget {
@@ -60,7 +60,7 @@ class WelcomePageWidget extends StatelessWidget {
             Container(
               // margin: const EdgeInsets.all(32),
               padding: const EdgeInsets.all(20),
-              child: Button(
+              child: ButtonWidget(
                 isRounded: true,
                 isExpanded: true,
                 padding: const EdgeInsets.all(15),

@@ -51,7 +51,7 @@ class AsyncRepository {
       // valor de lastUpdate, si el valor de updatedAt es mayor que el valor de
       // lastUpdate, entonces se asigna el valor de updatedAt a lastUpdate
       if (updatedAt != null && lastUpdate != null) {
-        if (updatedAt.compareTo(lastUpdate!) > 0) {
+        if (updatedAt.compareTo(lastUpdate) > 0) {
           lastUpdate = updatedAt;
         }
       }

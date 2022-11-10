@@ -1,9 +1,7 @@
-import 'package:base/src/components/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../../components/forms.dart';
+import '../../../widgets/buttons_widget.dart';
 import '../bloc/bloc/auth_bloc.dart';
 
 class RegisterFormWindget extends StatefulWidget {
@@ -29,14 +27,14 @@ class _RegisterFormWindgetState extends State<RegisterFormWindget> {
           ),
           Column(
             children: [
-              const Button(
+              const ButtonWidget(
                 padding: EdgeInsets.all(15),
                 text: "Crate account",
                 isExpanded: true,
                 isRounded: true,
               ),
               const SizedBox(height: 10),
-              Button(
+              ButtonWidget(
                   padding: const EdgeInsets.all(15),
                   text: "Back to login",
                   isExpanded: true,

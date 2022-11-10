@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 ///
 /// Es configurable y se le pueden definir diferentes estilos
 /// y comportamientos.
-class Button extends StatelessWidget {
+class ButtonWidget extends StatelessWidget {
   /// [String] Texto que se mostrara dentro del botón
   final String text;
 
@@ -40,7 +40,7 @@ class Button extends StatelessWidget {
 
   final EdgeInsets? padding;
 
-  const Button(
+  const ButtonWidget(
       {Key? key,
       required this.text,
       this.type = ButtonType.standar,

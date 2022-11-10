@@ -63,4 +63,14 @@ class UserRepositoryImpl implements UserRepository {
       ..currentPage = 0
       ..totalPages = 0);
   }
+
+  @override
+  Future<String> getAdminGroupId() async {
+    // Obtenemos de la tabla user_group el id del grupo admin para ello ordenamos por fecha de creación descendente y obtenemos el primero
+    final response = await _database.db!.rawQuery(
+        'SELECT id_user_group FROM user_group ORDER BY strftime(created_at) DESC LIMIT 1');
+
+    // Retornamos el id del grupo admin
+    return response.first['id_user_group']!.toString();
+  }
 }

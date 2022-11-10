@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:global_configuration/global_configuration.dart';
 
-import '../../../components/buttons.dart';
-import '../../../components/forms.dart';
+import '../../../widgets/buttons_widget.dart';
+import '../../../widgets/forms_widgets.dart';
 import '../bloc/bloc/auth_bloc.dart';
 
 class LoginFormWidget extends StatefulWidget {
@@ -43,14 +43,14 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                       style: TextStyle(fontSize: 20),
                     ),
                     const SizedBox(height: 10),
-                    InputText(
+                    InputTextWidget(
                         enabled: !state.isLoadingLogin,
                         controller: usernameController,
                         validator: usernameValidator,
                         label: "Usuario",
                         icon: FontAwesomeIcons.solidUser,
                         type: InputTextStyle.circularBorder),
-                    InputText(
+                    InputTextWidget(
                         obscureText: true,
                         enabled: !state.isLoadingLogin,
                         controller: passwordController,
@@ -63,7 +63,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
               const SizedBox(height: 30),
               Column(
                 children: [
-                  Button(
+                  ButtonWidget(
                     isLoading: state.isLoadingLogin,
                     padding: const EdgeInsets.all(15),
                     text: "Iniciar sesión",
@@ -79,7 +79,7 @@ class _LoginFormWidgetState extends State<LoginFormWidget> {
                   ),
                   // const SizedBox(height: 10),
                   if (GlobalConfiguration().get("allow_account_creation")) ...[
-                    Button(
+                    ButtonWidget(
                         padding: const EdgeInsets.all(15),
                         text: "Create new account",
                         isExpanded: true,

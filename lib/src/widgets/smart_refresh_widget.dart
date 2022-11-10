@@ -15,15 +15,17 @@ import '../models/pagination_model.dart';
 /// a PaginationModel, indicando el modelo individual (por ejemplo UserModel) y
 /// también indicando la función que retornara los datos la cual debe cumplir los
 /// criterios que aquí se indiquen.
-class SmartRefresh<T extends PaginationModel<S>, S> extends StatefulWidget {
-  const SmartRefresh(
+class SmartRefreshWidget<T extends PaginationModel<S>, S>
+    extends StatefulWidget {
+  const SmartRefreshWidget(
       {Key? key,
       required this.getData,
       required this.listViewBuilder,
       this.title = "",
       this.recordsPerPage = 10,
       this.errorWidget,
-      this.noDataWidget})
+      this.noDataWidget,
+      this.floatingActionButton})
       : super(key: key);
 
   /// Obtener datos
@@ -54,12 +56,14 @@ class SmartRefresh<T extends PaginationModel<S>, S> extends StatefulWidget {
   /// El Widget que se mostrara si no se encontraron registros
   final Widget? noDataWidget;
 
+  // Boton de accion flotante
+  final Widget? floatingActionButton;
   @override
-  State<SmartRefresh<T, S>> createState() => _SmartRefreshState<T, S>();
+  State<SmartRefreshWidget<T, S>> createState() => _SmartRefreshState<T, S>();
 }
 
 class _SmartRefreshState<T extends PaginationModel<S>, S>
-    extends State<SmartRefresh<T, S>> {
+    extends State<SmartRefreshWidget<T, S>> {
   final RefreshController _controller = RefreshController();
 
   /// Numero de pagina actual
@@ -84,6 +88,7 @@ class _SmartRefreshState<T extends PaginationModel<S>, S>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: widget.floatingActionButton,
       appBar: AppBar(
         title: Text(widget.title),
         actions: [
@@ -218,7 +223,7 @@ class SearchData<T extends PaginationModel<S>, S> extends SearchDelegate {
       getData;
 
   /// Instancia del smart refresh para poder acceder a la construcción de widgets
-  final SmartRefresh<T, S> smartRefresh;
+  final SmartRefreshWidget<T, S> smartRefresh;
 
   /// Listado de datos obtenidos de la busqueda
   BuiltList<S> data = BuiltList<S>();

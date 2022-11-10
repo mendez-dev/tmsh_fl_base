@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
-import '../../../components/buttons.dart';
 import '../bloc/download/download_bloc.dart';
 
 // Crear un stateless widget con un container que tenga una animación lottie centrada en el widget
-class DownloadSuccess extends StatelessWidget {
-  const DownloadSuccess({Key? key}) : super(key: key);
+class DownloadingWidget extends StatelessWidget {
+  const DownloadingWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DownloadBloc, DownloadState>(
@@ -22,14 +22,14 @@ class DownloadSuccess extends StatelessWidget {
                 width: double.infinity,
                 child: Container(
                     padding: const EdgeInsets.all(20),
-                    child: Lottie.asset('assets/lotties/success_white.json'))),
+                    child: Lottie.asset('assets/lotties/async.json'))),
             Column(
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   margin: const EdgeInsets.only(bottom: 10),
                   child: Text(
-                    "Datos descargados",
+                    "Descargando datos",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline4,
                   ),
@@ -37,7 +37,7 @@ class DownloadSuccess extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
                   child: Text(
-                    "Los datos se descargaron correctamente",
+                    "Descargando datos por favor espere...",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
@@ -49,12 +49,22 @@ class DownloadSuccess extends StatelessWidget {
             ),
             Container(
               padding: const EdgeInsets.all(20),
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                child: Button(
-                    text: "Continuar",
-                    isExpanded: true,
-                    onTap: () => Navigator.of(context).pop()),
+              child: LinearPercentIndicator(
+                animateFromLastPercent: true,
+                animation: true,
+                barRadius: const Radius.circular(4),
+                lineHeight: 35.0,
+                percent: state.progress / 100,
+                center: Text(
+                  "${state.progress} %",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText2!
+                      .copyWith(color: Colors.white),
+                ),
+                padding: const EdgeInsets.all(0),
+                backgroundColor: Colors.grey,
+                progressColor: Theme.of(context).primaryColor,
               ),
             ),
           ],

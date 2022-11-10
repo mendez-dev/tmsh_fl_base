@@ -14,16 +14,16 @@ import '../../utils/logger.dart';
 
 class DatabaseRepository {
   /// Almacenar la instancia de nuestra base de datos SQLite
-  static Database? _database;
+  Database? db;
   final int _version;
 
   DatabaseRepository({int version = 1}) : _version = version;
 
   /// Se encarga de inicializar la creación de la base de datos
   Future<void> initDB() async {
-    if (_database != null) {
+    if (db != null) {
       // Si ya existe una instancia de la base de datos la reasignamos
-      _database = _database;
+      db = db;
     } else {
       // Si no existe creamos una nueva base de datos
 
@@ -37,7 +37,7 @@ class DatabaseRepository {
       logger.i(path);
 
       // Creamos la estructura de la base de datos
-      _database = await openDatabase(path, version: _version,
+      db = await openDatabase(path, version: _version,
           onCreate: (Database db, int version) async {
         await createUserGroup(db);
         await createUser(db);
@@ -58,14 +58,14 @@ class DatabaseRepository {
     bool saved = false;
     try {
       // Obtenemos el nombre de la llave primaria de la tabla
-      final columns = await _database!.rawQuery('PRAGMA table_info($table)');
+      final columns = await db!.rawQuery('PRAGMA table_info($table)');
       final columnNames = columns.map((c) => c['name']).toList();
       final String primaryKey = columnNames.first.toString();
 
-      Batch batch = _database!.batch();
+      Batch batch = db!.batch();
       for (final item in data) {
         // Verificamos si el registro ya existe en la base de datos
-        final exists = await _database!.rawQuery(
+        final exists = await db!.rawQuery(
             '''SELECT * FROM $table WHERE $primaryKey = '${item[primaryKey]}' ''');
         Map<String, dynamic> map = Map.from(item);
 
@@ -106,11 +106,11 @@ class DatabaseRepository {
       // Ejecutamos la consulta para obtener los datos
       final String query =
           '''SELECT * FROM $table ORDER BY created_at ASC LIMIT $limitValue OFFSET $offset''';
-      data = await _database!.rawQuery(query);
+      data = await db!.rawQuery(query);
 
       // Calculamos el numero de paginas que hay
       int? count = Sqflite.firstIntValue(
-          await _database!.rawQuery("SELECT COUNT(*) FROM $table"));
+          await db!.rawQuery("SELECT COUNT(*) FROM $table"));
 
       if (count != null) {
         pages = (count / recordsPerPage).ceil();
@@ -133,8 +133,7 @@ class DatabaseRepository {
     // Obtenemos el valor de la ultima actualización
     final String query =
         '''SELECT updated_at FROM $table ORDER BY strftime(updated_at) DESC LIMIT 1''';
-    final List<Map<String, dynamic>> data = await _database!.rawQuery(query);
+    final List<Map<String, dynamic>> data = await db!.rawQuery(query);
     return data.isNotEmpty ? data.first['updated_at'] : null;
-
   }
 }

@@ -7,6 +7,7 @@ part of 'serializer.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
+      ..add(UserCreate.serializer)
       ..add(UserModel.serializer)
       ..add(UsersPagination.serializer)
       ..add(UsersPaginationResponse.serializer)
