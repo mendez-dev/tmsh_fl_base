@@ -1,16 +1,20 @@
+import 'package:base/src/helpers/dialog_helper.dart';
 import 'package:base/src/modules/users/models/user_create.dart';
 import 'package:base/src/modules/users/repositories/user_repository.dart';
+import 'package:base/src/modules/users/repositories/user_repository_local.dart';
 import 'package:base/src/validations/validations.dart';
 import 'package:base/src/widgets/buttons_widget.dart';
 import 'package:base/src/widgets/forms_widgets.dart';
 import 'package:conduit_password_hash/pbkdf2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:crypto/crypto.dart';
 
 import '../../../utils/logger.dart';
+import '../models/user_response.dart';
 
 class AddUserWidget extends StatefulWidget {
   const AddUserWidget({Key? key}) : super(key: key);
@@ -156,7 +160,16 @@ class _AddUserWidgetState extends State<AddUserWidget> {
         ..password = passwordHash
         ..idUserGroup = idUserGroup);
 
-      logger.v(userCreate.toJson());
+      final UserResponse response =
+          await RepositoryProvider.of<UserRepositoryLocal>(context)
+              .createUser(userCreate);
+
+      if (response.success) {
+        await showSuccessDialog(context: context, title: "Usuario creado");
+        Navigator.pop(context);
+      } else {
+        Fluttertoast.showToast(msg: response.errors!.first);
+      }
     }
   }
 

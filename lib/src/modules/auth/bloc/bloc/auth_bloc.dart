@@ -1,6 +1,8 @@
 import 'package:base/src/modules/auth/models/auth_response.dart';
 import 'package:base/src/modules/auth/repositories/auth_repository.dart';
 import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
+import 'package:base/src/modules/users/models/user_model.dart';
+import 'package:base/src/modules/users/models/user_response.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -21,6 +23,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<ChangePageStateEvent>(_onChangePageStateEventToState);
     on<SetScreenSizeEvent>(_setScreenSizeEventToState);
     on<LoginEvent>(_onLoginEventToState);
+    on<VerifyEvent>(_onVerifyEventToState);
   }
 
   void _onChangePageStateEventToState(
@@ -77,5 +80,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
 
     emit(state.copyWith(isLoadingLogin: false));
+  }
+
+  _onVerifyEventToState(VerifyEvent event, Emitter<AuthState> emit) async {
+    // Indicamos que se está realizando la peticion
+    emit(state.copyWith(isLoadingVerify: true));
+
+    final UserResponse response = await _authRepository.verify();
+
+    if (response.success) {
+      _preferencesRepository.saveUserId(response.data!.idUser);
+    } else {
+      // TODO: Implementar logout
+    }
+    emit(state.copyWith(isLoadingVerify: false, user: response.data));
   }
 }

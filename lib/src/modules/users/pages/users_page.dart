@@ -29,7 +29,7 @@ class _UserPageState extends State<UserPage> {
         trailing: const Icon(Icons.chevron_right),
       ),
       getData: RepositoryProvider.of<UserRepository>(context).getUserPagination,
-      floatingActionButton: AnimatedContainerWidget(
+      floatingActionButton: const AnimatedContainerWidget(
         icon: FontAwesomeIcons.userPlus,
         child: AddUserWidget(),
       ),

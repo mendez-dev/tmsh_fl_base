@@ -46,5 +46,13 @@ class LoginEvent implements AuthEvent {
   List<Object> get props => [username, password];
 
   @override
-  bool? get stringify => throw UnimplementedError();
+  bool? get stringify => true;
+}
+
+class VerifyEvent implements AuthEvent {
+  @override
+  List<Object> get props => [];
+
+  @override
+  bool? get stringify => true;
 }

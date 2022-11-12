@@ -1,4 +1,5 @@
 import 'package:base/src/modules/users/repositories/user_repository_impl.dart';
+import 'package:base/src/modules/users/repositories/user_repository_local.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../repositories/user_repository.dart';
@@ -14,4 +15,9 @@ List<RepositoryProvider> usersRepositoryProviders = [
         database: RepositoryProvider.of<DatabaseRepository>(context),
         network: RepositoryProvider.of<NetworkRepository>(context)),
   ),
+  RepositoryProvider<UserRepositoryLocal>(
+      create: (context) => UserRepositoryLocal(
+            preferences: RepositoryProvider.of<PreferencesRepository>(context),
+            database: RepositoryProvider.of<DatabaseRepository>(context),
+          )),
 ];

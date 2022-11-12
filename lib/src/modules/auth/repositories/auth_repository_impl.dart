@@ -1,6 +1,9 @@
 import 'package:base/src/modules/auth/models/auth_response.dart';
 import 'package:base/src/modules/auth/repositories/auth_repository.dart';
+import 'package:base/src/modules/users/models/user_model.dart';
+import 'package:base/src/modules/users/models/user_response.dart';
 import 'package:base/src/repositories/network/network_repository.dart';
+import 'package:built_collection/built_collection.dart';
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -29,6 +32,25 @@ class AuthRepositoryImpl implements AuthRepository {
     logger.v(response);
 
     return auth!;
+  }
+
+  @override
+  Future<UserResponse> verify() async {
+    ListBuilder<String> errors = ListBuilder<String>();
+    bool success = true;
+    final response = await _networkRepository.instance.get("/v1/verify");
+    logger.v(response);
+
+    UserModel? user = UserModel.fromJson(response.data['data']);
+    if (user == null) {
+      errors.add("Error al obtener los datos del usuario");
+      success = false;
+    }
+
+    return UserResponse((u) => u
+      ..success = success
+      ..data = user?.toBuilder()
+      ..errors = errors);
   }
 
   // ---------------------------------------------------------------------------

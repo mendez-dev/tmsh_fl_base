@@ -19,6 +19,8 @@ class DatabaseRepository {
 
   DatabaseRepository({int version = 1}) : _version = version;
 
+  List<String> boolsFields = ['is_active', 'not_synchronized'];
+
   /// Se encarga de inicializar la creación de la base de datos
   Future<void> initDB() async {
     if (db != null) {
@@ -108,6 +110,11 @@ class DatabaseRepository {
           '''SELECT * FROM $table ORDER BY created_at ASC LIMIT $limitValue OFFSET $offset''';
       data = await db!.rawQuery(query);
 
+      if (data.isNotEmpty) {
+        // Convertimos los datos a booleanos
+        data = convertToBool(data);
+      }
+
       // Calculamos el numero de paginas que hay
       int? count = Sqflite.firstIntValue(
           await db!.rawQuery("SELECT COUNT(*) FROM $table"));
@@ -135,5 +142,29 @@ class DatabaseRepository {
         '''SELECT updated_at FROM $table ORDER BY strftime(updated_at) DESC LIMIT 1''';
     final List<Map<String, dynamic>> data = await db!.rawQuery(query);
     return data.isNotEmpty ? data.first['updated_at'] : null;
+  }
+
+  /// Obtener el id del grupo de usuarios super admin
+  /// Ordena los registros de la tabla user_group en base al campo crated_at
+  /// y obtiene el primer registro para retornar el campo id_user_group
+  Future<String?> getSuperAdminGroupId() async {
+    const String query =
+        '''SELECT id_user_group FROM user_group ORDER BY created_at ASC LIMIT 1''';
+    final List<Map<String, dynamic>> data = await db!.rawQuery(query);
+    return data.isNotEmpty ? data.first['id_user_group'] : null;
+  }
+
+  List<Map<String, dynamic>> convertToBool(List<Map<String, dynamic>> data) {
+    List<Map<String, dynamic>> newData = [];
+    for (final item in data) {
+      Map<String, dynamic> map = Map.from(item);
+      for (final field in boolsFields) {
+        if (map[field] != null) {
+          map[field] = map[field] == 1 ? true : false;
+        }
+      }
+      newData.add(map);
+    }
+    return newData;
   }
 }

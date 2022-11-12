@@ -38,7 +38,7 @@ class _$UserModelSerializer implements StructuredSerializer<UserModel> {
           specifiedType: const FullType(String)),
       'is_active',
       serializers.serialize(object.isActive,
-          specifiedType: const FullType(int)),
+          specifiedType: const FullType(bool)),
       'created_by',
       serializers.serialize(object.createdBy,
           specifiedType: const FullType(String)),
@@ -118,7 +118,7 @@ class _$UserModelSerializer implements StructuredSerializer<UserModel> {
           break;
         case 'is_active':
           result.isActive = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(bool))! as bool;
           break;
         case 'created_by':
           result.createdBy = serializers.deserialize(value,
@@ -167,7 +167,7 @@ class _$UserModel extends UserModel {
   @override
   final String? picture;
   @override
-  final int isActive;
+  final bool isActive;
   @override
   final String createdBy;
   @override
@@ -323,9 +323,9 @@ class UserModelBuilder implements Builder<UserModel, UserModelBuilder> {
   String? get picture => _$this._picture;
   set picture(String? picture) => _$this._picture = picture;
 
-  int? _isActive;
-  int? get isActive => _$this._isActive;
-  set isActive(int? isActive) => _$this._isActive = isActive;
+  bool? _isActive;
+  bool? get isActive => _$this._isActive;
+  set isActive(bool? isActive) => _$this._isActive = isActive;
 
   String? _createdBy;
   String? get createdBy => _$this._createdBy;

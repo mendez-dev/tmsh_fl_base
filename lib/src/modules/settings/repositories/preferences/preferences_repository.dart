@@ -38,4 +38,10 @@ abstract class PreferencesRepository {
 
   /// Retorna el origen de datos de la aplicación
   Future<DataOrigin> getDataOrigin();
+
+  // Guardar el id del usuario autenticado
+  Future<void> saveUserId(String value);
+
+  // Obtener el id del usuario autenticado
+  Future<String?> getUserId();
 }

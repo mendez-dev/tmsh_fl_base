@@ -40,6 +40,7 @@ class LoginWidget extends StatelessWidget {
         listener: (BuildContext context, AuthState state) {
           // logger.v(MediaQuery.of(context).viewInsets.bottom);
           if (state.isLoginSuccess) {
+            RepositoryProvider.of<AuthBloc>(context).add(VerifyEvent());
             Navigator.pushNamedAndRemoveUntil(
                 context, 'home', (route) => false);
           }

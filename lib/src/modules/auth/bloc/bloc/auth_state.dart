@@ -13,6 +13,8 @@ class AuthState extends Equatable {
   final double keyboardHeight;
   final bool isLoadingLogin;
   final bool isLoginSuccess;
+  final bool isLoadingVerify;
+  final UserModel? user;
 
   const AuthState(
       {required this.pageState,
@@ -26,7 +28,9 @@ class AuthState extends Equatable {
       required this.headingTop,
       required this.keyboardHeight,
       required this.isLoadingLogin,
-      required this.isLoginSuccess});
+      required this.isLoginSuccess,
+      required this.isLoadingVerify,
+      required this.user});
 
   factory AuthState.initial() {
     return const AuthState(
@@ -41,7 +45,9 @@ class AuthState extends Equatable {
         headingTop: 100,
         keyboardHeight: 0.0,
         isLoadingLogin: false,
-        isLoginSuccess: false);
+        isLoginSuccess: false,
+        isLoadingVerify: false,
+        user: null);
   }
 
   AuthState copyWith(
@@ -56,7 +62,9 @@ class AuthState extends Equatable {
       double? headingTop,
       double? keyboardHeight,
       bool? isLoadingLogin,
-      bool? isLoginSuccess}) {
+      bool? isLoginSuccess,
+      bool? isLoadingVerify,
+      UserModel? user}) {
     return AuthState(
         pageState: pageState ?? this.pageState,
         loginYOffset: loginYOffset ?? this.loginYOffset,
@@ -69,7 +77,9 @@ class AuthState extends Equatable {
         headingTop: headingTop ?? this.headingTop,
         keyboardHeight: keyboardHeight ?? this.keyboardHeight,
         isLoadingLogin: isLoadingLogin ?? this.isLoadingLogin,
-        isLoginSuccess: isLoginSuccess ?? this.isLoginSuccess);
+        isLoginSuccess: isLoginSuccess ?? this.isLoginSuccess,
+        isLoadingVerify: isLoadingVerify ?? this.isLoadingVerify,
+        user: user ?? this.user);
   }
 
   @override
@@ -85,6 +95,7 @@ class AuthState extends Equatable {
         loginHeight,
         keyboardHeight,
         isLoadingLogin,
-        isLoginSuccess
+        isLoginSuccess,
+        isLoadingVerify
       ];
 }

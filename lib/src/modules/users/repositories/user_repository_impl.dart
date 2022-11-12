@@ -1,4 +1,6 @@
 import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
+import 'package:base/src/modules/users/models/user_create.dart';
+import 'package:base/src/modules/users/models/user_response.dart';
 import 'package:base/src/modules/users/models/users_pagination_response.dart';
 import 'package:base/src/modules/users/repositories/user_repository.dart';
 import 'package:base/src/repositories/database_repository/database_repository.dart';
@@ -54,6 +56,8 @@ class UserRepositoryImpl implements UserRepository {
       final response = await _database.getPaginated(
           table: 'user', page: page, recordsPerPage: recordsPerPage);
 
+      logger.v(response);
+
       return UsersPagination.fromJson(response)!;
     }
 
@@ -72,5 +76,11 @@ class UserRepositoryImpl implements UserRepository {
 
     // Retornamos el id del grupo admin
     return response.first['id_user_group']!.toString();
+  }
+
+  @override
+  Future<UserResponse> createUser(UserCreate user) {
+    // TODO: implement createUser
+    throw UnimplementedError();
   }
 }

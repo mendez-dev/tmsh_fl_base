@@ -1,5 +1,6 @@
 import 'package:base/src/models/data_origin.dart';
 import 'package:global_configuration/global_configuration.dart';
+import '../../../../utils/logger.dart';
 import 'preferences_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:string_validator/string_validator.dart';
@@ -13,6 +14,8 @@ class PreferencesRepositoryImpl implements PreferencesRepository {
 
   /// Almacena el indice con el que se guardara y leerá el token de acceso
   final String _authToken = 'authToken';
+
+  final String _isUser = 'id_user';
 
   /// Almacena el indice con el que se guardara y leerá el tema
   final String _themeIndexKey = 'themeIndex';
@@ -117,5 +120,16 @@ class PreferencesRepositoryImpl implements PreferencesRepository {
       }
     }
     return DataOrigin.local;
+  }
+
+  @override
+  Future<void> saveUserId(String value) async {
+    logger.i('saveUserId: $value');
+    await _storage.write(key: _isUser, value: value);
+  }
+
+  @override
+  Future<String?> getUserId() async {
+    return Future.value(await _storage.read(key: _isUser));
   }
 }

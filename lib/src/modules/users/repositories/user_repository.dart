@@ -1,3 +1,5 @@
+import 'package:base/src/modules/users/models/user_create.dart';
+import 'package:base/src/modules/users/models/user_response.dart';
 import 'package:base/src/modules/users/models/users_pagination.dart';
 
 abstract class UserRepository {
@@ -8,4 +10,6 @@ abstract class UserRepository {
   });
 
   Future<String> getAdminGroupId();
+
+  Future<UserResponse> createUser(UserCreate user);
 }
