@@ -8,11 +8,15 @@ abstract class SettingsEvent extends Equatable {}
 class GetInitialConfigEvent implements SettingsEvent {
   final ThemeModel theme;
   final SettingsModel settings;
+  final String dataSource;
 
-  GetInitialConfigEvent({required this.theme, required this.settings});
+  GetInitialConfigEvent(
+      {required this.theme,
+      required this.settings,
+      this.dataSource = 'NETWORK'});
 
   @override
-  List<Object?> get props => [theme, settings];
+  List<Object?> get props => [theme, settings, dataSource];
 
   @override
   bool? get stringify => true;
@@ -20,7 +24,6 @@ class GetInitialConfigEvent implements SettingsEvent {
 
 /// Establese el tema de la aplicación
 class SetDarkModeEvent implements SettingsEvent {
-
   final bool value;
 
   SetDarkModeEvent(this.value);
@@ -29,5 +32,4 @@ class SetDarkModeEvent implements SettingsEvent {
 
   @override
   bool? get stringify => true;
-
 }

@@ -167,4 +167,31 @@ class DatabaseRepository {
     }
     return newData;
   }
+
+  // Funcion que busca un registro en la base de datos
+  Future<Map<String, dynamic>?> find(
+      {required String table, required String id}) async {
+    Map<String, dynamic> data = {};
+    try {
+      // Obtenemos el nombre de la llave primaria de la tabla
+      final columns = await db!.rawQuery('PRAGMA table_info($table)');
+      final columnNames = columns.map((c) => c['name']).toList();
+      final String primaryKey = columnNames.first.toString();
+
+      // Ejecutamos la consulta para obtener los datos
+      final String query =
+          '''SELECT * FROM $table WHERE $primaryKey = '$id' AND deleted_at IS NULL''';
+      final List<Map<String, dynamic>> result = await db!.rawQuery(query);
+
+      if (result.isNotEmpty) {
+        data = result.first;
+        // Convertimos los datos a booleanos
+        data = convertToBool([data]).first;
+      }
+    } catch (e) {
+      logger.e('Error al obtener registro $id de $table');
+      logger.e(e);
+    }
+    return data;
+  }
 }

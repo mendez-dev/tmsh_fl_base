@@ -66,14 +66,20 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _onLoginEventToState(LoginEvent event, Emitter<AuthState> emit) async {
     // Indicamos que se está realizando la peticion
     emit(state.copyWith(isLoadingLogin: true));
+    String dataSource = await _preferencesRepository.getDataSource();
 
     final AuthResponse response = await _authRepository.login(
         username: event.username, password: event.password);
 
     if (response.code == 200) {
-      _preferencesRepository.save<bool>("isLogged", true);
-      _preferencesRepository.save("authToken", response.data!.token);
-      _preferencesRepository.save("initial_route", 'home');
+      _preferencesRepository.save<bool>("is_logged", true);
+      if (dataSource == 'NETWORK') {
+        _preferencesRepository.save("authToken", response.data!.token);
+        _preferencesRepository.save("initial_route", 'download');
+      } else {
+        _preferencesRepository.saveUserId(response.data!.token);
+        _preferencesRepository.save("initial_route", 'home');
+      }
 
       emit(state.copyWith(isLoginSuccess: true));
       emit(state.copyWith(isLoginSuccess: false));
@@ -85,13 +91,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   _onVerifyEventToState(VerifyEvent event, Emitter<AuthState> emit) async {
     // Indicamos que se está realizando la peticion
     emit(state.copyWith(isLoadingVerify: true));
+    String dataSource = await _preferencesRepository.getDataSource();
 
     final UserResponse response = await _authRepository.verify();
 
-    if (response.success) {
-      _preferencesRepository.saveUserId(response.data!.idUser);
+    if (response.code == 200) {
+      if (dataSource == 'NETWORK') {
+        _preferencesRepository.saveUserId(response.data!.idUser);
+      }
     } else {
-      // TODO: Implementar logout
+      _preferencesRepository.save("initial_route", 'login');
     }
     emit(state.copyWith(isLoadingVerify: false, user: response.data));
   }

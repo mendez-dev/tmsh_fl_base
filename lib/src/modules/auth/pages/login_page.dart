@@ -2,30 +2,17 @@ import 'package:base/src/modules/settings/repositories/preferences/preferences_r
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../repositories/network/network_repository.dart';
 import '../bloc/bloc/auth_bloc.dart';
 import '../components/login_form_widget.dart';
 import '../components/register_form_widget.dart';
 import '../components/welcome_page_widget.dart';
-import '../repositories/auth_repository_impl.dart';
-import '../repositories/auth_repository.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return RepositoryProvider<AuthRepository>(
-      create: (BuildContext context) => AuthRepositoryImpl(
-          networkRepository: RepositoryProvider.of<NetworkRepository>(context)),
-      child: BlocProvider<AuthBloc>(
-        create: (BuildContext context) => AuthBloc(
-            preferencesRepository:
-                RepositoryProvider.of<PreferencesRepository>(context),
-            authRepository: RepositoryProvider.of<AuthRepository>(context)),
-        child: const LoginWidget(),
-      ),
-    );
+    return const LoginWidget();
   }
 }
 
@@ -37,12 +24,14 @@ class LoginWidget extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (BuildContext context, AuthState state) {
-          // logger.v(MediaQuery.of(context).viewInsets.bottom);
+        listener: (BuildContext context, AuthState state) async {
           if (state.isLoginSuccess) {
+            String initialRoute =
+                await RepositoryProvider.of<PreferencesRepository>(context)
+                    .getInitialRoute();
             RepositoryProvider.of<AuthBloc>(context).add(VerifyEvent());
             Navigator.pushNamedAndRemoveUntil(
-                context, 'home', (route) => false);
+                context, initialRoute, (route) => false);
           }
         },
         builder: (BuildContext context, AuthState state) {

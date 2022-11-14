@@ -19,9 +19,11 @@ class _$UserResponseSerializer implements StructuredSerializer<UserResponse> {
   Iterable<Object?> serialize(Serializers serializers, UserResponse object,
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object?>[
-      'success',
-      serializers.serialize(object.success,
-          specifiedType: const FullType(bool)),
+      'code',
+      serializers.serialize(object.code, specifiedType: const FullType(int)),
+      'message',
+      serializers.serialize(object.message,
+          specifiedType: const FullType(String)),
     ];
     Object? value;
     value = object.data;
@@ -54,9 +56,13 @@ class _$UserResponseSerializer implements StructuredSerializer<UserResponse> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'success':
-          result.success = serializers.deserialize(value,
-              specifiedType: const FullType(bool))! as bool;
+        case 'code':
+          result.code = serializers.deserialize(value,
+              specifiedType: const FullType(int))! as int;
+          break;
+        case 'message':
+          result.message = serializers.deserialize(value,
+              specifiedType: const FullType(String))! as String;
           break;
         case 'data':
           result.data.replace(serializers.deserialize(value,
@@ -77,7 +83,9 @@ class _$UserResponseSerializer implements StructuredSerializer<UserResponse> {
 
 class _$UserResponse extends UserResponse {
   @override
-  final bool success;
+  final int code;
+  @override
+  final String message;
   @override
   final UserModel? data;
   @override
@@ -86,9 +94,11 @@ class _$UserResponse extends UserResponse {
   factory _$UserResponse([void Function(UserResponseBuilder)? updates]) =>
       (new UserResponseBuilder()..update(updates))._build();
 
-  _$UserResponse._({required this.success, this.data, this.errors})
+  _$UserResponse._(
+      {required this.code, required this.message, this.data, this.errors})
       : super._() {
-    BuiltValueNullFieldError.checkNotNull(success, r'UserResponse', 'success');
+    BuiltValueNullFieldError.checkNotNull(code, r'UserResponse', 'code');
+    BuiltValueNullFieldError.checkNotNull(message, r'UserResponse', 'message');
   }
 
   @override
@@ -102,21 +112,24 @@ class _$UserResponse extends UserResponse {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is UserResponse &&
-        success == other.success &&
+        code == other.code &&
+        message == other.message &&
         data == other.data &&
         errors == other.errors;
   }
 
   @override
   int get hashCode {
-    return $jf(
-        $jc($jc($jc(0, success.hashCode), data.hashCode), errors.hashCode));
+    return $jf($jc(
+        $jc($jc($jc(0, code.hashCode), message.hashCode), data.hashCode),
+        errors.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper(r'UserResponse')
-          ..add('success', success)
+          ..add('code', code)
+          ..add('message', message)
           ..add('data', data)
           ..add('errors', errors))
         .toString();
@@ -127,9 +140,13 @@ class UserResponseBuilder
     implements Builder<UserResponse, UserResponseBuilder> {
   _$UserResponse? _$v;
 
-  bool? _success;
-  bool? get success => _$this._success;
-  set success(bool? success) => _$this._success = success;
+  int? _code;
+  int? get code => _$this._code;
+  set code(int? code) => _$this._code = code;
+
+  String? _message;
+  String? get message => _$this._message;
+  set message(String? message) => _$this._message = message;
 
   UserModelBuilder? _data;
   UserModelBuilder get data => _$this._data ??= new UserModelBuilder();
@@ -145,7 +162,8 @@ class UserResponseBuilder
   UserResponseBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _success = $v.success;
+      _code = $v.code;
+      _message = $v.message;
       _data = $v.data?.toBuilder();
       _errors = $v.errors?.toBuilder();
       _$v = null;
@@ -172,8 +190,10 @@ class UserResponseBuilder
     try {
       _$result = _$v ??
           new _$UserResponse._(
-              success: BuiltValueNullFieldError.checkNotNull(
-                  success, r'UserResponse', 'success'),
+              code: BuiltValueNullFieldError.checkNotNull(
+                  code, r'UserResponse', 'code'),
+              message: BuiltValueNullFieldError.checkNotNull(
+                  message, r'UserResponse', 'message'),
               data: _data?.build(),
               errors: _errors?.build());
     } catch (_) {

@@ -124,12 +124,36 @@ class PreferencesRepositoryImpl implements PreferencesRepository {
 
   @override
   Future<void> saveUserId(String value) async {
-    logger.i('saveUserId: $value');
     await _storage.write(key: _isUser, value: value);
   }
 
   @override
   Future<String?> getUserId() async {
     return Future.value(await _storage.read(key: _isUser));
+  }
+
+  @override
+  Future<String> getDataSource() async {
+    // Verificamos si el usuario ya inicio sesión la primera vez desde la api web
+    final bool firstWebLogin = await getBool("first_web_login");
+    logger.i("firstWebLogin: $firstWebLogin");
+
+    /// Si el usuario aun no ha iniciado sesión desde la api web
+    /// inicialmente el origen de datos será NETWORK para que pueda
+    /// descargar los datos a la base de datos local
+    if (!firstWebLogin) {
+      return "NETWORK";
+    }
+
+    // Si no obtenemos el valor almanacenado en el storage
+    final String? value = await _storage.read(key: 'data_source');
+
+    if (value != null) {
+      logger.i("data_source: $value");
+      return value;
+    } else {
+      // Si aun no se ha guardado un origin de datos en el storage retornamos NETWORK
+      return "NETWORK";
+    }
   }
 }

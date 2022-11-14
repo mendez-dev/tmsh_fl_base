@@ -10,7 +10,8 @@ part 'user_response.g.dart';
 
 abstract class UserResponse
     implements Built<UserResponse, UserResponseBuilder> {
-  bool get success;
+  int get code;
+  String get message;
   UserModel? get data;
   BuiltList<String>? get errors;
 

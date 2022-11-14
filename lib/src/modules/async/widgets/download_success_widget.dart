@@ -1,3 +1,4 @@
+import 'package:base/src/modules/settings/repositories/preferences/preferences_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -52,14 +53,31 @@ class DownloadSuccessWidget extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(20),
                 child: ButtonWidget(
-                    text: "Continuar",
-                    isExpanded: true,
-                    onTap: () => Navigator.of(context).pop()),
+                  text: "Continuar",
+                  isExpanded: true,
+                  onTap: () => _continue(context),
+                ),
               ),
-            ),
+            )
           ],
         );
       },
     );
+  }
+
+  void _continue(BuildContext context) async {
+    PreferencesRepository _preferencesRepository =
+        RepositoryProvider.of<PreferencesRepository>(context);
+    // Indicamos que se realizo el primer login con exito y a partir de
+    // ahora se usara la base de datos local
+    String initialRoute = await _preferencesRepository.getInitialRoute();
+    if (initialRoute == "download") {
+      _preferencesRepository.save<bool>("first_web_login", true);
+      _preferencesRepository.save<String>("data_source", "LOCAL");
+      _preferencesRepository.save<String>("initial_route", "home");
+      Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 }

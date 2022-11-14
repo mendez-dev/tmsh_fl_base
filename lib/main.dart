@@ -1,8 +1,12 @@
+import 'package:base/src/modules/auth/bloc/bloc/auth_bloc.dart';
 import 'package:base/src/repositories/database_repository/database_repository.dart';
+import 'package:base/src/repositories/network/network_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 
 import 'src/app.dart';
+import 'src/modules/auth/repositories/auth_repository_local.dart';
+import 'src/modules/auth/repositories/auth_repository_net.dart';
 import 'src/modules/settings/bloc/settings/settings_bloc.dart';
 import 'src/modules/settings/models/settings_model.dart';
 import 'src/modules/settings/models/theme_model.dart';
@@ -33,21 +37,41 @@ void main() async {
   ThemeModel theme = await preferencesRepository.getTheme();
   SettingsModel settings = await settingsRepository.initSettings();
   String initialRoute = await preferencesRepository.getInitialRoute();
-
+  String dataSource = await preferencesRepository.getDataSource();
   logger.v(settings);
 
-  settingsBloc.add(GetInitialConfigEvent(theme: theme, settings: settings));
+  settingsBloc.add(GetInitialConfigEvent(
+      theme: theme, settings: settings, dataSource: dataSource));
 
   // Cargamos la base de datos local
 
-  final DatabaseRepository _dataBase = DatabaseRepository(version: 1);
-  _dataBase.initDB();
+  final DatabaseRepository databaseRepository = DatabaseRepository(version: 1);
+  databaseRepository.initDB();
+
+  AuthBloc authBloc = AuthBloc(
+      preferencesRepository: preferencesRepository,
+      authRepository: dataSource == "NETWORK"
+          ? AuthRepositoryNet(
+              networkRepository:
+                  NetworkRepository(preferences: preferencesRepository),
+            )
+          : AuthRepositoryLocal(
+              databaseRepository: databaseRepository,
+              preferencesRepository: preferencesRepository));
+
+  // Verificamos si el usuario ya está autenticado
+  bool isLogged = await preferencesRepository.getBool('is_logged');
+
+  if (isLogged) {
+    authBloc.add(VerifyEvent());
+  }
 
   runApp(MyApp(
-    databaseRepository: _dataBase,
+    databaseRepository: databaseRepository,
     settingsRepository: settingsRepository,
     settingsBloc: settingsBloc,
     preferencesRepository: preferencesRepository,
     initialRoute: initialRoute,
+    authBloc: authBloc,
   ));
 }

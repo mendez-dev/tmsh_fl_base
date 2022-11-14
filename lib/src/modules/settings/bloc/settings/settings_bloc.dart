@@ -31,15 +31,19 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       GetInitialConfigEvent event, Emitter<SettingsState> emit) async {
     // Guardamos los ajustes iniciales y el tema seleccionado en el estado de
     // la aplicación
-    emit(state.copyWith(theme: event.theme, settings: event.settings));
+    emit(state.copyWith(
+        theme: event.theme,
+        settings: event.settings,
+        dataSource: event.dataSource));
   }
 
   // Establece el tema de la aplicacion
-  void _onSetDarkModeEventToState(SetDarkModeEvent event, Emitter<SettingsState> emit) async {
+  void _onSetDarkModeEventToState(
+      SetDarkModeEvent event, Emitter<SettingsState> emit) async {
     if (event.value) {
       await _pref.setTheme(ThemeModel.dark);
       emit(state.copyWith(theme: ThemeModel.dark));
-    }else {
+    } else {
       await _pref.setTheme(ThemeModel.light);
       emit(state.copyWith(theme: ThemeModel.light));
     }

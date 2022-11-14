@@ -53,7 +53,8 @@ class UserRepositoryLocal implements UserRepository {
 
     if (errors.isNotEmpty) {
       return UserResponse((b) => b
-        ..success = false
+        ..message = 'Error al crear el usuario'
+        ..code = 400
         ..errors = errors);
     }
 
@@ -102,7 +103,8 @@ class UserRepositoryLocal implements UserRepository {
     }
 
     return UserResponse((b) => b
-      ..success = true
+      ..message = 'Usuario creado correctamente'
+      ..code = 200
       ..data = UserModel.fromJson(userCreated)!.toBuilder());
   }
 

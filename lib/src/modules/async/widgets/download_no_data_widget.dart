@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../settings/repositories/preferences/preferences_repository.dart';
 import '../bloc/download/download_bloc.dart';
 
 // Crear un stateless widget con un container que tenga una animación lottie centrada en el widget
@@ -52,11 +53,27 @@ class DownloadNoDataWidget extends StatelessWidget {
                 child: ButtonWidget(
                   text: "ACEPTAR",
                   isExpanded: true,
-                  onTap: () => Navigator.pop(context),
+                  onTap: () => _continue(context),
                 )),
           ],
         );
       },
     );
+  }
+
+  void _continue(BuildContext context) async {
+    PreferencesRepository _preferencesRepository =
+        RepositoryProvider.of<PreferencesRepository>(context);
+    // Indicamos que se realizo el primer login con exito y a partir de
+    // ahora se usara la base de datos local
+    String initialRoute = await _preferencesRepository.getInitialRoute();
+    if (initialRoute == "download") {
+      _preferencesRepository.save<bool>("first_web_login", true);
+      _preferencesRepository.save<String>("data_source", "LOCAL");
+      _preferencesRepository.save<String>("initial_route", "home");
+      Navigator.pushNamedAndRemoveUntil(context, "home", (route) => false);
+    } else {
+      Navigator.of(context).pop();
+    }
   }
 }

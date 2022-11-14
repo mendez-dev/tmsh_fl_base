@@ -1,6 +1,6 @@
 {
   "base_url": "https://localhost",
-  "api_base_url": "http://192.168.1.15/ci4_api/public/",
+  "api_base_url": "http://192.168.1.23/ci4_api/public/",
   "allow_account_creation": false,
   "salt": ".:6S@tz9M/PM%-*GebtM/PDM.bCfmg[D",
   "iterations": 20

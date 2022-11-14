@@ -7,7 +7,7 @@ void signOut(BuildContext context) async {
   PreferencesRepository _preferencesRepository =
       RepositoryProvider.of<PreferencesRepository>(context);
 
-  _preferencesRepository.save<bool>('isLogged', false);
+  _preferencesRepository.save<bool>('is_logged', false);
   await _preferencesRepository.remove('token');
   await _preferencesRepository.remove('initial_route');
 
