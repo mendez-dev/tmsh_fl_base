@@ -1,37 +1,46 @@
 import 'package:flutter/material.dart';
 
-/// Boton personalizado y configurable
+/// Botón personalizado y configurable
 ///
 /// El objetivo de este widget es que pueda cumplir con todas
-/// las necesidades al momento de usar un botón sin requrir a
-/// la creacion de un widget adicional.
+/// las necesidades al momento de usar un botón sin requerir a
+/// la creación de un widget adicional.
 ///
 /// Es configurable y se le pueden definir diferentes estilos
 /// y comportamientos.
 class ButtonWidget extends StatelessWidget {
+
+  /// Icono que se mostrará en el botón antes del texto
+  final IconData? prependIcon;
+
+  /// Icono que se mostrará en el botón después del texto
+  final IconData? appendIcon;
+
+  final MainAxisAlignment mainAxisAlignment;
+
   /// [String] Texto que se mostrara dentro del botón
   final String text;
 
-  /// [ButtonType] Indica el tipo del boton si es standar u outline
+  /// [ButtonType] Indica el tipo del botón si es standard u outline
   final ButtonType type;
 
-  /// [Function()?] Funcion que se ejecutara al precionar el botón
+  /// [Function()?] Función que se ejecutara al presionar el botón
   final Function()? onTap;
 
-  /// [BorderRadius] reemplaza el borderRadius por defecto del boton
+  /// [BorderRadius] reemplaza el borderRadius por defecto del botón
   /// si se indica la propiedad isRounded = `true` y borderRadius != `null`
-  /// se dara prioridad el borde indicado en borderRedius
+  /// se dará prioridad el borde indicado en borderRedius
   final BorderRadius? borderRadius;
 
-  /// [bool] Indica si el botón se expandira horizontalmente para tomar
+  /// [bool] Indica si el botón se expandirá horizontalmente para tomar
   /// el espacio disponible
   final bool isExpanded;
 
-  /// [bool] Indica si el boton tendra un estilo completamente redondeado
+  /// [bool] Indica si el botón tendrá un estilo completamente redondeado
   final bool isRounded;
 
-  /// [Color] Define el color del boton si no se establece uno se tomara
-  /// color principal del tema de la aplicacion
+  /// [Color] Define el color del botón si no se establece uno se tomara
+  /// color principal del tema de la aplicación
   final Color? color;
 
   /// [bool] Si es `true` mostrara un CircularProgressIndicator en lugar
@@ -42,8 +51,11 @@ class ButtonWidget extends StatelessWidget {
 
   const ButtonWidget(
       {Key? key,
-      required this.text,
-      this.type = ButtonType.standar,
+      this.text = "",
+      this.mainAxisAlignment = MainAxisAlignment.center,
+      this.prependIcon,
+      this.appendIcon,
+      this.type = ButtonType.standard,
       this.onTap,
       this.borderRadius,
       this.isExpanded = false,
@@ -64,7 +76,7 @@ class ButtonWidget extends StatelessWidget {
     );
   }
 
-  /// Retorna el widget correspondiente al tipo de boton
+  /// Retorna el widget correspondiente al tipo de botón
   ///
   /// Si no se a indicado un tipo de botón se retorna un
   /// widget del tipo [ElevatedButton]
@@ -72,18 +84,55 @@ class ButtonWidget extends StatelessWidget {
     switch (type) {
       case ButtonType.outline:
         return OutlinedButton(
+          
             style: _getButtonStyle(context),
             onPressed: onTap,
-            child: _getText(context));
+            child: SizedBox(
+              child: Wrap(
+                children: [
+                  if (prependIcon != null)
+                    Icon(
+                      prependIcon,
+                      color: Colors.white,
+                    ),
+                  _getText(context),
+                  if (appendIcon != null)
+                    Icon(
+                      appendIcon,
+                      color: Colors.white,
+                    ),
+                ],
+              ),
+            ));
       default:
         return ElevatedButton(
             style: _getButtonStyle(context),
             onPressed: onTap,
-            child: _getText(context));
+            child: Wrap(
+              children: [
+                if (prependIcon != null)
+                  Container(
+                    margin: const EdgeInsets.only(right: 10),
+                    child: Icon(
+                      prependIcon,
+                      color: Colors.white,
+                    ),
+                  ),
+                _getText(context),
+                if (appendIcon != null)
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Icon(
+                      appendIcon,
+                      color: Colors.white,
+                    ),
+                  ),
+              ],
+            ));
     }
   }
 
-  /// Retorna el estilo del bóton de acuerdo al tipo selecionado
+  /// Retorna el estilo del botón de acuerdo al tipo seleccionado
   ///
   /// Identifica el tipo de botón y genera un estilo de acuerdo
   /// a cada tipo
@@ -92,21 +141,22 @@ class ButtonWidget extends StatelessWidget {
       case ButtonType.outline:
         return OutlinedButton.styleFrom(
             padding: padding,
-            primary: color,
+            foregroundColor: color,
+            
             shape: RoundedRectangleBorder(borderRadius: _getBorderRaius()),
             side: BorderSide(color: color ?? Theme.of(context).primaryColor));
 
       default:
         return ElevatedButton.styleFrom(
             padding: padding,
-            primary: color,
+            foregroundColor: color,
             shape: RoundedRectangleBorder(borderRadius: _getBorderRaius()));
     }
   }
 
-  /// Retorna el estilo del texto de acuerdo al tipo de boton
+  /// Retorna el estilo del texto de acuerdo al tipo de botón
   ///
-  /// Si el botón es de tipo standar retornara un color de texto blanco
+  /// Si el botón es de tipo standard retornara un color de texto blanco
   /// ya que tiene un background con un color solido
   ///
   /// Si el botón es de tipo outline retornara un texto del color del botón.
@@ -128,7 +178,7 @@ class ButtonWidget extends StatelessWidget {
 
   /// Retorna el borde radio del botón
   ///
-  /// Si se ha definido un borderRadius espesífico se retornara este,
+  /// Si se ha definido un borderRadius específico se retornara este,
   /// si no evaluare si la propiedad rounded es verdadera y si no
   /// retornara un border radius circular ed 5 pixeles
   BorderRadius _getBorderRaius() {
@@ -142,4 +192,4 @@ class ButtonWidget extends StatelessWidget {
   }
 }
 
-enum ButtonType { standar, outline }
+enum ButtonType { standard, outline }

@@ -16,7 +16,7 @@ class InputTextWidget extends StatelessWidget {
       this.label,
       this.icon,
       this.controller,
-      this.type = InputTextStyle.standar,
+      this.type = InputTextStyle.standard,
       this.validator,
       this.margin,
       this.enabled = true,
@@ -70,4 +70,4 @@ class InputTextWidget extends StatelessWidget {
   }
 }
 
-enum InputTextStyle { standar, bordered, circularBorder }
+enum InputTextStyle { standard, bordered, circularBorder }
