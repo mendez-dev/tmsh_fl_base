@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 /// Es configurable y se le pueden definir diferentes estilos
 /// y comportamientos.
 class ButtonWidget extends StatelessWidget {
-
   /// Icono que se mostrará en el botón antes del texto
   final IconData? prependIcon;
 
@@ -84,30 +83,14 @@ class ButtonWidget extends StatelessWidget {
     switch (type) {
       case ButtonType.outlined:
         return OutlinedButton(
-          
             style: _getButtonStyle(context),
             onPressed: onTap,
             child: SizedBox(
               child: Wrap(
                 children: [
-                  if (prependIcon != null)
-                    Container(
-                    margin: text.isNotEmpty ? const EdgeInsets.only(right: 10) : null,
-                    child: Icon(
-                      prependIcon,
-                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
-                    ),
-                  ),
-                    if(text.isNotEmpty)
-                  _getText(context),
-                  if (appendIcon != null)
-                    Container(
-                    margin: text.isNotEmpty ? const EdgeInsets.only(left: 10) : null,
-                    child: Icon(
-                      appendIcon,
-                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
-                    ),
-                  ),
+                  if (prependIcon != null) _getPrependIcon(context),
+                  if (text.isNotEmpty) _getText(context),
+                  if (appendIcon != null) _getAppendIcon(context),
                 ],
               ),
             ));
@@ -117,27 +100,36 @@ class ButtonWidget extends StatelessWidget {
             onPressed: onTap,
             child: Wrap(
               children: [
-                if (prependIcon != null)
-                  Container(
-                    margin: text.isNotEmpty ? const EdgeInsets.only(right: 10) : null,
-                    child: Icon(
-                      prependIcon,
-                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
-                    ),
-                  ),
-                  if (text.isNotEmpty)
-                _getText(context),
-                if (appendIcon != null)
-                  Container(
-                    margin: text.isNotEmpty ? const EdgeInsets.only(left: 10) : null,
-                    child: Icon(
-                      appendIcon,
-                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
-                    ),
-                  ),
+                if (prependIcon != null) _getPrependIcon(context),
+                if (text.isNotEmpty) _getText(context),
+                if (appendIcon != null) _getAppendIcon(context),
               ],
             ));
     }
+  }
+
+  Container _getAppendIcon(BuildContext context) {
+    return Container(
+      margin: text.isNotEmpty ? const EdgeInsets.only(left: 10) : null,
+      child: Icon(
+        appendIcon,
+        color: type == ButtonType.outlined
+            ? Theme.of(context).primaryColor
+            : Colors.white,
+      ),
+    );
+  }
+
+  Container _getPrependIcon(BuildContext context) {
+    return Container(
+      margin: text.isNotEmpty ? const EdgeInsets.only(right: 10) : null,
+      child: Icon(
+        prependIcon,
+        color: type == ButtonType.outlined
+            ? Theme.of(context).primaryColor
+            : Colors.white,
+      ),
+    );
   }
 
   /// Retorna el estilo del botón de acuerdo al tipo seleccionado
@@ -149,15 +141,14 @@ class ButtonWidget extends StatelessWidget {
       case ButtonType.outlined:
         return OutlinedButton.styleFrom(
             padding: padding,
-            foregroundColor: color,
-            
+            backgroundColor: color,
             shape: RoundedRectangleBorder(borderRadius: _getBorderRaius()),
             side: BorderSide(color: color ?? Theme.of(context).primaryColor));
 
       default:
         return ElevatedButton.styleFrom(
             padding: padding,
-            foregroundColor: color,
+            backgroundColor: color,
             shape: RoundedRectangleBorder(borderRadius: _getBorderRaius()));
     }
   }
