@@ -95,6 +95,7 @@ class ButtonWidget extends StatelessWidget {
                       prependIcon,
                       color: Colors.white,
                     ),
+                    if(text.isNotEmpty)
                   _getText(context),
                   if (appendIcon != null)
                     Icon(
@@ -118,6 +119,7 @@ class ButtonWidget extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  if (text.isNotEmpty)
                 _getText(context),
                 if (appendIcon != null)
                   Container(
