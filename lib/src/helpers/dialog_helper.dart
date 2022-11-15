@@ -36,7 +36,7 @@ Future<bool> showConfirmationDialog(
               Expanded(
                 child: ButtonWidget(
                   isExpanded: true,
-                  type: ButtonType.outline,
+                  type: ButtonType.outlined,
                   text: cancelText,
                   onTap: () => Navigator.pop<bool>(context, false),
                 ),

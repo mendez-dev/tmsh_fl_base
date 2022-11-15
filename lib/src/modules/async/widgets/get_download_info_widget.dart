@@ -43,7 +43,7 @@ class GetDownloadInfoWidget extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(20),
           child: ButtonWidget(
-              type: ButtonType.outline,
+              type: ButtonType.outlined,
               text: "Cancelar",
               isExpanded: true,
               onTap: () => Navigator.pop(context)),

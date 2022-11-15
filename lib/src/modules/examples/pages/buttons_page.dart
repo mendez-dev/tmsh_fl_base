@@ -21,21 +21,21 @@ class ButtonsPage extends StatelessWidget {
               ButtonWidget(onTap: () {}, text: "Redondeado", isRounded: true),
               ButtonWidget(onTap: () {}, text: "Azul", color: Colors.blue),
               ButtonWidget(
-                  onTap: () {}, text: "Estandar", type: ButtonType.outline),
+                  onTap: () {}, text: "Estandar", type: ButtonType.outlined),
               ButtonWidget(
                   onTap: () {},
                   text: "Expandido",
-                  type: ButtonType.outline,
+                  type: ButtonType.outlined,
                   isExpanded: true),
               ButtonWidget(
                   onTap: () {},
                   text: "Redodeado",
-                  type: ButtonType.outline,
+                  type: ButtonType.outlined,
                   isRounded: true),
               ButtonWidget(
                 onTap: () {},
                 text: "Verde",
-                type: ButtonType.outline,
+                type: ButtonType.outlined,
                 color: Colors.green,
               ),
               ButtonWidget(

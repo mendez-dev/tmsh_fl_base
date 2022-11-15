@@ -21,7 +21,7 @@ class ButtonWidget extends StatelessWidget {
   /// [String] Texto que se mostrara dentro del botón
   final String text;
 
-  /// [ButtonType] Indica el tipo del botón si es standard u outline
+  /// [ButtonType] Indica el tipo del botón si es standard u outlined
   final ButtonType type;
 
   /// [Function()?] Función que se ejecutara al presionar el botón
@@ -82,7 +82,7 @@ class ButtonWidget extends StatelessWidget {
   /// widget del tipo [ElevatedButton]
   Widget _getButtonType(BuildContext context) {
     switch (type) {
-      case ButtonType.outline:
+      case ButtonType.outlined:
         return OutlinedButton(
           
             style: _getButtonStyle(context),
@@ -91,17 +91,23 @@ class ButtonWidget extends StatelessWidget {
               child: Wrap(
                 children: [
                   if (prependIcon != null)
-                    Icon(
+                    Container(
+                    margin: text.isNotEmpty ? const EdgeInsets.only(right: 10) : null,
+                    child: Icon(
                       prependIcon,
-                      color: Colors.white,
+                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
                     ),
+                  ),
                     if(text.isNotEmpty)
                   _getText(context),
                   if (appendIcon != null)
-                    Icon(
+                    Container(
+                    margin: text.isNotEmpty ? const EdgeInsets.only(left: 10) : null,
+                    child: Icon(
                       appendIcon,
-                      color: Colors.white,
+                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
                     ),
+                  ),
                 ],
               ),
             ));
@@ -113,20 +119,20 @@ class ButtonWidget extends StatelessWidget {
               children: [
                 if (prependIcon != null)
                   Container(
-                    margin: const EdgeInsets.only(right: 10),
+                    margin: text.isNotEmpty ? const EdgeInsets.only(right: 10) : null,
                     child: Icon(
                       prependIcon,
-                      color: Colors.white,
+                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
                     ),
                   ),
                   if (text.isNotEmpty)
                 _getText(context),
                 if (appendIcon != null)
                   Container(
-                    margin: const EdgeInsets.only(left: 10),
+                    margin: text.isNotEmpty ? const EdgeInsets.only(left: 10) : null,
                     child: Icon(
                       appendIcon,
-                      color: Colors.white,
+                      color: type == ButtonType.outlined ? Theme.of(context).primaryColor : Colors.white,
                     ),
                   ),
               ],
@@ -140,7 +146,7 @@ class ButtonWidget extends StatelessWidget {
   /// a cada tipo
   ButtonStyle _getButtonStyle(BuildContext context) {
     switch (type) {
-      case ButtonType.outline:
+      case ButtonType.outlined:
         return OutlinedButton.styleFrom(
             padding: padding,
             foregroundColor: color,
@@ -161,10 +167,10 @@ class ButtonWidget extends StatelessWidget {
   /// Si el botón es de tipo standard retornara un color de texto blanco
   /// ya que tiene un background con un color solido
   ///
-  /// Si el botón es de tipo outline retornara un texto del color del botón.
+  /// Si el botón es de tipo outlined retornara un texto del color del botón.
   TextStyle _getTextStyle(BuildContext context) {
     switch (type) {
-      case ButtonType.outline:
+      case ButtonType.outlined:
         return TextStyle(
             color: color ?? Theme.of(context).colorScheme.primary,
             fontSize: 16);
@@ -194,4 +200,4 @@ class ButtonWidget extends StatelessWidget {
   }
 }
 
-enum ButtonType { standard, outline }
+enum ButtonType { standard, outlined }

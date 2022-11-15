@@ -39,7 +39,7 @@ class _RegisterFormWindgetState extends State<RegisterFormWindget> {
                   text: "Back to login",
                   isExpanded: true,
                   isRounded: true,
-                  type: ButtonType.outline,
+                  type: ButtonType.outlined,
                   onTap: () => BlocProvider.of<AuthBloc>(context)
                       .add(ChangePageStateEvent(1))),
               const SizedBox(height: 30)

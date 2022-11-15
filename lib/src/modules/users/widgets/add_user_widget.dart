@@ -123,7 +123,7 @@ class _AddUserWidgetState extends State<AddUserWidget> {
                       children: [
                         Expanded(
                           child: ButtonWidget(
-                              type: ButtonType.outline,
+                              type: ButtonType.outlined,
                               isExpanded: true,
                               text: "Cancelar",
                               onTap: () => Navigator.pop(context)),
